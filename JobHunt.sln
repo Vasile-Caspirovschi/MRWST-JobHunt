@@ -3,21 +3,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobHunt.Application", "src\JobHunt.Application\JobHunt.Application.csproj", "{7FCD79A2-C33D-4B52-960B-5FCCB3B8177D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobHunt.Application", "src\JobHunt.Application\JobHunt.Application.csproj", "{7FCD79A2-C33D-4B52-960B-5FCCB3B8177D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobHunt.Domain", "src\JobHunt.Domain\JobHunt.Domain.csproj", "{87C7C6DB-134F-44DD-B127-3E474EC7646D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobHunt.Domain", "src\JobHunt.Domain\JobHunt.Domain.csproj", "{87C7C6DB-134F-44DD-B127-3E474EC7646D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobHunt.Infrastracture", "src\JobHunt.Infrastracture\JobHunt.Infrastracture.csproj", "{3D027293-EA94-4BBE-918D-3F6D80324C62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobHunt.Infrastracture", "src\JobHunt.Infrastracture\JobHunt.Infrastracture.csproj", "{3D027293-EA94-4BBE-918D-3F6D80324C62}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobHunt.Presentation", "src\JobHunt.Presentation\JobHunt.Presentation.csproj", "{323396C7-32D8-439D-84AA-E33658CA9583}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobHunt.Presentation", "src\JobHunt.Presentation\JobHunt.Presentation.csproj", "{323396C7-32D8-439D-84AA-E33658CA9583}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{0B16D6F7-6AEB-4C06-AC1C-608D68D56FFA}"
+	ProjectSection(SolutionItems) = preProject
+		Directory.Packages.props = Directory.Packages.props
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{7FCD79A2-C33D-4B52-960B-5FCCB3B8177D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -36,5 +38,11 @@ Global
 		{323396C7-32D8-439D-84AA-E33658CA9583}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{323396C7-32D8-439D-84AA-E33658CA9583}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{323396C7-32D8-439D-84AA-E33658CA9583}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {61089606-5CE8-43AB-AAF8-15C79E328378}
 	EndGlobalSection
 EndGlobal

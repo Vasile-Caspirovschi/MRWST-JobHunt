@@ -1,6 +1,10 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <PackageReference Include="MediatR" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\JobHunt.Domain\JobHunt.Domain.csproj" />
   </ItemGroup>
 

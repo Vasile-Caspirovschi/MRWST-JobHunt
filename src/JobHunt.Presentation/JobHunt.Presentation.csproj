@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\JobHunt.Application\JobHunt.Application.csproj" />
+    <ProjectReference Include="..\JobHunt.Infrastracture\JobHunt.Infrastracture.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

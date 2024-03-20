@@ -18,6 +18,16 @@ public class HomeController : Controller
         return View();
     }
 
+    public IActionResult Jobs()
+    {
+        return View();
+    }
+
+    public IActionResult JobDetails()
+    {
+        return View();
+    }
+
     public IActionResult Privacy()
     {
         return View();

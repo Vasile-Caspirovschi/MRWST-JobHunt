@@ -1,22 +1,134 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
+}
+
+.small-section-tittle2 h4 {
+    color: #ed563b !important;
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 10px;
+}
+
+.small-section-tittle2 .ion {
+    float: left;
+    padding-right: 16px;
+}
+
+.section-tittle2 h2 {
+    margin-bottom: 35px;
+}
+
+@media (min-width: 576px) {
+    .section-tittle2 h2 {
+        font-size: 29px;
+    }
+}
+
+@media (min-width: 992px) {
+    .section-tittle2 h2 {
+        font-size: 43px;
+    }
+}
+
+
+
+@media (max-width: 575px) {
+    .count-job span {
+        margin-bottom: 30px;
+    }
+}
+.job-category-listing {
+    border: 1px solid #ededed;
+    padding: 30px 19px 30px 30px;
+}
+
+@media (min-width: 992px) {
+    .job-category-listing {
+        padding: 30px 19px 30px 16px;
+    }
+}
+
+@media (min-width: 768px) {
+    .job-category-listing {
+        padding: 30px 19px 30px 16px;
+    }
+}
+
+.job-category-listing .single-listing .select-Categories .container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    color: #666666;
+    font-size: 16px;
+}
+
+@media (max-width: 575px) {
+    .job-category-listing .single-listing .select-Categories .container {
+        font-size: 14px;
+    }
+}
+
+.job-category-listing .single-listing .select-Categories .container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height: 0;
+    width: 0;
+}
+
+.job-category-listing .single-listing .select-Categories .container .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 24px;
+    width: 24px;
+    border: 1px solid #ddd;
+}
+
+.job-category-listing .single-listing .select-Categories .container input:checked ~ .checkmark {
+    background-color: #ff4357;
+    border: 2px solid transparent;
+}
+
+    .job-category-listing .single-listing .select-Categories .container input:checked ~ .checkmark:after {
+        display: block;
+    }
+
+.job-category-listing .single-listing .select-Categories .container .checkmark::after {
+    left: 8px;
+    top: 1px;
+    width: 6px;
+    height: 14px;
+    border: solid white;
+    border-width: 0px 2px 2px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
 }

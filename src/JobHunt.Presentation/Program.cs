@@ -1,5 +1,7 @@
 using JobHunt.Application;
+using JobHunt.Application.Common.Interfaces;
 using JobHunt.Infrastracture;
+using JobHunt.Infrastracture.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,9 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
+    using var scope = app.Services.CreateScope();
+    using var dbContext = scope.ServiceProvider.GetRequiredService<IJobHuntDbContext>();
+    dbContext.Migrate();
 }
 
 app.UseHttpsRedirection();

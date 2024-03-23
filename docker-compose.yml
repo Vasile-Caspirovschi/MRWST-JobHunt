@@ -1,0 +1,20 @@
+version: '3.4'
+
+services:
+  # jobhunt.presentation:
+  #   image: ${DOCKER_REGISTRY-}jobhuntpresentation
+  #   build:
+  #     context: .
+  #     dockerfile: src/JobHunt.Presentation/Dockerfile
+
+  jobhunt.database: 
+    image: postgres:latest
+    container_name: jobhunt.database
+    environment:
+      - POSTGRES_DB=jobhunt-db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./.containers/jobhunt-db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432

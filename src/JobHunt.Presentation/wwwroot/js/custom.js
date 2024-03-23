@@ -72,9 +72,12 @@
 
     // Page loading animation
     $(window).on('load', function () {
-
         $('#js-preloader').addClass('loaded');
-
+        tinymce.init({
+            selector: '#job-description',
+            menubar: false,
+            license_key: 'gpl'
+        });
     });
 
 

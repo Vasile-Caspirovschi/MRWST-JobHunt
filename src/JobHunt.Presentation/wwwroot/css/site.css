@@ -22,11 +22,9 @@ body {
 }
 
 .small-section-tittle2 h4 {
-    color: #ed563b !important;
     font-size: 18px;
     font-weight: 600;
     line-height: 1.2;
-    margin-bottom: 10px;
 }
 
 .small-section-tittle2 .ion {
@@ -57,6 +55,7 @@ body {
         margin-bottom: 30px;
     }
 }
+
 .job-category-listing {
     border: 1px solid #ededed;
     padding: 30px 19px 30px 30px;
@@ -132,3 +131,50 @@ body {
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
 }
+
+.vertical-menu {
+    font-size: 14px;
+}
+
+    .vertical-menu ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+        .vertical-menu ul li {
+            /* Sub Menu */
+        }
+
+            .vertical-menu ul li a {
+                display: block;
+                padding: 10px 15px;
+                color: #000000;
+                text-decoration: none;
+                -webkit-transition: 0.2s linear;
+                -moz-transition: 0.2s linear;
+                -ms-transition: 0.2s linear;
+                -o-transition: 0.2s linear;
+                transition: 0.2s linear;
+            }
+
+                .vertical-menu ul li a:hover {
+                    background: #ed563b;
+                    color: #fff;
+                }
+
+                .vertical-menu ul li a .fa {
+                    width: 16px;
+                    text-align: center;
+                    margin-right: 5px;
+                    float: right;
+                }
+
+            .vertical-menu ul li ul li a {
+                border-left: 4px solid transparent;
+                padding: 10px 20px;
+            }
+
+                .vertical-menu ul li ul li a:hover {
+                    border-left: 4px solid #ff8f3f;
+                }

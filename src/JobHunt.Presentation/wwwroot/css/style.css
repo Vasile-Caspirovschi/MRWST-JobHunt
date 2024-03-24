@@ -1332,6 +1332,25 @@ responsive
         outline: none;
     }
 
+.btn-outline-primary {
+    border-color: #ed563b;
+    background-color: #fff;
+    color: #ed563b;
+}
+
+    .btn-outline-primary:not(:disabled):not(.disabled).active,
+    .btn-outline-primary:not(:disabled):not(.disabled):active,
+    .show > .btn-outline-primary.dropdown-toggle,
+    .btn-outline-primary:active,
+    .btn-outline-primary:active:focus,
+    .btn-outline-primary:focus,
+    .btn-outline-primary:hover {
+        background-color: #ed563b;
+        border-color: #f9735b;
+        outline: none;
+        color:#fff;
+    }
+
 .icon {
     width: 72px;
     height: 72px;

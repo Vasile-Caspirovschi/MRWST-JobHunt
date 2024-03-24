@@ -186,6 +186,7 @@ body {
 .form-body {
     box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
     border-radius: 10px;
+    max-width: 500px;
 }
 
 .form-footer {

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace JobHunt.Infrastracture.Persistence;
 
-public class JobHuntDbContext(DbContextOptions<JobHuntDbContext> contextOptions) : IdentityDbContext<AppUser, IdentityRole, string>(contextOptions), IJobHuntDbContext
+public class JobHuntDbContext(DbContextOptions<JobHuntDbContext> contextOptions) : IdentityDbContext<AppUser>(contextOptions), IJobHuntDbContext
 {
     public DbSet<JobPost> JobPosts { get; set; }
     public DbSet<JobCategory> JobCategories { get; set; }

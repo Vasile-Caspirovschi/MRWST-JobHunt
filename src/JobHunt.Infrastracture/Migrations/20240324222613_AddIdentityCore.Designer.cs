@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace JobHunt.Infrastracture.Migrations
 {
     [DbContext(typeof(JobHuntDbContext))]
-    [Migration("20240324174524_AddIdentity")]
-    partial class AddIdentity
+    [Migration("20240324222613_AddIdentityCore")]
+    partial class AddIdentityCore
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

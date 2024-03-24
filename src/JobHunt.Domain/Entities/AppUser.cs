@@ -1,10 +1,7 @@
-﻿namespace JobHunt.Domain.Entities;
+﻿using Microsoft.AspNetCore.Identity;
 
-public class AppUser
+namespace JobHunt.Domain.Entities;
+
+public class AppUser : IdentityUser
 {
-    public Guid Id { get; set; }
-    public string UserName { get; set; }= string.Empty;
-    public string Email { get; set; } = string.Empty;
-    public string PasswordHash { get; set; } = string.Empty;
-    public UserRoleType UserRole { get; set; }
 }

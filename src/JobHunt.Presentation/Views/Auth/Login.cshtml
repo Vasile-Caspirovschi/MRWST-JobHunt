@@ -1,0 +1,51 @@
+﻿@{
+}
+<br />
+<br />
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="d-flex justify-content-center">
+                    <form action="@Url.Action("Login", "Auth")" method="post">
+                        <div class="form-body">
+                            <div class="form-content">
+                                <div class="form-heading mb-3">
+                                    <h2>Log <em>In</em></h2>
+                                    <img src="~/images/line-dec.png" alt="">
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <input type="email" class="form-control" placeholder="Enter your email address" />
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <input type="password" class="form-control" placeholder="Enter your password" />
+                                </div>
+
+                                <div class="row mb-3">
+                                    <div class="col-6 d-flex justify-content-between">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" checked />
+                                            <label class="form-check-label">Remember me</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-6">
+                                        <a href="#!">Forgot password?</a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <button class="btn btn-primary btn-block" type="submit">Log in</button>
+                                </div>
+                            </div>
+                            <div class="form-footer">
+                                <div class="text-center">
+                                    <p>Not a member? <a href="@Url.Action("Register", "Auth")">Register</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

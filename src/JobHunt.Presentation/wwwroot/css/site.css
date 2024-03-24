@@ -178,3 +178,24 @@ body {
                 .vertical-menu ul li ul li a:hover {
                     border-left: 4px solid #ff8f3f;
                 }
+
+.form-content {
+    padding: 40px;
+    padding-bottom: 10px;
+}
+.form-body {
+    box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+    border-radius: 10px;
+}
+
+.form-footer {
+    background-color: #f6f6f6;
+    border-top: 2px solid #dce8f1;
+    padding: 20px;
+    text-align: center;
+    border-radius: 0 0 10px 10px;
+}
+
+.header-area.header-sticky + main {
+    padding-top: 80px;
+}

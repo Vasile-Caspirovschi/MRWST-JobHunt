@@ -30,30 +30,22 @@
             <div class="row">
                 <div class="col-12">
                     <nav class="main-nav header-text">
-                        <!-- ***** Logo Start ***** -->
                         <a href="@Url.Action("Index", "Home")" class="logo">Job<em> Hunt</em></a>
-                        <!-- ***** Logo End ***** -->
-                        <!-- ***** Menu Start ***** -->
                         <ul class="nav">
                             <li><a href="@Url.Action("Index", "Home")" class="active">Home</a></li>
                             <li><a href="@Url.Action("Jobs", "Jobs")">Jobs</a></li>
                             <li class="dropdown">
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">About</a>
-
+                                <a class="dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">For companies</a>
                                 <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="about.html">About Us</a>
-                                    <a class="dropdown-item" href="team.html">Team</a>
-                                    <a class="dropdown-item" href="blog.html">Blog</a>
-                                    <a class="dropdown-item" href="testimonials.html">Testimonials</a>
-                                    <a class="dropdown-item" href="terms.html">Terms</a>
+                                    <a class="dropdown-item" href="#">Candidates</a>
+                                    <a class="dropdown-item" href="@Url.Action("PostJob", "Jobs")">Post a job</a>
                                 </div>
                             </li>
-                            <li><a href="contact.html">Contact</a></li>
+                            <li><a href="@Url.Action("Login", "Auth")">Log in</a></li>
                         </ul>
                         <a class='menu-trigger'>
                             <span>Menu</span>
                         </a>
-                        <!-- ***** Menu End ***** -->
                     </nav>
                 </div>
             </div>
@@ -74,17 +66,16 @@
             </div>
         </div>
     </footer>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    @* <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script> *@
-    <script src="~/js/site.js" asp-append-version="true"></script>
-    <!-- Plugins -->
-    <script src="~/js/scrollreveal.min.js" ></script>
-    <script src="~/js/waypoints.min.js"></script>
-    <script src="~/js/jquery.counterup.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/imgfix.min.js"></script>
     <script src="~/js/mixitup.js"></script>
     <script src="~/js/custom.js" asp-append-version="true"></script>
+    @* <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script> *@
+    @* <script src="~/js/site.js" asp-append-version="true"></script> *@
+    @* <script src="~/js/scrollreveal.min.js"></script> *@
+    @* <script src="~/js/waypoints.min.js"></script> *@
+    @* <script src="~/js/jquery.counterup.min.js"></script> *@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

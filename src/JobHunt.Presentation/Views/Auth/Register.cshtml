@@ -1,5 +1,50 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
 }
+
+@* <div class="cta-content">
+                    <h2>Post a <em>job</em></h2>
+                    <p>Ut consectetur, metus sit amet aliquet placerat, enim est ultricies ligula, sit amet dapibus odio augue eget libero. Morbi tempus mauris a nisi luctus imperdiet.</p>
+                    <div class="main-button">
+                        <a href="@Url.Action("PostJob", "Jobs")">Post a job</a>
+                    </div>
+                </div> *@
+<section class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1">
+                <div class="section-heading">
+                    <h2>Create a new <em>account</em></h2>
+                    <img src="~/images/line-dec.png" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-4">
+                <div class="form-body">
+                    <div class="form-content">
+                        <div class="small-section-tittle2 mb-3">
+                            <h4>Candidate</h4>
+                        </div>
+                        <p class="mb-3">If you are looking for a job, choose this type of account.</p>
+                        <div class=" main-button-outline">
+                            <a href="@Url.Action("RegisterJobSeeker", "Auth")">I want a job</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="form-body">
+                    <div class="form-content">
+                        <div class="small-section-tittle2">
+                            <h4 class="custom-primary-color mb-3">Company</h4>
+                        </div>
+                        <p class="mb-3">If you are looking for employees, choose this type of account.</p>
+                        <div class="main-button">
+                            <a href="@Url.Action("RegisterEmployer", "Auth")">I want to hire</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

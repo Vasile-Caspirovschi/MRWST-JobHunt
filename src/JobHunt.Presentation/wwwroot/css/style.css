@@ -170,6 +170,28 @@ body {
         color: #fff;
     }
 
+.main-button-outline a {
+    display: inline-block;
+    font-size: 15px;
+    padding: 12px 20px;
+    background-color: #ed563b;
+    color: #fff;
+    text-align: center;
+    font-weight: 400;
+    text-transform: uppercase;
+    transition: all .3s;
+    border: 1px solid #ed563b;
+    background-color: #fff;
+    color: #ed563b;
+}
+
+    .main-button-outline a:hover {
+        background-color: #ed563b;
+        color: #fff;
+    }
+
+
+
 
 /* 
 ---------------------------------------------

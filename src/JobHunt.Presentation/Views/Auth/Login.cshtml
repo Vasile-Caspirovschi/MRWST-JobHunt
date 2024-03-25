@@ -1,5 +1,5 @@
-﻿@{
-}
+﻿@model LoginViewModel
+
 <br />
 <br />
 <section class="section" id="trainers">
@@ -15,22 +15,28 @@
                                     <img src="~/images/line-dec.png" alt="">
                                 </div>
                                 <div class="col-12 mb-3">
-                                    <input type="email" class="form-control" placeholder="Enter your email address" />
+                                    <input asp-for="Email" type="email" class="form-control" placeholder="Enter your email address" />
+                                    <span asp-validation-for="Email" class="text-danger"></span>
                                 </div>
                                 <div class="col-12 mb-3">
-                                    <input type="password" class="form-control" placeholder="Enter your password" />
+                                    <input asp-for="Password" type="password" class="form-control" placeholder="Enter your password" />
+                                    <span asp-validation-for="Password" class="text-danger"></span>
                                 </div>
 
                                 <div class="row mb-3">
                                     <div class="col-6 d-flex justify-content-between">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" checked />
-                                            <label class="form-check-label">Remember me</label>
+                                            <input asp-for="RememberMe" class="form-check-input" type="checkbox" checked />
+                                            <label class="form-check-label">Remember Me?</label>
                                         </div>
                                     </div>
-
                                     <div class="col-6">
-                                        <a href="#!">Forgot password?</a>
+                                        <a href="#">Forgot password?</a>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="text-danger">
+                                        @Html.ValidationSummary(false /*,  "Fix the following errors and then try again:" */)
                                     </div>
                                 </div>
                                 <div class="row">

@@ -13,25 +13,35 @@
                                     <h2>Regi<em>ster</em></h2>
                                     <img src="~/images/line-dec.png" alt="">
                                 </div>
-                                <div class="col-12 mb-3">
-                                    <input asp-for="FullName" type="text" class="form-control" placeholder="Enter firstname, surname" />
-                                    <span asp-validation-for="FullName" class="text-danger"></span>
+                                <div class="row">
+                                    <div class="col-12 mb-3">
+                                        <input asp-for="FullName" type="text" class="form-control" placeholder="Enter firstname, surname" />
+                                        <span asp-validation-for="FullName" class="text-danger"></span>
+                                    </div>
                                 </div>
-                                <div class="col-12 mb-3">
-                                    <input asp-for="Email" type="email" class="form-control" placeholder="Enter email address" />
-                                    <span asp-validation-for="Email" class="text-danger"></span>
+                                <div class="row">
+                                    <div class="col-12 mb-3">
+                                        <input asp-for="Email" type="email" class="form-control" placeholder="Enter email address" />
+                                        <span asp-validation-for="Email" class="text-danger"></span>
+                                    </div>
                                 </div>
-                                <div class="col-12 mb-3">
-                                    <input asp-for="PhoneNumber" type="number" class="form-control" placeholder="Enter contact number" />
-                                    <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                <div class="row">
+                                    <div class="col-12 mb-3">
+                                        <input asp-for="PhoneNumber" type="number" class="form-control" placeholder="Enter contact number" />
+                                        <span asp-validation-for="PhoneNumber" class="text-danger"></span>
+                                    </div>
                                 </div>
-                                <div class="col-12 mb-3">
-                                    <input asp-for="Password" type="password" class="form-control" placeholder="Enter password" />
-                                    <span asp-validation-for="Password" class="text-danger"></span>
+                                <div class="row">
+                                    <div class="col-12 mb-3">
+                                        <input asp-for="Password" type="password" class="form-control" placeholder="Enter password" />
+                                        <span asp-validation-for="Password" class="text-danger"></span>
+                                    </div>
                                 </div>
-                                <div class="col-12 mb-3">
-                                    <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Confirm password" />
-                                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                <div class="row">
+                                    <div class="col-12 mb-3">
+                                        <input asp-for="ConfirmPassword" type="password" class="form-control" placeholder="Confirm password" />
+                                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                                    </div>
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-12">
@@ -41,6 +51,12 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="text-danger">
+                                        @Html.ValidationSummary(false /*,  "Fix the following errors and then try again:" */)
+                                    </div>
+                                </div>
+
                                 <div class="row">
                                     <button class="btn btn-outline-primary btn-block" type="submit">Register</button>
                                 </div>

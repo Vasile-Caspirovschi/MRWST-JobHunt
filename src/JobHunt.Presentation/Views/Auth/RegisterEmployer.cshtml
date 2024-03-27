@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="d-flex justify-content-center">
-                    <form action="@Url.Action("RegisterEmployer ", "Auth")" method="post">
+                    <form action="@Url.Action("RegisterEmployer", "Auth")" method="post">
                         <div class="form-body">
                             <div class="form-content">
                                 <div class="form-heading mb-3">
@@ -43,6 +43,11 @@
                                             <input class="form-check-input" type="checkbox" checked />
                                             <label class="form-check-label">By pressing the "Register" button, you accept the Terms of use and Privacy policy.</label>
                                         </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="text-danger">
+                                        @Html.ValidationSummary(false /*,  "Fix the following errors and then try again:" */)
                                     </div>
                                 </div>
                                 <div class="row">

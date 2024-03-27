@@ -20,24 +20,21 @@ public class AuthController(SignInManager<AppUser> signInManager, UserManager<Ap
     }
 
     [HttpPost]
-    public async Task<IActionResult> Login(LoginViewModel login, string returnUrl = null!)
+    public async Task<IActionResult> Login(LoginViewModel login, string? returnUrl = null!)
     {
         returnUrl ??= Url.Content("~/");
         if (ModelState.IsValid)
         {
-            var user = _signInManager.UserManager.Users.Where(u => u.Email == login.Email).FirstOrDefault();
+            var user = _signInManager.UserManager.Users.FirstOrDefault(u => u.Email == login.Email);
             if (user is null)
             {
                 ModelState.AddModelError(string.Empty, "Username does not exist.");
                 return View();
             }
             var result = await _signInManager.PasswordSignInAsync(user.UserName!, login.Password, login.RememberMe, lockoutOnFailure: false);
-            if (!result.Succeeded)
-            {
-                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                return View();
-            }
-            return LocalRedirect(returnUrl);
+            if (result.Succeeded) return LocalRedirect(returnUrl);
+            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            return View();
         }
         return View();
     }
@@ -62,15 +59,10 @@ public class AuthController(SignInManager<AppUser> signInManager, UserManager<Ap
     {
         if (ModelState.IsValid)
         {
-            var user = new AppUser();
-            await _userStore.SetUserNameAsync(user, register.FullName, CancellationToken.None);
-            //await /*_emailStore*/.SetEmailAsync(user, register.Email, CancellationToken.None);
-            user.Email = register.Email;
-            user.PhoneNumber = register.PhoneNumber;
+            AppUser user = await AppUserInit(register);
             var result = await _userManager.CreateAsync(user, register.Password);
             if (result.Succeeded)
             {
-                //var userId = await _userManager.GetUserIdAsync(user);
                 await _userManager.AddToRoleAsync(user, UserRoleType.JobSeeker.ToString());
                 await _signInManager.SignInAsync(user, isPersistent: false);
                 return LocalRedirect(returnUrl);
@@ -86,8 +78,38 @@ public class AuthController(SignInManager<AppUser> signInManager, UserManager<Ap
     }
 
     [HttpPost]
-    public IActionResult RegisterEmployer(string returnUrl = "/")
+    public async Task<IActionResult> RegisterEmployer(RegisterViewModel register, string returnUrl = "/")
     {
-        return View();
+        if (ModelState.IsValid)
+        {
+            AppUser user = await AppUserInit(register);
+            var result = await _userManager.CreateAsync(user, register.Password);
+            if (result.Succeeded)
+            {
+                await _userManager.AddToRoleAsync(user, UserRoleType.Employer.ToString());
+                await _signInManager.SignInAsync(user, isPersistent: false);
+
+                // TODO: create new company where a employer registers
+
+                return LocalRedirect(returnUrl);
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error.Description);
+            }
+        }
+
+        return View(register);
+    }
+
+    private async Task<AppUser> AppUserInit(RegisterViewModel register)
+    {
+        var user = new AppUser();
+        await _userStore.SetUserNameAsync(user, register.FullName, CancellationToken.None);
+        //await /*_emailStore*/.SetEmailAsync(user, register.Email, CancellationToken.None);
+        user.Email = register.Email;
+        user.PhoneNumber = register.PhoneNumber;
+        return user;
     }
 }

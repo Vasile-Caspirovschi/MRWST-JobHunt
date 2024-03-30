@@ -1,17 +1,20 @@
-﻿using JobHunt.Domain.Entities;
+﻿using JobHunt.Application.Companies.Commands;
+using JobHunt.Domain.Entities;
 using JobHunt.Presentation.Models;
+using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JobHunt.Presentation.Controllers;
 
-public class AuthController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, IUserStore<AppUser> userStore)
-    : Controller
+public class AuthController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, 
+    IUserStore<AppUser> userStore, IMediator mediator) : Controller
 {
     private readonly SignInManager<AppUser> _signInManager = signInManager;
     private readonly UserManager<AppUser> _userManager = userManager;
     private readonly IUserStore<AppUser> _userStore = userStore;
+    private readonly IMediator _mediator = mediator;
 
     public async Task<IActionResult> Login()
     {
@@ -23,19 +26,19 @@ public class AuthController(SignInManager<AppUser> signInManager, UserManager<Ap
     public async Task<IActionResult> Login(LoginViewModel login, string? returnUrl = null!)
     {
         returnUrl ??= Url.Content("~/");
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid) return View();
+
+        var user = _signInManager.UserManager.Users.FirstOrDefault(u => u.Email == login.Email);
+        if (user is null)
         {
-            var user = _signInManager.UserManager.Users.FirstOrDefault(u => u.Email == login.Email);
-            if (user is null)
-            {
-                ModelState.AddModelError(string.Empty, "Username does not exist.");
-                return View();
-            }
-            var result = await _signInManager.PasswordSignInAsync(user.UserName!, login.Password, login.RememberMe, lockoutOnFailure: false);
-            if (result.Succeeded) return LocalRedirect(returnUrl);
-            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            ModelState.AddModelError(string.Empty, "Username does not exist.");
             return View();
         }
+
+        var result = await _signInManager.PasswordSignInAsync(user.UserName!, login.Password, login.RememberMe,
+            lockoutOnFailure: false);
+        if (result.Succeeded) return LocalRedirect(returnUrl);
+        ModelState.AddModelError(string.Empty, "Invalid login attempt.");
         return View();
     }
 
@@ -57,21 +60,20 @@ public class AuthController(SignInManager<AppUser> signInManager, UserManager<Ap
     [HttpPost]
     public async Task<IActionResult> RegisterJobSeeker(RegisterViewModel register, string returnUrl = "/")
     {
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid) return View(register);
+        
+        var user = await AppUserInit(register);
+        var result = await _userManager.CreateAsync(user, register.Password);
+        if (result.Succeeded)
         {
-            AppUser user = await AppUserInit(register);
-            var result = await _userManager.CreateAsync(user, register.Password);
-            if (result.Succeeded)
-            {
-                await _userManager.AddToRoleAsync(user, UserRoleType.JobSeeker.ToString());
-                await _signInManager.SignInAsync(user, isPersistent: false);
-                return LocalRedirect(returnUrl);
-            }
+            await _userManager.AddToRoleAsync(user, UserRoleType.JobSeeker.ToString());
+            await _signInManager.SignInAsync(user, isPersistent: false);
+            return LocalRedirect(returnUrl);
+        }
 
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError(string.Empty, error.Description);
-            }
+        foreach (var error in result.Errors)
+        {
+            ModelState.AddModelError(string.Empty, error.Description);
         }
 
         return View(register);
@@ -80,24 +82,24 @@ public class AuthController(SignInManager<AppUser> signInManager, UserManager<Ap
     [HttpPost]
     public async Task<IActionResult> RegisterEmployer(RegisterViewModel register, string returnUrl = "/")
     {
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid) return View(register);
+        if (string.IsNullOrEmpty(register.CompanyName))
         {
-            AppUser user = await AppUserInit(register);
-            var result = await _userManager.CreateAsync(user, register.Password);
-            if (result.Succeeded)
-            {
-                await _userManager.AddToRoleAsync(user, UserRoleType.Employer.ToString());
-                await _signInManager.SignInAsync(user, isPersistent: false);
-
-                // TODO: create new company where a employer registers
-
-                return LocalRedirect(returnUrl);
-            }
-
-            foreach (var error in result.Errors)
-            {
-                ModelState.AddModelError(string.Empty, error.Description);
-            }
+            ModelState.AddModelError(nameof(register.CompanyName), "Company name is required.");
+            return View(register);
+        }
+        var user = await AppUserInit(register);
+        var result = await _userManager.CreateAsync(user, register.Password);
+        if (result.Succeeded)
+        {
+            await _userManager.AddToRoleAsync(user, UserRoleType.Employer.ToString());
+            await _signInManager.SignInAsync(user, isPersistent: false);
+            await _mediator.Send(new CreateCompanyCommand(register.CompanyName, user));
+            return LocalRedirect(returnUrl);
+        }
+        foreach (var error in result.Errors)
+        {
+            ModelState.AddModelError(string.Empty, error.Description);
         }
 
         return View(register);

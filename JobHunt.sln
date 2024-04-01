@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobHunt.Application", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobHunt.Domain", "src\JobHunt.Domain\JobHunt.Domain.csproj", "{87C7C6DB-134F-44DD-B127-3E474EC7646D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobHunt.Infrastracture", "src\JobHunt.Infrastracture\JobHunt.Infrastracture.csproj", "{3D027293-EA94-4BBE-918D-3F6D80324C62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobHunt.Infrastructure", "src\JobHunt.Infrastructure\JobHunt.Infrastructure.csproj", "{3D027293-EA94-4BBE-918D-3F6D80324C62}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JobHunt.Presentation", "src\JobHunt.Presentation\JobHunt.Presentation.csproj", "{323396C7-32D8-439D-84AA-E33658CA9583}"
 EndProject

@@ -1,4 +1,4 @@
-﻿using JobHunt.Domain.Entities;
+﻿using JobHunt.Domain.Enums;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 

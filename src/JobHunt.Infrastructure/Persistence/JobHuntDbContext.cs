@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace JobHunt.Infrastracture.Persistence;
+namespace JobHunt.Infrastructure.Persistence;
 
 public class JobHuntDbContext(DbContextOptions<JobHuntDbContext> contextOptions) : IdentityDbContext<AppUser>(contextOptions), IJobHuntDbContext
 {

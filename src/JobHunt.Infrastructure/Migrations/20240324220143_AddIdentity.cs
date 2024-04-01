@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace JobHunt.Infrastracture.Migrations
+namespace JobHunt.Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class AddIdentity : Migration

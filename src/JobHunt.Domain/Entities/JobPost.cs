@@ -1,8 +1,8 @@
-﻿namespace JobHunt.Domain.Entities;
+namespace JobHunt.Domain.Entities;
 
 public class JobPost
 {
-    public Guid JobId { get; set; }
+    public Guid Id { get; set; }
     public string Title { get; set; } = string.Empty;
     public int JobSalary { get; set; }
     public JobCategory JobCategory { get; set; } = default!;

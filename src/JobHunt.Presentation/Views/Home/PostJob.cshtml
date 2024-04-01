@@ -1,0 +1,111 @@
+﻿@{
+    ViewData["Title"] = "Post a job";
+}
+<br />
+<br />
+<section>
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-2">
+                    <div class="vertical-menu position-fixed">
+                        <ul>
+                            <li><a href='#'>Account</a></li>
+                            <li><a href='#'>About company</a></li>
+                            <li><a href='#'>Contact data</a></li>
+                            <li><a href='#'>Job posts</a></li>
+                            <li><a href='#'>Post a job</a></li>
+                            <li><a href='#'>Job applications</a></li>
+                            <li><a href='#'>Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-10">
+                    <form>
+                        <h3 class="mb-3">Post a job</h3>
+                        <div class="mb-3 small-section-tittle2">
+                            <h4>Job title</h4>
+                            <div class="col-12">
+                                <input type="text" class="form-control" placeholder="Enter job title">
+                            </div>
+                        </div>
+                        <div class="mb-3 small-section-tittle2">
+                            <div class="row">
+                                <div class="col-sm">
+                                    <h4>Job salary</h4>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text"><i class="fa fa-money custom-primary-color"></i></span>
+                                        <input type="text" class="form-control" placeholder="Salary" aria-label="Salary" aria-describedby="basic-addon2">
+                                        <span class="input-group-text">.00</span>
+                                    </div>
+                                </div>
+                                <div class="col-sm">
+                                    <h4>Job location</h4>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-map-marker custom-primary-color"></i></span>
+                                        <input type="text" class="form-control" placeholder="Job Location" aria-label="Job Location" aria-describedby="basic-addon1">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm">
+                                <div class="mb-3 small-section-tittle2">
+                                    <h4>Job category</h4>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-university custom-primary-color"></i></span>
+                                        <select class="form-select" name="select">
+                                            <option value="">All Category</option>
+                                            <option value="">Category 1</option>
+                                            <option value="">Category 2</option>
+                                            <option value="">Category 3</option>
+                                            <option value="">Category 4</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm">
+                                <div class="mb-3 small-section-tittle2">
+                                    <h4>Job type</h4>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-clock-o custom-primary-color"></i></span>
+                                        <select class="form-select" name="select">
+                                            <option value="">Full time</option>
+                                            <option value="">Part time</option>
+                                            <option value="">Remote</option>
+                                            <option value="">Freelance</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm">
+                                <div class="mb-3 small-section-tittle2">
+                                    <h4>Experience</h4>
+                                    <div class="input-group mb-3">
+                                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-briefcase custom-primary-color"></i></span>
+                                        <select class="form-select" name="select">
+                                            <option value="">0-1 Years</option>
+                                            <option value="">1-2 Years</option>
+                                            <option value="">2-3 Years</option>
+                                            <option value="">3-6 Years</option>
+                                            <option value="">6-more..</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3 small-section-tittle2">
+                            <h4>Job description</h4>
+                            <textarea id="job-description">
+                                Format your job description here ...
+                            </textarea>
+                        </div>
+                        <div class="col-12">
+                            <button class="btn btn-primary w-100" type="submit">Post the job</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,8 +1,114 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Home";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="main-banner" id="top">
+    <video autoplay muted loop id="bg-video">
+        <source src="~/images/video.mp4" type="video/mp4" />
+    </video>
+
+    <div class="video-overlay header-text">
+        <div class="caption">
+            <h6>Lorem ipsum dolor sit amet</h6>
+            <h2>Find the perfect <em>Job</em></h2>
+            <div class="main-button">
+                <a href="contact.html">Contact Us</a>
+            </div>
+        </div>
+    </div>
 </div>
+<!-- ***** Main Banner Area End ***** -->
+<!-- ***** Cars Starts ***** -->
+<section class="section" id="trainers">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="section-heading">
+                    <h2>Featured <em>Jobs</em></h2>
+                    <img src="~/images/line-dec.png" alt="">
+                    <p>Nunc urna sem, laoreet ut metus id, aliquet consequat magna. Sed viverra ipsum dolor, ultricies fermentum massa consequat eu.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="trainer-item">
+                    <div class="image-thumb">
+                        <img src="~/images/product-1-720x480.jpg" alt="">
+                    </div>
+                    <div class="down-content">
+                        <span> <sup>$</sup>70 000 </span>
+
+                        <h4>Lorem ipsum dolor sit amet, consectetur</h4>
+
+                        <p>Medical &nbsp;/&nbsp; Health Jobs</p>
+
+                        <ul class="social-icons">
+                            <li><a href="job-details.html">+ View More</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="trainer-item">
+                    <div class="image-thumb">
+                        <img src="~/images/product-2-720x480.jpg" alt="">
+                    </div>
+                    <div class="down-content">
+                        <span> <sup>$</sup>70 000 </span>
+
+                        <h4>Lorem ipsum dolor sit amet, consectetur</h4>
+
+                        <p>Medical &nbsp;/&nbsp; Health Jobs</p>
+
+                        <ul class="social-icons">
+                            <li><a href="job-details.html">+ View More</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="trainer-item">
+                    <div class="image-thumb">
+                        <img src="~/images/product-3-720x480.jpg" alt="">
+                    </div>
+                    <div class="down-content">
+                        <span> <sup>$</sup>70 000 </span>
+
+                        <h4>Lorem ipsum dolor sit amet, consectetur</h4>
+
+                        <p>Medical &nbsp;/&nbsp; Health Jobs</p>
+
+                        <ul class="social-icons">
+                            <li><a href="job-details.html">+ View More</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <br>
+
+        <div class="main-button text-center">
+            <a href="jobs.html">View Jobs</a>
+        </div>
+    </div>
+</section>
+<!-- ***** Cars Ends ***** -->
+
+<!-- ***** Call to Action Start ***** -->
+<section class="section section-bg" id="call-to-action" style="background-image: url(~/images/banner-image-1-1920x500.jpg)">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 offset-lg-1">
+                <div class="cta-content">
+                    <h2>Post a <em>job</em></h2>
+                    <p>Ut consectetur, metus sit amet aliquet placerat, enim est ultricies ligula, sit amet dapibus odio augue eget libero. Morbi tempus mauris a nisi luctus imperdiet.</p>
+                    <div class="main-button">
+                        <a href="@Url.Action("PostJob", "Home")">Post a job</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

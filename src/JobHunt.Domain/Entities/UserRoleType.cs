@@ -3,6 +3,6 @@
 public enum UserRoleType
 {
     JobSeeker = 0,
-    Recuiter = 1,
+    Employer = 1,
     Admin = 2,
 }

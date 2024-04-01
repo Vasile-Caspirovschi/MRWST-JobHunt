@@ -13,7 +13,7 @@ public class CreateCompanyCommandHandler(IJobHuntDbContext dbContext) : ICommand
 
     public async Task<Result> Handle(CreateCompanyCommand request, CancellationToken cancellationToken)
     {
-        var newCompany = new Company()
+        var newCompany = new Company
         {
             Name = request.Name,
             CompanyRepresentativeId = request.Representative.Id,
@@ -23,6 +23,7 @@ public class CreateCompanyCommandHandler(IJobHuntDbContext dbContext) : ICommand
         await _dbContext.Companies.AddAsync(newCompany, cancellationToken);
         if (await _dbContext.SaveChangesAsync(cancellationToken) > 0)
             return Result.Success();
-        return Result.Failure(new Error("CreateCompany.Failed", "Something went wrong when trying to create a new company"));
+        return Result.Failure(new Error("CreateCompany.Failed",
+            "Something went wrong when trying to create a new company"));
     }
 }

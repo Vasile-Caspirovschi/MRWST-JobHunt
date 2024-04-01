@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace JobHunt.Infrastracture.Persistence;
+namespace JobHunt.Infrastructure.Persistence;
 
 public static class DbSeeder
 {

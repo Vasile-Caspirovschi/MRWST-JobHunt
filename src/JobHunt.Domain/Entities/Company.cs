@@ -9,5 +9,5 @@ public class Company
     public string CompanyRepresentativeId { get; set; } = default!;
     public AppUser CompanyRepresentative { get; set; } = default!;
     public string? Location { get; set; } = default!;
-    public string? Logo { get; set; }
+    public Image? Logo { get; set; }
 }

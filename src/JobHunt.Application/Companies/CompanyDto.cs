@@ -1,3 +1,5 @@
+using JobHunt.Domain.Entities;
+
 namespace JobHunt.Application.Companies;
 
 public class CompanyDto
@@ -8,5 +10,6 @@ public class CompanyDto
     public string? Phone { get; set;}
     public string? CompanyRepresentativeId { get; set; }
     public string? Location { get; set; } = default!;
-    public string? Logo { get; set; }
+    public string? LogoUrl { get; set; }
+    public string? LogoId { get; set; }
 }

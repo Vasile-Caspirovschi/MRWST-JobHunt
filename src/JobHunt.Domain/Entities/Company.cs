@@ -8,5 +8,7 @@ public class Company
     public string? Phone { get; set;}
     public AppUser Reprezentative = default!;
     public string? Location { get; set; } = default!;
-    public string? Logo { get; set; }
+    public Image? Logo { get; set; }
+
+    public IEnumerable<JobPost> JobPosts { get; set; } = default!;
 }

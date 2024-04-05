@@ -10,4 +10,6 @@ public class Company
     public AppUser CompanyRepresentative { get; set; } = default!;
     public string? Location { get; set; } = default!;
     public Image? Logo { get; set; }
+
+    public IEnumerable<JobPost> JobPosts { get; set; } = default!;
 }

@@ -3,6 +3,7 @@ using System;
 using JobHunt.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace JobHunt.Infrastructure.Migrations
 {
     [DbContext(typeof(JobHuntDbContext))]
-    partial class JobHuntDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240405073321_SetupRelashionships")]
+    partial class SetupRelashionships
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -176,9 +179,6 @@ namespace JobHunt.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("JobCategoryId")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("JobDescription")
                         .IsRequired()
                         .HasColumnType("text");
@@ -200,8 +200,6 @@ namespace JobHunt.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyId");
-
-                    b.HasIndex("JobCategoryId");
 
                     b.ToTable("JobPosts");
                 });
@@ -360,23 +358,26 @@ namespace JobHunt.Infrastructure.Migrations
                     b.Navigation("Company");
                 });
 
+            modelBuilder.Entity("JobHunt.Domain.Entities.JobCategory", b =>
+                {
+                    b.HasOne("JobHunt.Domain.Entities.JobPost", "JobPost")
+                        .WithOne("JobCategory")
+                        .HasForeignKey("JobHunt.Domain.Entities.JobCategory", "JobPostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("JobPost");
+                });
+
             modelBuilder.Entity("JobHunt.Domain.Entities.JobPost", b =>
                 {
                     b.HasOne("JobHunt.Domain.Entities.Company", "Company")
-                        .WithMany()
+                        .WithMany("JobPosts")
                         .HasForeignKey("CompanyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("JobHunt.Domain.Entities.JobCategory", "JobCategory")
-                        .WithMany()
-                        .HasForeignKey("JobCategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.Navigation("Company");
-
-                    b.Navigation("JobCategory");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

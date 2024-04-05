@@ -8,6 +8,7 @@ public class JobPost
     public string Title { get; set; } = string.Empty;
     public int JobSalary { get; set; }
     public JobCategory JobCategory { get; set; } = default!;
+    public Guid CompanyId { get; set; }
     public Company Company { get; set; } = default!;
     public string JobDescription { get; set; } = string.Empty;
     public DateOnly PublishDate { get; set; }

@@ -148,11 +148,17 @@ namespace JobHunt.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<Guid>("JobPostId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("JobPostId")
+                        .IsUnique();
 
                     b.ToTable("JobCategories");
                 });
@@ -355,6 +361,17 @@ namespace JobHunt.Infrastructure.Migrations
                     b.Navigation("Company");
                 });
 
+            modelBuilder.Entity("JobHunt.Domain.Entities.JobCategory", b =>
+                {
+                    b.HasOne("JobHunt.Domain.Entities.JobPost", "JobPost")
+                        .WithOne("JobCategory")
+                        .HasForeignKey("JobHunt.Domain.Entities.JobCategory", "JobPostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("JobPost");
+                });
+
             modelBuilder.Entity("JobHunt.Domain.Entities.JobPost", b =>
                 {
                     b.HasOne("JobHunt.Domain.Entities.Company", "Company")
@@ -432,9 +449,9 @@ namespace JobHunt.Infrastructure.Migrations
                     b.Navigation("Logo");
                 });
 
-            modelBuilder.Entity("JobHunt.Domain.Entities.JobCategory", b =>
+            modelBuilder.Entity("JobHunt.Domain.Entities.JobPost", b =>
                 {
-                    b.Navigation("JobPost")
+                    b.Navigation("JobCategory")
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

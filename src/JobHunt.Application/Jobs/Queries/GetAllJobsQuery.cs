@@ -15,15 +15,25 @@ public class GetAllJobsQueryHandler(IPaginationService<JobPost, JobPostDto> pagi
 
     public async Task<PagedResult<JobPostDto>> Handle(GetAllJobsPagedQuery request, CancellationToken cancellationToken)
     {
-        Expression<Func<JobPost, JobPostDto>> mapper = jopPost => new JobPostDto()
+        var experienceRangeType = typeof(ExperienceRangeType);
+        var jobTypeType = typeof(JobTypeType);
+
+        Expression<Func<JobPost, JobPostDto>> mapper = jobPost => new JobPostDto()
         {
-            Title = jopPost.Title,
-            Location = jopPost.Company.Location!,
-            Experience = (ExperienceRangeType)Enum.Parse(typeof(ExperienceRangeType), jopPost.Experience, true),
-            JobDescription = jopPost.JobDescription,
-            JobSalary = jopPost.JobSalary,
-            JobType = (JobTypeType)Enum.Parse(typeof(JobTypeType), jopPost.JobType, true),
+            Title = jobPost.Title,
+            Location = jobPost.Company.Location!,
+            Experience = (ExperienceRangeType)Enum.Parse(experienceRangeType, jobPost.Experience, true),
+            JobDescription = jobPost.JobDescription,
+            JobSalary = jobPost.JobSalary,
+            JobType = (JobTypeType)Enum.Parse(jobTypeType, jobPost.JobType, true),
+            JobCategoryName = jobPost.JobCategory.Title
         };
-        return await _paginationService.GetPagedAsync(request.PageNumber, request.PageSize, mapper);
+
+        var includes = new List<Expression<Func<JobPost, object>>>()
+        {
+            jobPost => jobPost.Company,
+            jobPost => jobPost.JobCategory,
+        };
+        return await _paginationService.GetPagedAsync(request.PageNumber, request.PageSize, mapper, includes);
     }
 }

@@ -1,7 +1,6 @@
 ﻿using JobHunt.Application.Common.CQRS;
 using JobHunt.Application.Common.Interfaces;
 using JobHunt.Domain.Entities;
-using JobHunt.Domain.Enums;
 using JobHunt.Domain.Shared;
 
 namespace JobHunt.Application.Jobs.Commands;

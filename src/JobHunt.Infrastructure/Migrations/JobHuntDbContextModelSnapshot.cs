@@ -176,6 +176,9 @@ namespace JobHunt.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<Guid>("JobCategoryId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("JobDescription")
                         .IsRequired()
                         .HasColumnType("text");
@@ -197,6 +200,8 @@ namespace JobHunt.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyId");
+
+                    b.HasIndex("JobCategoryId");
 
                     b.ToTable("JobPosts");
                 });
@@ -374,7 +379,15 @@ namespace JobHunt.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("JobHunt.Domain.Entities.JobCategory", "JobCategory")
+                        .WithMany()
+                        .HasForeignKey("JobCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Company");
+
+                    b.Navigation("JobCategory");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

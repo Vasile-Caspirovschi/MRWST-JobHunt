@@ -42,7 +42,7 @@
 
 
     // Scroll animation init
-    window.sr = new scrollReveal();
+    //window.sr = new scrollReveal();
 
 
     // Menu Dropdown Toggle
@@ -62,8 +62,7 @@
             if (refElement.position().top <= scrollPos && refElement.position().top + refElement.height() > scrollPos) {
                 $('.nav ul li a').removeClass("active");
                 currLink.addClass("active");
-            }
-            else {
+            } else {
                 currLink.removeClass("active");
             }
         });

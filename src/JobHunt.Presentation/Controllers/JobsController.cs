@@ -16,11 +16,19 @@ public class JobsController(IMediator mediator) : Controller
 
     public async Task<IActionResult> Jobs(int pageNumber, int pageSize, CancellationToken cancellationToken)
     {
-        IEnumerable<JobPostDto> jobs = [];
+        var viewModel = new JobsViewModel();
         var result = await _mediator.Send(new GetAllJobsPagedQuery(pageNumber, pageSize), cancellationToken);
+        
         if (result.IsSuccess)
-            jobs = result.Value;
-        return View(jobs);
+        {
+            viewModel.Jobs = result.Value;
+            viewModel.CurrentPage = result.PageNumber;
+            viewModel.TotalPages = result.PageCount;
+        }
+        viewModel.CurrentPage = 6;
+        viewModel.TotalPages = 20;
+
+        return View(viewModel);
     }
 
     public IActionResult JobDetails()

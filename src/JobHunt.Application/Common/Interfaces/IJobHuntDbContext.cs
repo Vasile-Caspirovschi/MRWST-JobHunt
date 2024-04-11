@@ -10,5 +10,5 @@ public interface IJobHuntDbContext : IDisposable
     DbSet<Company> Companies { get; set; }
     DbSet<AppUser> Users { get; set; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
-    void Migrate();
+    Task MigrateAsync(CancellationToken cancellationToken);
 }

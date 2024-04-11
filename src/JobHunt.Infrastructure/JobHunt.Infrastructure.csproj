@@ -1,6 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <ItemGroup>
+      <None Remove="DbUp\Scripts\0001-Roles.sql" />
+      <None Remove="DbUp\Scripts\0002-JobCategories.sql" />
+    </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Include="DbUp\Scripts\0001-Roles.sql" />
+      <EmbeddedResource Include="DbUp\Scripts\0002-JobCategories.sql" />
+    </ItemGroup>
+    <ItemGroup>
         <PackageReference Include="CloudinaryDotNet" />
+        <PackageReference Include="dbup-postgresql" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools">

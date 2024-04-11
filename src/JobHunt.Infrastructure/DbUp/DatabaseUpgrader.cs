@@ -20,7 +20,6 @@ internal class DatabaseUpgrader(IConfiguration _configuration) : IDatabaseUpgrad
                 .WithScriptsEmbeddedInAssemblies([typeof(DatabaseUpgrader).Assembly])
                 .LogToConsole()
                 .Build();
-
             Console.WriteLine("Checking if the database needs to be upgraded...");
             if (!upgradeEngine.IsUpgradeRequired())
             {

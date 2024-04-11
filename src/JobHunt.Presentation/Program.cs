@@ -1,7 +1,6 @@
 using JobHunt.Application;
 using JobHunt.Application.Common.Interfaces;
 using JobHunt.Infrastructure;
-using JobHunt.Infrastructure.Persistence;
 using JobHunt.Presentation;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,6 +14,8 @@ builder.Services
 
 var app = builder.Build();
 
+await app.UpgradeDatabase(app.Lifetime.ApplicationStopping);
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -25,9 +26,6 @@ if (!app.Environment.IsDevelopment())
 
 using var scope = app.Services.CreateScope();
 using var dbContext = scope.ServiceProvider.GetRequiredService<IJobHuntDbContext>();
-dbContext.Migrate();
-await DbSeeder.SeedRoles(scope.ServiceProvider);
-
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

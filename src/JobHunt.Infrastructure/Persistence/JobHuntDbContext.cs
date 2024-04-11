@@ -18,9 +18,8 @@ public class JobHuntDbContext(DbContextOptions<JobHuntDbContext> contextOptions)
         base.OnModelCreating(modelBuilder);
     }
 
-
-    public void Migrate()
+    public async Task MigrateAsync(CancellationToken cancellationToken)
     {
-        Database.Migrate();
+        await Database.MigrateAsync(cancellationToken);
     }
 }

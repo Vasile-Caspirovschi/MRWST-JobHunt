@@ -19,11 +19,15 @@ if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
     app.UseHsts();
-    using var scope = app.Services.CreateScope();
-    using var dbContext = scope.ServiceProvider.GetRequiredService<IJobHuntDbContext>();
-    dbContext.Migrate();
-    await DbSeeder.SeedRoles(scope.ServiceProvider);
+    
 }
+
+
+using var scope = app.Services.CreateScope();
+using var dbContext = scope.ServiceProvider.GetRequiredService<IJobHuntDbContext>();
+dbContext.Migrate();
+await DbSeeder.SeedRoles(scope.ServiceProvider);
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

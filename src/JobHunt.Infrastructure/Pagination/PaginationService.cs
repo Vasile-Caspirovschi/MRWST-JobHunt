@@ -5,13 +5,13 @@ using System.Linq.Expressions;
 
 namespace JobHunt.Infrastructure.Pagination;
 
-public class PaginationService<TEntity, TResult>(DbContext context) : IPaginationService<TEntity, TResult> 
+public class PaginationService<TEntity, TResult>(IJobHuntDbContext  context) : IPaginationService<TEntity, TResult> 
     where TEntity : class
 {
     private const int PAGE_SIZE = 10;
     private const int PAGE_NUMBER = 1;
 
-    private readonly DbContext _context = context;
+    private readonly DbContext _context = context as DbContext;
 
     public async Task<PagedResult<TResult>> GetPagedAsync(int pageNumber, int pageSize, Expression<Func<TEntity, TResult>> selector, Expression<Func<TEntity, bool>>? predicate = null)
     {

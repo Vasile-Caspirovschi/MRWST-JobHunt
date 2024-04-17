@@ -20,7 +20,7 @@ public class AccountController(IMediator mediator, ICloudImageService imageServi
     public async Task<IActionResult> AboutCompany(CancellationToken cancellationToken)
     {
         var id = User.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
-        var result = await _mediator.Send(new GetCompanyByRepresentativeId(id), cancellationToken);
+        var result = await _mediator.Send(new GetCompanyByRepresentativeIdQuery(id), cancellationToken);
 
         if (!result.IsFailure) return View(new CompanyViewModel(result.Value));
 

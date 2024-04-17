@@ -12,5 +12,5 @@ public class JobPostDto
     //public Company Company { get; set; } = default!;
     public required string JobDescription { get; set; }
     public required JobTypeType JobType { get; set; }
-    public required ExperienceRangeType Experience { get; set; }
+    public ExperienceRangeType Experience { get; set; }
 }

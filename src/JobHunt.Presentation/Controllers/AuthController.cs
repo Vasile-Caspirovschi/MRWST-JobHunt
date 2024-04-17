@@ -11,10 +11,10 @@ namespace JobHunt.Presentation.Controllers;
 public class AuthController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, 
     IUserStore<AppUser> userStore, IMediator mediator) : Controller
 {
+    private readonly IMediator _mediator = mediator;
     private readonly SignInManager<AppUser> _signInManager = signInManager;
     private readonly UserManager<AppUser> _userManager = userManager;
     private readonly IUserStore<AppUser> _userStore = userStore;
-    private readonly IMediator _mediator = mediator;
 
     public async Task<IActionResult> Login()
     {
@@ -36,7 +36,7 @@ public class AuthController(SignInManager<AppUser> signInManager, UserManager<Ap
         }
 
         var result = await _signInManager.PasswordSignInAsync(user.UserName!, login.Password, login.RememberMe,
-            lockoutOnFailure: false);
+            false);
         if (result.Succeeded) return LocalRedirect(returnUrl);
         ModelState.AddModelError(string.Empty, "Invalid login attempt.");
         return View();
@@ -61,20 +61,17 @@ public class AuthController(SignInManager<AppUser> signInManager, UserManager<Ap
     public async Task<IActionResult> RegisterJobSeeker(RegisterViewModel register, string returnUrl = "/")
     {
         if (!ModelState.IsValid) return View(register);
-        
+
         var user = await AppUserInit(register);
         var result = await _userManager.CreateAsync(user, register.Password);
         if (result.Succeeded)
         {
             await _userManager.AddToRoleAsync(user, UserRoleType.JobSeeker.ToString());
-            await _signInManager.SignInAsync(user, isPersistent: false);
+            await _signInManager.SignInAsync(user, false);
             return LocalRedirect(returnUrl);
         }
 
-        foreach (var error in result.Errors)
-        {
-            ModelState.AddModelError(string.Empty, error.Description);
-        }
+        foreach (var error in result.Errors) ModelState.AddModelError(string.Empty, error.Description);
 
         return View(register);
     }
@@ -88,19 +85,18 @@ public class AuthController(SignInManager<AppUser> signInManager, UserManager<Ap
             ModelState.AddModelError(nameof(register.CompanyName), "Company name is required.");
             return View(register);
         }
+
         var user = await AppUserInit(register);
         var result = await _userManager.CreateAsync(user, register.Password);
         if (result.Succeeded)
         {
             await _userManager.AddToRoleAsync(user, UserRoleType.Employer.ToString());
-            await _signInManager.SignInAsync(user, isPersistent: false);
+            await _signInManager.SignInAsync(user, false);
             await _mediator.Send(new CreateCompanyCommand(register.CompanyName, user));
             return LocalRedirect(returnUrl);
         }
-        foreach (var error in result.Errors)
-        {
-            ModelState.AddModelError(string.Empty, error.Description);
-        }
+
+        foreach (var error in result.Errors) ModelState.AddModelError(string.Empty, error.Description);
 
         return View(register);
     }

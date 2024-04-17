@@ -1,4 +1,4 @@
-﻿using JobHunt.Domain.Enums;
+using JobHunt.Domain.Enums;
 
 namespace JobHunt.Domain.Entities;
 

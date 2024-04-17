@@ -1,6 +1,7 @@
 @using JobHunt.Application.Jobs
 @using JobHunt.Domain.Enums
-
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model JobHunt.Application.Companies.CompanyDto
 @{
     ViewData["Title"] = "About your company";
 }
@@ -8,17 +9,18 @@
     <div class="container pt-2">
         <div class="row">
             <div class="col-lg-2">
-               <partial name="SideMenu" />
+                <partial name="SideMenu"/>
             </div>
             <div class="col-lg-10">
-                <form action="#" method="post">
+                <form action="@Url.Action("UpdateCompanyDetails", "Account")" method="post">
                     <h3 class="mb-3">About your company</h3>
+                    <input asp-for="Id" type="hidden">
                     <div class="row">
                         <div class="col-12 col-sm-3">
                             <div class="mb-3 small-section-tittle2">
                                 <h4 class="mb-1">Company logo</h4>
                                 <img class="img-fluid border rounded mb-1" src="~/images/placeholder.png" alt="Logo">
-                                <input type="file" class="form-control bg-white">
+                                <input asp-for="Logo" type="file" class="form-control bg-white">
                             </div>
                         </div>
                         <div class="col-12 col-sm-9">
@@ -26,23 +28,23 @@
                                 <div class="col-12 col-sm-6">
                                     <div class="mb-3 small-section-tittle2">
                                         <h4 class="mb-1">Name</h4>
-                                        <input type="text" class="form-control" placeholder="Enter company's name">
-                                        <span class="text-danger"></span>
+                                        <input asp-for="Name" type="text" class="form-control" placeholder="Enter company's name">
+                                        <span asp-validation-for="Name" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-12 col-sm-6">
                                     <div class="mb-3 small-section-tittle2">
                                         <h4 class="mb-1">Contacts</h4>
-                                        <input type="number" class="form-control" placeholder="Enter company's phone">
-                                        <span class="text-danger"></span>
+                                        <input asp-for="Phone" type="number" class="form-control" placeholder="Enter company's phone">
+                                        <span asp-validation-for="Phone" class="text-danger"></span>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-12">
                                 <div class="mb-3 small-section-tittle2">
                                     <h4 class="mb-1">Location</h4>
-                                    <input type="text" class="form-control" placeholder="Enter company's location">
-                                    <span class="text-danger"></span>
+                                    <input asp-for="Location" type="text" class="form-control" placeholder="Enter company's location">
+                                    <span asp-validation-for="Location" class="text-danger"></span>
                                 </div>
                             </div>
 
@@ -52,7 +54,7 @@
                         <div class="mb-3 small-section-tittle2">
                             <h4 class="mb-1">Description</h4>
                             <div class="col-12">
-                                <textarea class="form-control" rows="5" placeholder="Company's description"></textarea>
+                                <textarea asp-for="Description" class="form-control" rows="5" placeholder="Company's description"></textarea>
                             </div>
                         </div>
                     </div>

@@ -97,7 +97,6 @@ namespace JobHunt.Infrastracture.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("Description")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Location")

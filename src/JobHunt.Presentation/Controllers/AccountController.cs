@@ -1,3 +1,9 @@
+using System.Security.Claims;
+using JobHunt.Application.Companies;
+using JobHunt.Application.Companies.Commands;
+using JobHunt.Application.Companies.Queries;
+using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace JobHunt.Presentation.Controllers;
@@ -18,9 +24,19 @@ public class AccountController(IMediator mediator) : Controller
         }
         return View(result.Value);
     }
-    
+
     public IActionResult ContactData()
     {
         return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> UpdateCompanyDetails(CompanyDto company, CancellationToken cancellationToken)
+    {
+        if (!ModelState.IsValid) return View("AboutCompany", company);
+        var result = await _mediator.Send(new UpdateCompanyCommand(company), cancellationToken);
+        if (result.IsFailure)
+            ModelState.AddModelError(string.Empty, result.Error.Message);
+        return View("AboutCompany", company);
     }
 }

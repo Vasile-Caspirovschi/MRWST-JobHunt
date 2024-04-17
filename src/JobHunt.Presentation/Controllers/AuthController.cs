@@ -1,5 +1,6 @@
 ﻿using JobHunt.Application.Companies.Commands;
 using JobHunt.Domain.Entities;
+using JobHunt.Domain.Enums;
 using JobHunt.Presentation.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authentication;

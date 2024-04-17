@@ -1,17 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <ItemGroup>
-        <PackageReference Include="MediatR"/>
-        <PackageReference Include="Microsoft.EntityFrameworkCore"/>
-        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions"/>
+        <PackageReference Include="CloudinaryDotNet" />
+        <PackageReference Include="MediatR" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\JobHunt.Domain\JobHunt.Domain.csproj"/>
+        <ProjectReference Include="..\JobHunt.Domain\JobHunt.Domain.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Jobs\Queries\"/>
+        <Folder Include="Jobs\Queries\" />
     </ItemGroup>
 
   <PropertyGroup>

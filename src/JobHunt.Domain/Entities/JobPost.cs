@@ -1,4 +1,6 @@
-﻿namespace JobHunt.Domain.Entities;
+﻿using JobHunt.Domain.Enums;
+
+namespace JobHunt.Domain.Entities;
 
 public class JobPost
 {
@@ -9,5 +11,6 @@ public class JobPost
     public Company Company { get; set; } = default!;
     public string JobDescription { get; set; } = string.Empty;
     public DateOnly PublishDate { get; set; }
-    public JobTypeType JobType { get; set; }
+    public string JobType { get; set; } = string.Empty;
+    public string Experience { get; set; } = string.Empty;
 }

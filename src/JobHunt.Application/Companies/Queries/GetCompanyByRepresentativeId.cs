@@ -37,7 +37,7 @@ public class GetCompanyByRepresentativeIdHanlder(IJobHuntDbContext dbContext) : 
             CompanyRepresentativeId = company.CompanyRepresentativeId,
             Description = company.Description,
             Location = company.Location,
-            Logo = company.Location,
+            LogoUrl = company.Location,
             Phone = company.Phone
         });
     }

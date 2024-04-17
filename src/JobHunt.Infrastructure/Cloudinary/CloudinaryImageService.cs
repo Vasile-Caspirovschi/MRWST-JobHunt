@@ -18,18 +18,12 @@ public class CloudinaryImageService : ICloudImageService
 
     public async Task<ImageUploadResult> AddImageAsync(UploadedImageFile file)
     {
-        var uploadResult = new ImageUploadResult();
-        if (file.Length > 0)
+        var uploadParams = new ImageUploadParams
         {
-            var uploadParams = new ImageUploadParams
-            {
-                File = new FileDescription(file.FileName, file.Stream),
-                Transformation = new Transformation().Height(500).Width(500).Crop("fill").Gravity("face")
-            };
-            uploadResult = await _cloudinary.UploadAsync(uploadParams);
-        }
-
-        return uploadResult;
+            File = new FileDescription(file.FileName, file.Stream),
+            Transformation = new Transformation().Height(500).Width(500).Crop("fill").Gravity("face")
+        };
+        return await _cloudinary.UploadAsync(uploadParams);
     }
 
     public async Task<DeletionResult> DeleteImageAsync(string publicId)

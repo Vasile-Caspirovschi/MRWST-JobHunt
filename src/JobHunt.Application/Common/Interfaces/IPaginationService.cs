@@ -15,5 +15,5 @@ public interface IPaginationService<TEntity, TResult> where TEntity : class
     /// <param name="predicate">Used for filtering</param>
     /// <returns></returns>
     Task<PagedResult<TResult>> GetPagedAsync(int pageNumber, int pageSize,
-        Expression<Func<TEntity, TResult>> selector, Expression<Func<TEntity, bool>>? predicate = null);
+        Expression<Func<TEntity, TResult>> selector, IEnumerable<Expression<Func<TEntity, object>>>? includes = null, Expression<Func<TEntity, bool>>? predicate = null);
 }

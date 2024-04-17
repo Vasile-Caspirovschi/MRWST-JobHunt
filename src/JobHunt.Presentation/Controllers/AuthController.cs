@@ -1,5 +1,6 @@
 ﻿using JobHunt.Domain.Entities;
 using JobHunt.Presentation.Models;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,27 +9,36 @@ namespace JobHunt.Presentation.Controllers;
 public class AuthController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, IUserStore<AppUser> userStore)
     : Controller
 {
-
     private readonly SignInManager<AppUser> _signInManager = signInManager;
     private readonly UserManager<AppUser> _userManager = userManager;
     private readonly IUserStore<AppUser> _userStore = userStore;
 
-    public IActionResult Login(string returnUrl = "/")
+    public async Task<IActionResult> Login()
     {
+        await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
         return View();
     }
 
     [HttpPost]
-    public IActionResult Login()
+    public async Task<IActionResult> Login(LoginViewModel login, string returnUrl = null!)
     {
-        //        var user = userRepository.GetByUsernameAndPassword(
-        //model.Username, model.Password);
-        //        if (user == null)
-        //            return Unauthorized();
-
-        //        await HttpContext.SignInAsync();
-
-        //        return LocalRedirect(model.ReturnUrl);
+        returnUrl ??= Url.Content("~/");
+        if (ModelState.IsValid)
+        {
+            var user = _signInManager.UserManager.Users.Where(u => u.Email == login.Email).FirstOrDefault();
+            if (user is null)
+            {
+                ModelState.AddModelError(string.Empty, "Username does not exist.");
+                return View();
+            }
+            var result = await _signInManager.PasswordSignInAsync(user.UserName!, login.Password, login.RememberMe, lockoutOnFailure: false);
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                return View();
+            }
+            return LocalRedirect(returnUrl);
+        }
         return View();
     }
 

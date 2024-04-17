@@ -26,7 +26,6 @@ if (!app.Environment.IsDevelopment())
 using var scope = app.Services.CreateScope();
 using var dbContext = scope.ServiceProvider.GetRequiredService<IJobHuntDbContext>();
 dbContext.Migrate();
-await DbSeeder.SeedRoles(scope.ServiceProvider);
 
 
 app.UseHttpsRedirection();

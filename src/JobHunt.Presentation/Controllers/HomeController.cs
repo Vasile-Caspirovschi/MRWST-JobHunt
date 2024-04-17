@@ -1,39 +1,12 @@
-using System.Diagnostics;
+﻿using JobHunt.Presentation.Models;
 using Microsoft.AspNetCore.Mvc;
-using JobHunt.Presentation.Models;
+using System.Diagnostics;
 
 namespace JobHunt.Presentation.Controllers;
 
 public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger;
-   
-    public HomeController(ILogger<HomeController> logger)
-    {
-        _logger = logger;
-    }
-
     public IActionResult Index()
-    {
-        return View();
-    }
-
-    public IActionResult Jobs()
-    {
-        return View();
-    }
-
-    public IActionResult JobDetails()
-    {
-        return View();
-    }
-
-    public IActionResult PostJob()
-    {
-        return View();
-    }
-
-    public IActionResult Privacy()
     {
         return View();
     }

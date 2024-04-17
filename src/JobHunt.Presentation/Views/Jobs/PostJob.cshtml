@@ -1,4 +1,8 @@
-﻿@{
+﻿@using JobHunt.Application.Jobs
+@using JobHunt.Domain.Enums
+@model JobPostDto
+
+@{
     ViewData["Title"] = "Post a job";
 }
 <br />
@@ -21,12 +25,13 @@
                     </div>
                 </div>
                 <div class="col-lg-10">
-                    <form>
+                    <form action="@Url.Action("PostJob", "Jobs")" method="post">
                         <h3 class="mb-3">Post a job</h3>
                         <div class="mb-3 small-section-tittle2">
                             <h4>Job title</h4>
                             <div class="col-12">
-                                <input type="text" class="form-control" placeholder="Enter job title">
+                                <input asp-for="Title" type="text" class="form-control" placeholder="Enter job title">
+                                <span asp-validation-for="Title" class="text-danger"></span>
                             </div>
                         </div>
                         <div class="mb-3 small-section-tittle2">
@@ -35,15 +40,17 @@
                                     <h4>Job salary</h4>
                                     <div class="input-group mb-3">
                                         <span class="input-group-text"><i class="fa fa-money custom-primary-color"></i></span>
-                                        <input type="text" class="form-control" placeholder="Salary" aria-label="Salary" aria-describedby="basic-addon2">
+                                        <input asp-for="JobSalary" type="number" class="form-control" placeholder="Salary" aria-label="Salary" aria-describedby="basic-addon2">
                                         <span class="input-group-text">.00</span>
+                                        <span asp-validation-for="JobSalary" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="col-sm">
                                     <h4>Job location</h4>
                                     <div class="input-group mb-3">
                                         <span class="input-group-text" id="basic-addon1"><i class="fa fa-map-marker custom-primary-color"></i></span>
-                                        <input type="text" class="form-control" placeholder="Job Location" aria-label="Job Location" aria-describedby="basic-addon1">
+                                        <input asp-for="Location" type="text" class="form-control" placeholder="Job Location" aria-label="Job Location" aria-describedby="basic-addon1">
+                                        <span asp-validation-for="Location" class="text-danger"></span>
                                     </div>
                                 </div>
                             </div>
@@ -54,13 +61,14 @@
                                     <h4>Job category</h4>
                                     <div class="input-group mb-3">
                                         <span class="input-group-text" id="basic-addon1"><i class="fa fa-university custom-primary-color"></i></span>
-                                        <select class="form-select" name="select">
+                                        <select asp-for="JobCategoryName" class="form-select" name="select">
                                             <option value="">All Category</option>
                                             <option value="">Category 1</option>
                                             <option value="">Category 2</option>
                                             <option value="">Category 3</option>
                                             <option value="">Category 4</option>
                                         </select>
+                                        @* <span asp-validation-for="JobCategoryName" class="text-danger"></span> *@
                                     </div>
                                 </div>
                             </div>
@@ -69,12 +77,10 @@
                                     <h4>Job type</h4>
                                     <div class="input-group mb-3">
                                         <span class="input-group-text" id="basic-addon1"><i class="fa fa-clock-o custom-primary-color"></i></span>
-                                        <select class="form-select" name="select">
-                                            <option value="">Full time</option>
-                                            <option value="">Part time</option>
-                                            <option value="">Remote</option>
-                                            <option value="">Freelance</option>
+                                        <select asp-for="JobType" class="form-select" name="select" asp-items="Html.GetEnumSelectList<JobTypeType>()">
+                                            Select work shedule
                                         </select>
+                                        <span asp-validation-for="JobType" class="text-danger"></span>
                                     </div>
                                 </div>
                             </div>
@@ -83,13 +89,10 @@
                                     <h4>Experience</h4>
                                     <div class="input-group mb-3">
                                         <span class="input-group-text" id="basic-addon1"><i class="fa fa-briefcase custom-primary-color"></i></span>
-                                        <select class="form-select" name="select">
-                                            <option value="">0-1 Years</option>
-                                            <option value="">1-2 Years</option>
-                                            <option value="">2-3 Years</option>
-                                            <option value="">3-6 Years</option>
-                                            <option value="">6-more..</option>
+                                        <select asp-for="Experience" class="form-select" name="select" asp-items="Html.GetEnumSelectList<ExperienceRangeType>()">
+                                            Select experience
                                         </select>
+                                        <span asp-validation-for="Experience" class="text-danger"></span>
                                     </div>
                                 </div>
                             </div>
@@ -97,8 +100,13 @@
                         <div class="mb-3 small-section-tittle2">
                             <h4>Job description</h4>
                             <textarea id="job-description">
-                                Format your job description here ...
+                                @{
+                                    if (Model is not null && !string.IsNullOrEmpty(Model.JobDescription))
+                                        @Html.Raw(Model.JobDescription);
+                                }
                             </textarea>
+                            <input asp-for="JobDescription" type="hidden" id="job-description-raw-html" />
+                            <span asp-validation-for="JobDescription" class="text-danger"></span>
                         </div>
                         <div class="col-12">
                             <button class="btn btn-primary w-100" type="submit">Post the job</button>

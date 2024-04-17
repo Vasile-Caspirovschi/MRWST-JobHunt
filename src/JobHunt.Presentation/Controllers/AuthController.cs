@@ -13,4 +13,13 @@ public class AuthController : Controller
     {
         return View();
     }
+
+    public IActionResult RegisterJobSeeker()
+    {
+        return View();
+    }
+    public IActionResult RegisterEmployer()
+    {
+        return View();
+    }
 }

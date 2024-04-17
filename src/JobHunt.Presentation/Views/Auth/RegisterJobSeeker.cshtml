@@ -1,5 +1,55 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@{
 }
+<br />
+<br />
+<section class="section" id="trainers">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="d-flex justify-content-center">
+                    <form action="@Url.Action("RegisterJobSeeker", "Auth")" method="post">
+                        <div class="form-body">
+                            <div class="form-content">
+                                <div class="form-heading mb-3">
+                                    <h2>Regi<em>ster</em></h2>
+                                    <img src="~/images/line-dec.png" alt="">
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <input type="text" class="form-control" placeholder="Enter firstname, surname" />
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <input type="number" class="form-control" placeholder="Enter contact number" />
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <input type="email" class="form-control" placeholder="Enter email address" />
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <input type="password" class="form-control" placeholder="Enter password" />
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <input type="password" class="form-control" placeholder="Confirm password" />
+                                </div>
+                                <div class="row mb-3">
+                                    <div class="col-12">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" checked />
+                                            <label class="form-check-label">By pressing the "Register" button, you accept the Terms of use and Privacy policy.</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <button class="btn btn-outline-primary btn-block" type="submit">Register</button>
+                                </div>
+                            </div>
+                            <div class="form-footer">
+                                <div class="text-center">
+                                    <p>Have an account? <a href="@Url.Action("Login", "Auth")">Log in</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

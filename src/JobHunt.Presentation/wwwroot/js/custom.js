@@ -72,12 +72,20 @@
 
     // Page loading animation
     $(window).on('load', function () {
-        $('#js-preloader').addClass('loaded');
         tinymce.init({
             selector: '#job-description',
             menubar: false,
-            license_key: 'gpl'
+            license_key: 'gpl',
+            plugins: 'code',
+            placeholder: 'Format your job description here ...',
+            setup: function (editor) {
+                editor.on('GetContent', function (e) {
+                    var content = e.content;
+                    $('#job-description-raw-html').val(content);
+                });
+            }
         });
+        $('#js-preloader').addClass('loaded');
     });
 
 

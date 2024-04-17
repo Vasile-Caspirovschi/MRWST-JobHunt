@@ -148,11 +148,17 @@ namespace JobHunt.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<Guid>("JobPostId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("JobPostId")
+                        .IsUnique();
 
                     b.ToTable("JobCategories");
                 });
@@ -431,10 +437,10 @@ namespace JobHunt.Infrastructure.Migrations
 
                     b.Navigation("Logo");
                 });
-
             modelBuilder.Entity("JobHunt.Domain.Entities.JobCategory", b =>
                 {
                     b.Navigation("JobPost")
+
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

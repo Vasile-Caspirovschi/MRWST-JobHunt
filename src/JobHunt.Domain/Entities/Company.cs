@@ -6,7 +6,8 @@ public class Company
     public string Name { get; set; } = string.Empty;
     public string Description { get; set;} = string.Empty;
     public string? Phone { get; set;}
-    public AppUser Reprezentative = default!;
+    public string CompanyRepresentativeId { get; set; } = default!;
+    public AppUser CompanyRepresentative { get; set; } = default!;
     public string? Location { get; set; } = default!;
     public string? Logo { get; set; }
 }

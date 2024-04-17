@@ -4,9 +4,11 @@ using JobHunt.Presentation.Models;
 using MediatR;
 using JobHunt.Application.Jobs.Commands;
 using JobHunt.Application.Jobs;
+using Microsoft.AspNetCore.Authorization;
 
 namespace JobHunt.Presentation.Controllers;
 
+[Authorize]
 public class JobsController(IMediator mediator) : Controller
 {
     private readonly IMediator _mediator = mediator;

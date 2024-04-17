@@ -22,8 +22,8 @@ public class GetCompanyByRepresentativeIdHanlder(IJobHuntDbContext dbContext) : 
                 new Error("GetCompany.Failed", "Company representative not found"));
         }
 
-        var company = await _dbContext.Companies.FirstOrDefaultAsync(c => 
-            c.CompanyRepresentativeId == request.RepresentativeId, cancellationToken: cancellationToken);
+        var company = await _dbContext.Companies.Include(c => c.Logo)
+            .FirstOrDefaultAsync(c => c.CompanyRepresentativeId == request.RepresentativeId, cancellationToken);
         if (company == null)
         {
             return Result.Failure<CompanyDto>(
@@ -37,7 +37,8 @@ public class GetCompanyByRepresentativeIdHanlder(IJobHuntDbContext dbContext) : 
             CompanyRepresentativeId = company.CompanyRepresentativeId,
             Description = company.Description,
             Location = company.Location,
-            LogoUrl = company.Location,
+            LogoUrl = company.Logo?.ImageUrl ?? @"/images/placeholder.png",
+            LogoId = company.Logo?.PublicId,
             Phone = company.Phone
         });
     }

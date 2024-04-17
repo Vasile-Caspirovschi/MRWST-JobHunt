@@ -49,7 +49,6 @@ body {
 }
 
 
-
 @media (max-width: 575px) {
     .count-job span {
         margin-bottom: 30px;
@@ -116,9 +115,9 @@ body {
     border: 2px solid transparent;
 }
 
-    .job-category-listing .single-listing .select-Categories .container input:checked ~ .checkmark:after {
-        display: block;
-    }
+.job-category-listing .single-listing .select-Categories .container input:checked ~ .checkmark:after {
+    display: block;
+}
 
 .job-category-listing .single-listing .select-Categories .container .checkmark::after {
     left: 8px;
@@ -136,55 +135,56 @@ body {
     font-size: 14px;
 }
 
-    .vertical-menu ul {
-        list-style: none;
-        margin: 0;
-        padding: 0;
-    }
+.vertical-menu ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
 
-        .vertical-menu ul li {
-            /* Sub Menu */
-        }
+.vertical-menu ul li {
+    /* Sub Menu */
+}
 
-            .vertical-menu ul li a {
-                display: block;
-                padding: 10px 15px;
-                color: #000000;
-                text-decoration: none;
-                -webkit-transition: 0.2s linear;
-                -moz-transition: 0.2s linear;
-                -ms-transition: 0.2s linear;
-                -o-transition: 0.2s linear;
-                transition: 0.2s linear;
-            }
+.vertical-menu ul li a {
+    display: block;
+    padding: 10px 15px;
+    color: #000000;
+    text-decoration: none;
+    -webkit-transition: 0.2s linear;
+    -moz-transition: 0.2s linear;
+    -ms-transition: 0.2s linear;
+    -o-transition: 0.2s linear;
+    transition: 0.2s linear;
+}
 
-                .vertical-menu ul li a:hover {
-                    background: #ed563b;
-                    color: #fff;
-                }
+.vertical-menu ul li a:hover {
+    background: #ed563b;
+    color: #fff;
+}
 
-                .vertical-menu ul li a .fa {
-                    width: 16px;
-                    text-align: center;
-                    margin-right: 5px;
-                    float: right;
-                }
+.vertical-menu ul li a .fa {
+    width: 16px;
+    text-align: center;
+    margin-right: 5px;
+    float: right;
+}
 
-            .vertical-menu ul li ul li a {
-                border-left: 4px solid transparent;
-                padding: 10px 20px;
-            }
+.vertical-menu ul li ul li a {
+    border-left: 4px solid transparent;
+    padding: 10px 20px;
+}
 
-                .vertical-menu ul li ul li a:hover {
-                    border-left: 4px solid #ff8f3f;
-                }
+.vertical-menu ul li ul li a:hover {
+    border-left: 4px solid #ff8f3f;
+}
 
 .form-content {
     padding: 40px;
     padding-bottom: 10px;
 }
+
 .form-body {
-    box-shadow: 0 30px 60px 0 rgba(0,0,0,0.3);
+    box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
     border-radius: 10px;
     max-width: 500px;
 }

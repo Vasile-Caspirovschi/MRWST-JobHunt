@@ -1,4 +1,4 @@
-﻿namespace JobHunt.Domain.Entities;
+﻿namespace JobHunt.Domain.Enums;
 
 public enum UserRoleType
 {

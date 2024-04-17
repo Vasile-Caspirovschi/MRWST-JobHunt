@@ -1,8 +1,8 @@
-﻿using JobHunt.Domain.Entities;
+﻿using JobHunt.Domain.Enums;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace JobHunt.Infrastracture.Persistence;
+namespace JobHunt.Infrastructure.Persistence;
 
 public static class DbSeeder
 {

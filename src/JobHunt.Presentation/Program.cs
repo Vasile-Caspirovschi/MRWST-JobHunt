@@ -1,7 +1,7 @@
 using JobHunt.Application;
 using JobHunt.Application.Common.Interfaces;
-using JobHunt.Infrastracture;
-using JobHunt.Infrastracture.Persistence;
+using JobHunt.Infrastructure;
+using JobHunt.Infrastructure.Persistence;
 using JobHunt.Presentation;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,7 +11,7 @@ builder.Services.AddControllersWithViews();
 builder.Services
     .AddPresentation()
     .AddApplication()
-    .AddInfrastracture(builder.Configuration);
+    .AddInfrastructure(builder.Configuration);
 
 var app = builder.Build();
 

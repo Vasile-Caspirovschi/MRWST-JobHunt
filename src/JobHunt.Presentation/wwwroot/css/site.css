@@ -200,3 +200,29 @@ body {
 .header-area.header-sticky + main {
     padding-top: 80px;
 }
+
+
+.job-item {
+    border: 1px solid transparent;
+    border-radius: 2px;
+    box-shadow: 0 0 45px rgba(0, 0, 0, .08);
+    transition: .5s;
+}
+
+    .job-item:hover {
+        border-color: rgba(0, 0, 0, .08);
+        box-shadow: none;
+    }
+
+
+.custom-primary-color {
+    color: #ed563b !important;
+}
+
+.pagination .page-link {
+    color: #ed563b !important;
+}
+
+.pagination > .page-item.active {
+    color: white;
+}

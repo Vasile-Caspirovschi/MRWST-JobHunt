@@ -3,6 +3,7 @@ using System;
 using JobHunt.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace JobHunt.Infrastructure.Migrations
 {
     [DbContext(typeof(JobHuntDbContext))]
-    partial class JobHuntDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240408202717_RemoveJobPostIdFromJobCategory")]
+    partial class RemoveJobPostIdFromJobCategory
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -148,17 +151,11 @@ namespace JobHunt.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("JobPostId")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("JobPostId")
-                        .IsUnique();
 
                     b.ToTable("JobCategories");
                 });
@@ -437,10 +434,10 @@ namespace JobHunt.Infrastructure.Migrations
 
                     b.Navigation("Logo");
                 });
+
             modelBuilder.Entity("JobHunt.Domain.Entities.JobCategory", b =>
                 {
                     b.Navigation("JobPost")
-
                         .IsRequired();
                 });
 #pragma warning restore 612, 618

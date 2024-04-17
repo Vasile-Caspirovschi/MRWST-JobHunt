@@ -14,13 +14,13 @@ public static class DependencyInjection
     {
         services.AddDbContext<IJobHuntDbContext, JobHuntDbContext>(options =>
             options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
-        
+
         //configure cloudinary for storing the images in cloud
         services.Configure<CloudinarySettings>(configuration.GetSection(nameof(CloudinarySettings)));
         services.AddScoped<ICloudImageService, CloudinaryImageService>();
 
         //register the pagination service
-        services.AddScoped(typeof(IPaginationService<>), typeof(PaginationService<>));
+        services.AddScoped(typeof(IPaginationService<,>), typeof(PaginationService<,>));
         return services;
     }
 }

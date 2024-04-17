@@ -7,6 +7,7 @@ public class JobPost
     public Guid Id { get; set; }
     public string Title { get; set; } = string.Empty;
     public int JobSalary { get; set; }
+    public Guid JobCategoryId { get; set; }
     public JobCategory JobCategory { get; set; } = default!;
     public Guid CompanyId { get; set; }
     public Company Company { get; set; } = default!;

@@ -5,6 +5,7 @@ using MediatR;
 using JobHunt.Application.Jobs.Commands;
 using JobHunt.Application.Jobs;
 using Microsoft.AspNetCore.Authorization;
+using JobHunt.Application.Jobs.Queries;
 
 namespace JobHunt.Presentation.Controllers;
 
@@ -13,9 +14,21 @@ public class JobsController(IMediator mediator) : Controller
 {
     private readonly IMediator _mediator = mediator;
 
-    public IActionResult Jobs()
+    public async Task<IActionResult> Jobs(int pageNumber, int pageSize, CancellationToken cancellationToken)
     {
-        return View();
+        var viewModel = new JobsViewModel();
+        var result = await _mediator.Send(new GetAllJobsPagedQuery(pageNumber, pageSize), cancellationToken);
+        
+        if (result.IsSuccess)
+        {
+            viewModel.Jobs = result.Value;
+            viewModel.CurrentPage = result.PageNumber;
+            viewModel.TotalPages = result.PageCount;
+        }
+        viewModel.CurrentPage = 6;
+        viewModel.TotalPages = 20;
+
+        return View(viewModel);
     }
 
     public IActionResult JobDetails()
@@ -31,8 +44,7 @@ public class JobsController(IMediator mediator) : Controller
         var result = await _mediator.Send(new CreateJobPostCommand(newJobPost), cancellationToken);
         if (result.IsSuccess)
             return RedirectToAction(nameof(Jobs), nameof(Jobs));
-        else
-            return View();
+        return View();
     }
 
     public IActionResult PostJob()

@@ -9,7 +9,8 @@ public class JobPostDto
     public required int JobSalary { get; set; }
     public string JobCategoryName { get; set; } = string.Empty;
     public required string Location { get; set; }
-    //public Company Company { get; set; } = default!;
+    public DateOnly? PublishDate { get; set; }
+    public string? CompanyLogoUrl { get; set; } = string.Empty;
     public required string JobDescription { get; set; }
     public required JobTypeType JobType { get; set; }
     public ExperienceRangeType Experience { get; set; }

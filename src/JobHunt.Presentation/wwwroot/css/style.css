@@ -197,9 +197,7 @@ header
 --------------------------------------------- 
 */
 
-.custom-primary-color {
-    color: #ed563b !important;
-}
+
 
 .background-header {
     background: rgba(250, 250, 250, 0.99) !important;
@@ -1305,9 +1303,6 @@ responsive
     color: #ed563b !important;
 }
 
-.pagination-lg .page-link {
-    color: #ed563b;
-}
 
 .btn-primary {
     border-color: #ed563b;

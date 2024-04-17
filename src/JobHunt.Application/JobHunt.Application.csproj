@@ -10,6 +10,10 @@
     <ProjectReference Include="..\JobHunt.Domain\JobHunt.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Jobs\Queries\" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>

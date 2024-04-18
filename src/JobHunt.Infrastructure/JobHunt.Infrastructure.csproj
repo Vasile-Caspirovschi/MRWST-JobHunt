@@ -2,10 +2,12 @@
     <ItemGroup>
       <None Remove="DbUp\Scripts\0001-Roles.sql" />
       <None Remove="DbUp\Scripts\0002-JobCategories.sql" />
+      <None Remove="DbUp\Scripts\0003-JobPosts.sql" />
     </ItemGroup>
     <ItemGroup>
       <EmbeddedResource Include="DbUp\Scripts\0001-Roles.sql" />
       <EmbeddedResource Include="DbUp\Scripts\0002-JobCategories.sql" />
+      <EmbeddedResource Include="DbUp\Scripts\0003-JobPosts.sql" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="CloudinaryDotNet" />

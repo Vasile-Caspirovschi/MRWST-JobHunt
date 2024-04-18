@@ -14,6 +14,7 @@ public class JobsController(IMediator mediator) : Controller
 {
     private readonly IMediator _mediator = mediator;
 
+    [AllowAnonymous]
     public async Task<IActionResult> Jobs(int pageNumber, int pageSize, CancellationToken cancellationToken)
     {
         var viewModel = new JobsViewModel();
@@ -25,9 +26,7 @@ public class JobsController(IMediator mediator) : Controller
             viewModel.CurrentPage = result.PageNumber;
             viewModel.TotalPages = result.PageCount;
         }
-        viewModel.CurrentPage = 6;
-        viewModel.TotalPages = 20;
-
+  
         return View(viewModel);
     }
 

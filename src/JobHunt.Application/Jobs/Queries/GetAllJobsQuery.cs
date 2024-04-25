@@ -26,7 +26,8 @@ public class GetAllJobsQueryHandler(IPaginationService<JobPost, JobPostDto> pagi
             JobDescription = jobPost.JobDescription,
             JobSalary = jobPost.JobSalary,
             JobType = (JobTypeType)Enum.Parse(jobTypeType, jobPost.JobType, true),
-            JobCategoryName = jobPost.JobCategory.Title
+            JobCategoryName = jobPost.JobCategory.Title,
+            CompanyId = jobPost.CompanyId,
         };
 
         var includes = new List<Expression<Func<JobPost, object>>>()

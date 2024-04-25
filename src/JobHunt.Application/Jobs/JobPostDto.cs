@@ -14,4 +14,5 @@ public class JobPostDto
     public required string JobDescription { get; set; }
     public required JobTypeType JobType { get; set; }
     public ExperienceRangeType Experience { get; set; }
+    public Guid CompanyId { get; set; }
 }

@@ -1,11 +1,13 @@
-using System.Diagnostics;
-using Microsoft.AspNetCore.Mvc;
+using JobHunt.Application.Companies.Queries;
+using JobHunt.Application.Jobs;
+using JobHunt.Application.Jobs.Commands;
+using JobHunt.Application.Jobs.Queries;
 using JobHunt.Presentation.Models;
 using MediatR;
-using JobHunt.Application.Jobs.Commands;
-using JobHunt.Application.Jobs;
 using Microsoft.AspNetCore.Authorization;
-using JobHunt.Application.Jobs.Queries;
+using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics;
+using System.Security.Claims;
 
 namespace JobHunt.Presentation.Controllers;
 
@@ -19,33 +21,45 @@ public class JobsController(IMediator mediator) : Controller
     {
         var viewModel = new JobsViewModel();
         var result = await _mediator.Send(new GetAllJobsPagedQuery(pageNumber, pageSize), cancellationToken);
-        
+
         if (result.IsSuccess)
         {
             viewModel.Jobs = result.Value;
             viewModel.CurrentPage = result.PageNumber;
             viewModel.TotalPages = result.PageCount;
         }
-  
+
         return View(viewModel);
     }
 
+
+    [AllowAnonymous]
     public IActionResult JobDetails()
     {
         return View();
     }
 
     [HttpPost]
+    [Authorize(Roles = "Employer")]
     public async Task<IActionResult> PostJob(JobPostDto newJobPost, CancellationToken cancellationToken)
     {
         if (!ModelState.IsValid)
             return View();
-        var result = await _mediator.Send(new CreateJobPostCommand(newJobPost), cancellationToken);
-        if (result.IsSuccess)
-            return RedirectToAction(nameof(Jobs), nameof(Jobs));
+        var userId = User.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
+        var getCompanyResult = await _mediator.Send(new GetCompanyByRepresentativeIdQuery(userId));
+        if (getCompanyResult.IsSuccess)
+        {
+            newJobPost.CompanyId = getCompanyResult.Value.Id;
+            var result = await _mediator.Send(new CreateJobPostCommand(newJobPost), cancellationToken);
+            //fix this
+            if (result.IsSuccess)
+                return RedirectToAction(nameof(Jobs), nameof(Jobs));
+        }
+        
         return View();
     }
 
+    [Authorize(Roles = "Employer")]
     public IActionResult PostJob()
     {
         return View();

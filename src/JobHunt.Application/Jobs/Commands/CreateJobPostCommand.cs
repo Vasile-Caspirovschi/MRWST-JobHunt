@@ -2,6 +2,7 @@
 using JobHunt.Application.Common.Interfaces;
 using JobHunt.Domain.Entities;
 using JobHunt.Domain.Shared;
+using System.ComponentModel.Design;
 
 namespace JobHunt.Application.Jobs.Commands;
 
@@ -22,18 +23,14 @@ public class CreateJobPostCommandHandler(IJobHuntDbContext dbContext) : ICommand
 
     public async Task<Result> Handle(CreateJobPostCommand request, CancellationToken cancellationToken)
     {
+        //var company = 
+
         var newJobPost = new JobPost()
         {
             Title = request.JobPost.Title,
             JobSalary = request.JobPost.JobSalary,
-            JobCategory = new JobCategory()
-            {
-                Title = request.JobPost.JobCategoryName?? "IT"
-            },
-            Company = new Company()
-            {
-                Location = request.JobPost.Location,
-            },
+            JobCategory = _dbContext.JobCategories.First(),
+            CompanyId = request.JobPost.CompanyId,
             JobDescription = request.JobPost.JobDescription,
             JobType = request.JobPost.JobType.ToString(),
             Experience = request.JobPost.Experience.ToString(),

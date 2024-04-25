@@ -20,6 +20,7 @@ public class GetAllJobsQueryHandler(IPaginationService<JobPost, JobPostDto> pagi
 
         Expression<Func<JobPost, JobPostDto>> mapper = jobPost => new JobPostDto()
         {
+            Id = jobPost.Id,
             Title = jobPost.Title,
             Location = jobPost.Company.Location!,
             Experience = (ExperienceRangeType)Enum.Parse(experienceRangeType, jobPost.Experience, true),
@@ -28,6 +29,7 @@ public class GetAllJobsQueryHandler(IPaginationService<JobPost, JobPostDto> pagi
             JobType = (JobTypeType)Enum.Parse(jobTypeType, jobPost.JobType, true),
             JobCategoryName = jobPost.JobCategory.Title,
             CompanyId = jobPost.CompanyId,
+            CompanyLogoUrl = jobPost.Company.Logo != null ? jobPost.Company.Logo.ImageUrl : @"/images/placeholder.png"
         };
 
         var includes = new List<Expression<Func<JobPost, object>>>()

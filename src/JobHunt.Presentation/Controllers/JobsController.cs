@@ -1,4 +1,4 @@
-using JobHunt.Application.Companies.Queries;
+﻿using JobHunt.Application.Companies.Queries;
 using JobHunt.Application.Jobs;
 using JobHunt.Application.Jobs.Commands;
 using JobHunt.Application.Jobs.Queries;
@@ -34,9 +34,22 @@ public class JobsController(IMediator mediator) : Controller
 
 
     [AllowAnonymous]
-    public IActionResult JobDetails()
+    public async Task<IActionResult> JobDetails(Guid jobPostId, CancellationToken cancellationToken)
     {
-        return View();
+        var userId = User.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
+        var getJobPostResult = await _mediator.Send(new GetJobPostById(jobPostId), cancellationToken);
+        var getCompanyResult = await _mediator.Send(new GetCompanyByRepresentativeIdQuery(userId), cancellationToken);
+
+        if (getJobPostResult.IsSuccess && getCompanyResult.IsSuccess)
+        {
+            var viewModel = new JobViewModel()
+            {
+                JobPost = getJobPostResult.Value,
+                Company = getCompanyResult.Value
+            };
+            return View(viewModel);
+        }
+        return RedirectToAction(nameof(Jobs), nameof(Jobs));
     }
 
     [HttpPost]
@@ -55,7 +68,7 @@ public class JobsController(IMediator mediator) : Controller
             if (result.IsSuccess)
                 return RedirectToAction(nameof(Jobs), nameof(Jobs));
         }
-        
+
         return View();
     }
 

@@ -28,8 +28,8 @@ public class PaginationService<TEntity, TResult>(IJobHuntDbContext context) : IP
         if (includes is not null)
             foreach (var include in includes)
                 query = query.Include(include);
-        if (predicate is not null)
-            query = query.Where(predicate);
+        //if (predicate is not null)
+        //    //query = query.Where(predicate);
 
         var rowCount = await query.CountAsync();
         var pageCount = (int)Math.Ceiling((double)rowCount / pageSize);

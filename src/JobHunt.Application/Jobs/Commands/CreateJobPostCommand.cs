@@ -2,7 +2,6 @@
 using JobHunt.Application.Common.Interfaces;
 using JobHunt.Domain.Entities;
 using JobHunt.Domain.Shared;
-using System.ComponentModel.Design;
 
 namespace JobHunt.Application.Jobs.Commands;
 

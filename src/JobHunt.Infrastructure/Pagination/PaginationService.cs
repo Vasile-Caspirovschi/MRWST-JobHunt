@@ -13,13 +13,13 @@ public class PaginationService<TEntity, TResult>(IJobHuntDbContext context) : IP
 
     private readonly DbContext _context = context as DbContext;
 
-    public async Task<PagedResult<TResult>> GetPagedAsync(int pageNumber, int pageSize,
+    public async Task<PagedResult<TResult>> GetPagedAsync(PaginationParams paginationParams,
         Expression<Func<TEntity, TResult>> selector,
         IEnumerable<Expression<Func<TEntity, object>>>? includes = null,
         Expression<Func<TEntity, bool>>? predicate = null)
     {
-        pageNumber = pageNumber <= 0 ? PAGE_NUMBER : pageNumber;
-        pageSize = pageSize <= 0 ? PAGE_SIZE : pageSize;
+        var pageNumber = paginationParams.PageNumber <= 0 ? PAGE_NUMBER : paginationParams.PageNumber;
+        var pageSize = paginationParams.PageSize <= 0 ? PAGE_SIZE : paginationParams.PageSize;
 
         var skip = (pageNumber - 1) * pageSize;
         var take = pageSize;
@@ -29,7 +29,7 @@ public class PaginationService<TEntity, TResult>(IJobHuntDbContext context) : IP
             foreach (var include in includes)
                 query = query.Include(include);
         if (predicate is not null)
-            query.Where(predicate);
+            query = query.Where(predicate);
 
         var rowCount = await query.CountAsync();
         var pageCount = (int)Math.Ceiling((double)rowCount / pageSize);

@@ -1,5 +1,4 @@
-﻿using CloudinaryDotNet.Actions;
-using JobHunt.Domain.Shared;
+﻿using JobHunt.Domain.Shared;
 using System.Linq.Expressions;
 
 namespace JobHunt.Application.Common.Interfaces;
@@ -14,6 +13,6 @@ public interface IPaginationService<TEntity, TResult> where TEntity : class
     /// <param name="pageSize"></param>
     /// <param name="predicate">Used for filtering</param>
     /// <returns></returns>
-    Task<PagedResult<TResult>> GetPagedAsync(int pageNumber, int pageSize,
+    Task<PagedResult<TResult>> GetPagedAsync(PaginationParams paginationParams,
         Expression<Func<TEntity, TResult>> selector, IEnumerable<Expression<Func<TEntity, object>>>? includes = null, Expression<Func<TEntity, bool>>? predicate = null);
 }

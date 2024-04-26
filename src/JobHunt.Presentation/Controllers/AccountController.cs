@@ -1,5 +1,4 @@
 using JobHunt.Application.Common.Interfaces;
-using JobHunt.Application.Companies;
 using JobHunt.Application.Companies.Commands;
 using JobHunt.Application.Companies.Queries;
 using JobHunt.Domain.Shared;

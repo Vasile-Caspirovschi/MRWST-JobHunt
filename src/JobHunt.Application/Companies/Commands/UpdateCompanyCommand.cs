@@ -2,7 +2,6 @@ using JobHunt.Application.Common.CQRS;
 using JobHunt.Application.Common.Interfaces;
 using JobHunt.Domain.Entities;
 using JobHunt.Domain.Shared;
-using Microsoft.EntityFrameworkCore;
 
 namespace JobHunt.Application.Companies.Commands;
 

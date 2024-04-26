@@ -1,5 +1,3 @@
-using JobHunt.Domain.Enums;
-
 namespace JobHunt.Domain.Entities;
 
 public class JobPost

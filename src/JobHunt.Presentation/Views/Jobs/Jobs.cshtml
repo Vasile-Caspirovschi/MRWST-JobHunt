@@ -35,45 +35,41 @@
                 </div>
                 <div class="row">
                     <form action="#">
-                        <!-- Job Category Listing start -->
                         <div class="job-category-listing mb-50">
-                            <!-- single one -->
                             <div class="single-listing">
                                 <div class="small-section-tittle2">
                                     <h4 class="custom-primary-color">Job Category</h4>
                                 </div>
-                                <!-- Select job items start -->
-                                <select class="form-select" name="select">
-                                    <option value="">All Category</option>
-                                    <option value="">Category 1</option>
-                                    <option value="">Category 2</option>
-                                    <option value="">Category 3</option>
-                                    <option value="">Category 4</option>
-                                </select>
-                                <!--  Select job items End-->
-                                <!-- select-Categories start -->
+                                <input class="form-control" onkeypress="updateUrlParamsOnEnter(event, 'byCategory', this.value)" list="categoryListOptions" placeholder="Type to search...">
+                                <datalist id="categoryListOptions">
+                                    <option value="It "></option>
+                                    <option value="New York"></option>
+                                    <option value="Seattle"></option>
+                                    <option value="Los Angeles"></option>
+                                    <option value="Chicago"></option>
+                                </datalist>
                                 <div class="select-Categories pt-80 pb-50">
                                     <div class="small-section-tittle2">
                                         <h4 class="custom-primary-color">Job Type</h4>
                                     </div>
                                     <label class="container">
                                         Full Time
-                                        <input type="checkbox">
+                                        <input type="checkbox" name="FullTime" onchange="updateUrlParams('byType', 'FullTime', this.checked)">
                                         <span class="checkmark"></span>
                                     </label>
                                     <label class="container">
                                         Part Time
-                                        <input type="checkbox" checked="checked">
+                                        <input type="checkbox" name="PartTime" onchange="updateUrlParams('byType', 'PartTime', this.checked)">
                                         <span class="checkmark"></span>
                                     </label>
                                     <label class="container">
                                         Remote
-                                        <input type="checkbox">
+                                        <input type="checkbox" name="Remote" onchange="updateUrlParams('byType', 'Remote', this.checked)">
                                         <span class="checkmark"></span>
                                     </label>
                                     <label class="container">
                                         Freelance
-                                        <input type="checkbox">
+                                        <input type="checkbox" name="Freelance" onchange="updateUrlParams('byType', 'Freelance', this.checked)">
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>
@@ -84,110 +80,46 @@
                                 <div class="small-section-tittle2">
                                     <h4 class="custom-primary-color">Job Location</h4>
                                 </div>
-                                <!-- Select job items start -->
-                                <select class="form-select" name="select">
-                                    <option value="">Anywhere</option>
-                                    <option value="">Category 1</option>
-                                    <option value="">Category 2</option>
-                                    <option value="">Category 3</option>
-                                    <option value="">Category 4</option>
-                                </select>
-                                <!--  Select job items End-->
-                                <!-- select-Categories start -->
+                                <input class="form-control" onkeypress="updateUrlParamsOnEnter(event, 'byLocation', this.value)" list="locationListOptions" placeholder="Type to search...">
+                                <datalist id="locationListOptions">
+                                    <option value="San Francisco"></option>
+                                    <option value="New York"></option>
+                                    <option value="Seattle"></option>
+                                    <option value="Los Angeles"></option>
+                                    <option value="Chicago"></option>
+                                </datalist>
                                 <div class="select-Categories pt-80 pb-50">
                                     <div class="small-section-tittle2">
                                         <h4 class="custom-primary-color">Experience</h4>
                                     </div>
                                     <label class="container">
+                                        0-1 Years
+                                        <input type="checkbox" name="ZeroToOneYears" onchange="updateUrlParams('byExperience', 'ZeroToOneYears', this.checked)">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <label class="container">
                                         1-2 Years
-                                        <input type="checkbox">
+                                        <input type="checkbox" name="OneToTwoYears" onchange="updateUrlParams('byExperience', 'OneToTwoYears', this.checked)">
                                         <span class="checkmark"></span>
                                     </label>
                                     <label class="container">
                                         2-3 Years
-                                        <input type="checkbox" checked="checked">
+                                        <input type="checkbox" name="TwoToThreeYears" onchange="updateUrlParams('byExperience', 'TwoToThreeYears', this.checked)">
                                         <span class="checkmark"></span>
                                     </label>
                                     <label class="container">
                                         3-6 Years
-                                        <input type="checkbox">
+                                        <input type="checkbox" name="ThreeToSixYears" onchange="updateUrlParams('byExperience', 'ThreeToSixYears', this.checked)">
                                         <span class="checkmark"></span>
                                     </label>
                                     <label class="container">
                                         6-more..
-                                        <input type="checkbox">
+                                        <input type="checkbox" name="SixOrMoreYears" onchange="updateUrlParams('byExperience', 'SixOrMoreYears', this.checked)">
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>
-                                <!-- select-Categories End -->
-                            </div>
-                            <!-- single three -->
-                            <div class="single-listing">
-                                <!-- select-Categories start -->
-                                <div class="select-Categories pb-50">
-                                    <div class="small-section-tittle2">
-                                        <h4 class="custom-primary-color">Posted Within</h4>
-                                    </div>
-                                    <label class="container">
-                                        Any
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="container">
-                                        Today
-                                        <input type="checkbox" checked="checked active">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="container">
-                                        Last 2 days
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="container">
-                                        Last 3 days
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="container">
-                                        Last 5 days
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                    <label class="container">
-                                        Last 10 days
-                                        <input type="checkbox">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                                <!-- select-Categories End -->
-                            </div>
-                            <div class="single-listing">
-                                @*   <!-- Range Slider Start -->
-                                <aside class="left_widgets p_filter_widgets price_rangs_aside sidebar_box_shadow">
-                                <div class="small-section-tittle2">
-                                <h4>Filter Jobs</h4>
-                                </div>
-                                <div class="widgets_inner">
-                                <div class="range_item">
-                                <!-- <div id="slider-range"></div> -->
-                                <input type="text" class="js-range-slider" value="" />
-                                <div class="d-flex align-items-center">
-                                <div class="price_text">
-                                <p>Price :</p>
-                                </div>
-                                <div class="price_value d-flex justify-content-center">
-                                <input type="text" class="js-input-from" id="amount" readonly />
-                                <span>to</span>
-                                <input type="text" class="js-input-to" id="amount" readonly />
-                                </div>
-                                </div>
-                                </div>
-                                </div>
-                                </aside>
-                                <!-- Range Slider End --> *@
                             </div>
                         </div>
-                        <!-- Job Category Listing End -->
                     </form>
                 </div>
             </div>
@@ -227,7 +159,7 @@
                             <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
                                 <div class="d-flex mb-3">
                                     <a class="btn btn-light btn-square me-3" href=""><i class="fa fa-heart-o custom-primary-color"></i></a>
-                                    <a class="btn btn-outline-primary" href="@Url.Action("JobDetails", "Jobs", new {jobPostId=job.Id})">See details</a>
+                                    <a class="btn btn-outline-primary" asp-action="JobDetails" asp-route-jobPostId="@job.Id">See details</a>
                                 </div>
                                 <small class="text-truncate"><i class="fa fa-calendar custom-primary-color me-2"></i>@job.PublishDate</small>
                             </div>
@@ -238,16 +170,16 @@
                 <br>
                 <ul class="pagination justify-content-center">
                     <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
-                        <a class="page-link" href="@Url.Action("Jobs", "Jobs", new {pageNumber=@Model.CurrentPage - 1, pageSize=Model.PageSize})" aria-label="Previous">
+                        <a class="page-link" asp-action="Jobs" asp-route-pageNumber="@(Model.CurrentPage - 1)" asp-route-pageSize="@Model.PageSize" aria-label="Previous">
                             <span aria-hidden="true">&laquo;</span>
                             <span class="sr-only">Previous</span>
                         </a>
                     </li>
 
-                    @if (Model.TotalPages > 1)
+                    @* @if (Model.TotalPages > 1)
                     {
-                        <li class="page-item"><a class="page-link" href="@Url.Action("Jobs", "Jobs", new {pageNumber=1, pageSize=Model.PageSize})">1</a></li>
-                    }
+                    <li class="page-item"><a class="page-link" asp-action="Jobs" asp-route-pageNumber="1" asp-route-pageSize="@Model.PageSize">1</a></li>
+                    } *@
                     @if (Model.CurrentPage > Model.Step)
                     {
                         <li class="page-item disabled"><a class="page-link">...</a></li>
@@ -256,7 +188,7 @@
                     @for (int i = Model.FromPage; i <= Model.ToPage; i++)
                     {
                         <li class="page-item @(Model.CurrentPage == i ? "active" : "")">
-                            <a class="page-link" href="@Url.Action("Jobs", "Jobs", new {pageNumber=i, pageSize=Model.PageSize})">
+                            <a class="page-link" asp-action="Jobs" asp-route-pageNumber="@i" asp-route-pageSize="@Model.PageSize">
                                 @i
                             </a>
                         </li>
@@ -269,14 +201,84 @@
 
                     @if (Model.TotalPages > Model.Step)
                     {
-                        <li class="page-item"><a class="page-link" href="@Url.Action("Jobs", "Jobs", new {pageNumber=Model.TotalPages, pageSize=Model.PageSize})">@Model.TotalPages</a></li>
+                        <li class="page-item"><a class="page-link" asp-action="Jobs" asp-route-pageNumber="@Model.TotalPages" asp-route-pageSize="@Model.PageSize">@Model.TotalPages</a></li>
                     }
                     <li class="page-item @(Model.CurrentPage == Model.TotalPages ? "disabled" : "")">
-                        <a class="page-link" href="@Url.Action("Jobs", "Jobs", new {pageNumber=@Model.CurrentPage + 1, pageSize=Model.PageSize})" aria-label="Next">
+                        <a class="page-link" asp-action="Jobs" asp-route-pageNumber="@(Model.CurrentPage + 1)" asp-route-pageSize="@Model.PageSize" aria-label="Next">
                             <span aria-hidden="true">&raquo;</span>
                             <span class="sr-only">Next</span>
                         </a>
                     </li>
                 </ul>
+
             </div>
 </section>
+
+<script>
+    function updateUrlParams(paramName, paramValue, isChecked) {
+        var url = new URL(window.location.href);
+        var params = new URLSearchParams(url.search);
+        var existingValue = params.get(paramName);
+        if (isChecked) {
+            localStorage.setItem(paramValue, isChecked);
+            if (existingValue !== null) {
+                paramValue = existingValue + ',' + paramValue;
+            }
+            params.set(paramName, paramValue);
+        } else {
+            if (existingValue !== null) {
+                var valuesArray = existingValue.split(',');
+                var index = valuesArray.indexOf(paramValue);
+                if (index !== -1) {
+                    valuesArray.splice(index, 1);
+                    localStorage.removeItem(paramValue);
+
+                    paramValue = valuesArray.join(',');
+                    if (paramValue === '') {
+                        params.delete(paramName);
+                    } else {
+                        params.set(paramName, paramValue);
+                    }
+                }
+            }
+        }
+        url.search = params.toString();
+        // window.history.replaceState({}, '', url.toString());
+        window.location.href = url.toString();
+    }
+
+    function setCheckboxStates() {
+        var paramValue = '';
+        for (var i = 0; i < localStorage.length; i++) {
+            var key = localStorage.key(i);
+            var isChecked = localStorage.getItem(key);
+            if (isChecked === "true") {
+                paramValue = paramValue + ',' + key;
+                document.querySelector('input[type="checkbox"][name="' + key + '"]').checked = true;
+            }
+        }
+
+        if (paramValue !== '') {
+            var url = new URL(window.location.href);
+            var params = new URLSearchParams(url.search);
+            params.set('byExperience', paramValue);
+            url.search = params.toString();
+        }
+    }
+
+    function updateUrlParamsOnEnter(e, paramName, paramValue) {
+        if (e.key === 'Enter') {
+            var url = new URL(window.location.href);
+            var params = new URLSearchParams(url.search);
+            params.set(paramName, paramValue);
+            url.search = params.toString();
+            // window.history.replaceState({}, '', url.toString());
+            window.location.href = url.toString();
+        }
+    }
+
+    window.onload = function () {
+        setCheckboxStates();
+    };
+
+</script>

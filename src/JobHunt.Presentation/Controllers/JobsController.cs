@@ -2,6 +2,7 @@
 using JobHunt.Application.Jobs;
 using JobHunt.Application.Jobs.Commands;
 using JobHunt.Application.Jobs.Queries;
+using JobHunt.Domain.Shared;
 using JobHunt.Presentation.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -17,10 +18,10 @@ public class JobsController(IMediator mediator) : Controller
     private readonly IMediator _mediator = mediator;
 
     [AllowAnonymous]
-    public async Task<IActionResult> Jobs(int pageNumber, int pageSize, CancellationToken cancellationToken)
+    public async Task<IActionResult> Jobs(PaginationParams paginationParams, JobPostFilterParams filters, CancellationToken cancellationToken)
     {
         var viewModel = new JobsViewModel();
-        var result = await _mediator.Send(new GetAllJobsPagedQuery(pageNumber, pageSize), cancellationToken);
+        var result = await _mediator.Send(new GetAllJobsPagedQuery(paginationParams, filters), cancellationToken);
 
         if (result.IsSuccess)
         {

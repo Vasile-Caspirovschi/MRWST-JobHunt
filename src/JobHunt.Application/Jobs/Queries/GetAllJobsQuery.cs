@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 
 namespace JobHunt.Application.Jobs.Queries;
 
-public sealed record GetAllJobsPagedQuery(int PageNumber, int PageSize) : IPagedQuery<JobPostDto>;
+public sealed record GetAllJobsPagedQuery(PaginationParams PaginationParams, JobPostFilterParams FilterParams) : IPagedQuery<JobPostDto>;
 
 public class GetAllJobsQueryHandler(IPaginationService<JobPost, JobPostDto> paginationService) : IPagedQueryHandler<GetAllJobsPagedQuery, JobPostDto>
 {
@@ -37,6 +37,9 @@ public class GetAllJobsQueryHandler(IPaginationService<JobPost, JobPostDto> pagi
             jobPost => jobPost.Company,
             jobPost => jobPost.JobCategory,
         };
-        return await _paginationService.GetPagedAsync(request.PageNumber, request.PageSize, mapper, includes);
+
+        Expression<Func<JobPost, bool>> filter = jobPost => request.FilterParams.GetPredicate(jobPost);
+
+        return await _paginationService.GetPagedAsync(request.PaginationParams, mapper, includes, filter);
     }
 }

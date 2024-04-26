@@ -1,5 +1,3 @@
-using JobHunt.Domain.Entities;
-
 namespace JobHunt.Application.Companies;
 
 public class CompanyDto

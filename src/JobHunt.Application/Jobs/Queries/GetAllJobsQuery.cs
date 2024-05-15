@@ -38,7 +38,11 @@ public class GetAllJobsQueryHandler(IPaginationService<JobPost, JobPostDto> pagi
             jobPost => jobPost.JobCategory,
         };
 
-        Expression<Func<JobPost, bool>> filter = jobPost => request.FilterParams.GetPredicate(jobPost);
+        Expression<Func<JobPost, bool>> filter = jobPost =>
+            (request.FilterParams.ByCategory == "any" || jobPost.JobCategory.Title == request.FilterParams.ByCategory) &&
+            (request.FilterParams.ByType == "any" || jobPost.JobType == request.FilterParams.ByType) &&
+            (request.FilterParams.ByLocation == "any" || jobPost.Company.Location == request.FilterParams.ByLocation) &&
+            (request.FilterParams.ByExperience == "any" || jobPost.Experience == request.FilterParams.ByExperience);
 
         return await _paginationService.GetPagedAsync(request.PaginationParams, mapper, includes, filter);
     }

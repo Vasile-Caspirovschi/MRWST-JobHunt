@@ -37,20 +37,21 @@ public class JobsController(IMediator mediator) : Controller
     [AllowAnonymous]
     public async Task<IActionResult> JobDetails(Guid jobPostId, CancellationToken cancellationToken)
     {
-        var userId = User.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
         var getJobPostResult = await _mediator.Send(new GetJobPostById(jobPostId), cancellationToken);
-        var getCompanyResult = await _mediator.Send(new GetCompanyByRepresentativeIdQuery(userId), cancellationToken);
+        if (getJobPostResult.IsFailure)
+            return RedirectToAction(nameof(Jobs), nameof(Jobs));
 
-        if (getJobPostResult.IsSuccess && getCompanyResult.IsSuccess)
+        var getCompanyResult = await _mediator.Send(new GetCompanyByIdQuery(getJobPostResult.Value.CompanyId), cancellationToken);
+
+        if (getCompanyResult.IsFailure)
+            return RedirectToAction(nameof(Jobs), nameof(Jobs));
+
+        var viewModel = new JobViewModel()
         {
-            var viewModel = new JobViewModel()
-            {
-                JobPost = getJobPostResult.Value,
-                Company = getCompanyResult.Value
-            };
-            return View(viewModel);
-        }
-        return RedirectToAction(nameof(Jobs), nameof(Jobs));
+            JobPost = getJobPostResult.Value,
+            Company = getCompanyResult.Value
+        };
+        return View(viewModel);
     }
 
     [HttpPost]

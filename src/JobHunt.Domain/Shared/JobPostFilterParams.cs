@@ -9,14 +9,16 @@ public class JobPostFilterParams
     public string ByLocation { get; set; } = "any";
     public string ByExperience { get; set; } = "any";
     public string ByPostedDate { get; set; } = "any";
+    public string SearchKey { get; set; } = string.Empty;
 
     public JobPostFilterParams()
     {
 
     }
 
-    public JobPostFilterParams(string byCategory = "any", string byType = "any", string byLocation = "any", string byExperience = "any", string byPostedDate = "any")
+    public JobPostFilterParams(string searchKey = "", string byCategory = "any", string byType = "any", string byLocation = "any", string byExperience = "any", string byPostedDate = "any")
     {
+        SearchKey = searchKey;
         ByCategory = byCategory;
         ByType = byType;
         ByLocation = byLocation;

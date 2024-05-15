@@ -7,6 +7,7 @@ public class JobsViewModel
     public IEnumerable<JobPostDto> Jobs { get; set; } = [];
 
     public int TotalPages { get; set; }
+    public int TotalItems { get; set; }
     public int PageSize { get; } = 10;
     public int CurrentPage { get; set; } = 1;
     public int Step { get; } = 5;

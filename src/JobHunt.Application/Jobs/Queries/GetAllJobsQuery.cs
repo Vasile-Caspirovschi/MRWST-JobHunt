@@ -3,6 +3,7 @@ using JobHunt.Application.Common.Interfaces;
 using JobHunt.Domain.Entities;
 using JobHunt.Domain.Enums;
 using JobHunt.Domain.Shared;
+using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
 namespace JobHunt.Application.Jobs.Queries;
@@ -29,7 +30,8 @@ public class GetAllJobsQueryHandler(IPaginationService<JobPost, JobPostDto> pagi
             JobType = (JobTypeType)Enum.Parse(jobTypeType, jobPost.JobType, true),
             JobCategoryName = jobPost.JobCategory.Title,
             CompanyId = jobPost.CompanyId,
-            CompanyLogoUrl = jobPost.Company.Logo != null ? jobPost.Company.Logo.ImageUrl : @"/images/placeholder.png"
+            CompanyLogoUrl = jobPost.Company.Logo != null ? jobPost.Company.Logo.ImageUrl : @"/images/placeholder.png",
+            PublishDate = jobPost.PublishDate,
         };
 
         var includes = new List<Expression<Func<JobPost, object>>>()
@@ -42,7 +44,10 @@ public class GetAllJobsQueryHandler(IPaginationService<JobPost, JobPostDto> pagi
             (request.FilterParams.ByCategory == "any" || jobPost.JobCategory.Title == request.FilterParams.ByCategory) &&
             (request.FilterParams.ByType == "any" || jobPost.JobType == request.FilterParams.ByType) &&
             (request.FilterParams.ByLocation == "any" || jobPost.Company.Location == request.FilterParams.ByLocation) &&
-            (request.FilterParams.ByExperience == "any" || jobPost.Experience == request.FilterParams.ByExperience);
+            (request.FilterParams.ByExperience == "any" || jobPost.Experience == request.FilterParams.ByExperience) &&
+            (string.IsNullOrEmpty(request.FilterParams.SearchKey) ||
+                EF.Functions.Like(jobPost.Title.ToLower(), $"%{request.FilterParams.SearchKey.ToLower()}%") ||
+                EF.Functions.Like(jobPost.Company.Name.ToLower(), $"%{request.FilterParams.SearchKey.ToLower()}%"));
 
         return await _paginationService.GetPagedAsync(request.PaginationParams, mapper, includes, filter);
     }

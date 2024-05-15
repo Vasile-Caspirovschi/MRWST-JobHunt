@@ -32,11 +32,11 @@ public class PaginationService<TEntity, TResult>(IJobHuntDbContext context) : IP
         if (predicate is not null)
             query = query.Where(predicate);
 
-        var rowCount = await query.CountAsync();
-        var pageCount = (int)Math.Ceiling((double)rowCount / pageSize);
+        var totalItems = await query.CountAsync();
+        var pageCount = (int)Math.Ceiling((double)totalItems / pageSize);
         pageCount = pageCount == 0 ? 1 : pageCount;
 
         var result = await query.Skip(skip).Take(take).Select(selector).ToListAsync();
-        return PagedResult<TResult>.Success(pageNumber, pageSize, rowCount, pageCount, result);
+        return PagedResult<TResult>.Success(pageNumber, pageSize, totalItems, pageCount, result);
     }
 }

@@ -124,13 +124,22 @@
                 </div>
             </div>
             <div class="col-lg-9">
+                <div class="row mb-3">
+                    <form action="@Url.Action("Jobs", "Jobs")" method="get">
+                        <div class="input-group">
+                            <input type="text" class="form-control" name="searchKey" placeholder="Search position or company">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-primary" type="submit">Search</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="d-flex justify-content-between">
-                            <span>39, 782 Jobs found</span>
-                            <!-- Select job items start -->
-                            <div class="d-flex ">
-                                <span class="white-space: nowrap;">Sort by</span>
+                        <div class="d-flex justify-content-between mb-3">
+                            <span>@Model.TotalItems jobs found</span>
+                            <div class="d-flex" style="gap:1rem;">
+                                <span style="text-wrap: nowrap;">Sort by</span>
                                 <select class="form-select form-select-sm" name="select">
                                     <option value="">None</option>
                                     <option value="">job list</option>
@@ -138,35 +147,35 @@
                                     <option value="">job list</option>
                                 </select>
                             </div>
-                            <!--  Select job items End-->
                         </div>
                     </div>
                 </div>
-
-                @foreach (var job in Model.Jobs)
-                {
-                    <div class="job-item p-4 mb-4">
-                        <div class="row g-4">
-                            <div class="col-sm-12 col-md-8 d-flex align-items-center">
-                                <img class="img-thumbnail border rounded" src="@job.CompanyLogoUrl" alt="" style="width: 80px; height: 80px;">
-                                <div class="text-start ps-4">
-                                    <h5 class="mb-3">@job.Title</h5>
-                                    <span class="text-truncate me-3"><i class="fa fa-map-marker custom-primary-color me-2"></i>@job.Location</span>
-                                    <span class="text-truncate me-3"><i class="fa fa-clock-o custom-primary-color me-2"></i>@job.JobType</span>
-                                    <span class="text-truncate me-0"><i class="fa fa-money custom-primary-color me-2"></i>@job.JobSalary</span>
+                <div class="row">
+                    @foreach (var job in Model.Jobs)
+                    {
+                        <div class="job-item p-4 mb-4">
+                            <div class="row g-4">
+                                <div class="col-sm-12 col-md-8 d-flex align-items-center">
+                                    <img class="img-thumbnail border rounded" src="@job.CompanyLogoUrl" alt="" style="width: 80px; height: 80px;">
+                                    <div class="text-start ps-4">
+                                        <h5 class="mb-3">@job.Title</h5>
+                                        <span class="text-truncate me-3"><i class="fa fa-map-marker custom-primary-color me-2"></i>@job.Location</span>
+                                        <span class="text-truncate me-3"><i class="fa fa-clock-o custom-primary-color me-2"></i>@job.JobType</span>
+                                        <span class="text-truncate me-0"><i class="fa fa-money custom-primary-color me-2"></i>@job.JobSalary</span>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
-                                <div class="d-flex mb-3">
-                                    <a class="btn btn-light btn-square me-3" href=""><i class="fa fa-heart-o custom-primary-color"></i></a>
-                                    <a class="btn btn-outline-primary" asp-action="JobDetails" asp-route-jobPostId="@job.Id">See details</a>
+                                <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
+                                    <div class="d-flex mb-3">
+                                        <a class="btn btn-light btn-square me-3" href=""><i class="fa fa-heart-o custom-primary-color"></i></a>
+                                        <a class="btn btn-outline-primary" asp-action="JobDetails" asp-route-jobPostId="@job.Id">See details</a>
+                                    </div>
+                                    <small class="text-truncate"><i class="fa fa-calendar custom-primary-color me-2"></i>@job.PublishDate</small>
                                 </div>
-                                <small class="text-truncate"><i class="fa fa-calendar custom-primary-color me-2"></i>@job.PublishDate</small>
                             </div>
                         </div>
-                    </div>
-                }
+                    }
 
+                </div>
                 <br>
                 <ul class="pagination justify-content-center">
                     <li class="page-item @(Model.CurrentPage == 1 ? "disabled" : "")">
@@ -211,6 +220,7 @@
                     </li>
                 </ul>
             </div>
+        </div>
 </section>
 
 <script>

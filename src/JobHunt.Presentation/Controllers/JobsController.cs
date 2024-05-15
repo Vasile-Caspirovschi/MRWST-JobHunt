@@ -28,11 +28,11 @@ public class JobsController(IMediator mediator) : Controller
             viewModel.Jobs = result.Value;
             viewModel.CurrentPage = result.PageNumber;
             viewModel.TotalPages = result.PageCount;
+            viewModel.TotalItems = result.RowCount;
         }
 
         return View(viewModel);
     }
-
 
     [AllowAnonymous]
     public async Task<IActionResult> JobDetails(Guid jobPostId, CancellationToken cancellationToken)

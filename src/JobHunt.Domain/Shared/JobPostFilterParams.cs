@@ -23,13 +23,4 @@ public class JobPostFilterParams
         ByExperience = byExperience;
         ByPostedDate = byPostedDate;
     }
-
-
-    public bool GetPredicate(JobPost jobPost)
-    {
-        return jobPost.Title.ToLower().Contains(ByCategory.ToLower())  ||
-               jobPost.JobType.ToLower().Contains(ByType.ToLower()) ||
-               jobPost.Company.Location.ToLower().Contains(ByLocation.ToLower()) ||
-               jobPost.Experience.ToLower().Contains(ByExperience.ToLower());
-    }
 }

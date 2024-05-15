@@ -67,7 +67,7 @@ public class AuthController(SignInManager<AppUser> signInManager, UserManager<Ap
         var result = await _userManager.CreateAsync(user, register.Password);
         if (result.Succeeded)
         {
-            await _userManager.AddToRoleAsync(user, UserRoleType.JobSeeker.ToString());
+            await _userManager.AddToRoleAsync(user, nameof(UserRoleType.JobSeeker));
             await _signInManager.SignInAsync(user, false);
             return LocalRedirect(returnUrl);
         }

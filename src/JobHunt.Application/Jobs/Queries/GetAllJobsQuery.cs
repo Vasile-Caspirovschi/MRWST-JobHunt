@@ -32,6 +32,7 @@ public class GetAllJobsQueryHandler(IPaginationService<JobPost, JobPostDto> pagi
             CompanyId = jobPost.CompanyId,
             CompanyLogoUrl = jobPost.Company.Logo != null ? jobPost.Company.Logo.ImageUrl : @"/images/placeholder.png",
             PublishDate = jobPost.PublishDate,
+            CompanyName = jobPost.Company.Name
         };
 
         var includes = new List<Expression<Func<JobPost, object>>>()

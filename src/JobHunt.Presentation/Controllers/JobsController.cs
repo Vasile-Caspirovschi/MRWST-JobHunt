@@ -1,4 +1,5 @@
-﻿using JobHunt.Application.Companies.Queries;
+﻿using JobHunt.Application.Categories.Queries;
+using JobHunt.Application.Companies.Queries;
 using JobHunt.Application.Jobs;
 using JobHunt.Application.Jobs.Commands;
 using JobHunt.Application.Jobs.Queries;
@@ -7,6 +8,7 @@ using JobHunt.Presentation.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Query;
 using System.Diagnostics;
 using System.Security.Claims;
 
@@ -22,13 +24,13 @@ public class JobsController(IMediator mediator) : Controller
     {
         var viewModel = new JobsViewModel();
         var result = await _mediator.Send(new GetAllJobsPagedQuery(paginationParams, filters), cancellationToken);
+        var categoriesResult = await _mediator.Send(new GetAllJobCategoriesQuery(), cancellationToken);
 
         if (result.IsSuccess)
         {
             viewModel.Jobs = result.Value;
-            viewModel.CurrentPage = result.PageNumber;
-            viewModel.TotalPages = result.PageCount;
-            viewModel.TotalItems = result.RowCount;
+            viewModel.Categories = categoriesResult.Value;
+            viewModel.Pagination = new PaginationViewModel(result.PageCount, result.RowCount, result.PageSize, result.PageNumber);
         }
 
         return View(viewModel);

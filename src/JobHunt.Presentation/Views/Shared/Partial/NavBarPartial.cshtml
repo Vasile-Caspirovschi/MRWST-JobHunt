@@ -1,0 +1,32 @@
+﻿<header class="header-area header-sticky background-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav class="main-nav header-text">
+                    <a href="@Url.Action("Index", "Home")" class="logo">Job<em> Hunt</em></a>
+                    <ul class="nav">
+                        <li>
+                            <a href="@Url.Action("Index", "Home")" class="active">Home</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Jobs", "Jobs")">Jobs</a>
+                        </li>
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">For companies</a>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="#">Candidates</a>
+                                <a class="dropdown-item" href="@Url.Action("PostJob", "Jobs")">Post a job</a>
+                            </div>
+                        </li>
+                        <li>
+                            <partial name="/Views/Shared/Partial/ViewLoginPartial.cshtml" />
+                        </li>
+                    </ul>
+                    <a class='menu-trigger'>
+                        <span>Menu</span>
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </div>
+</header>

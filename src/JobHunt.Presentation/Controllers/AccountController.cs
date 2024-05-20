@@ -1,20 +1,43 @@
 using JobHunt.Application.Common.Interfaces;
 using JobHunt.Application.Companies.Commands;
 using JobHunt.Application.Companies.Queries;
+using JobHunt.Domain.Entities;
+using JobHunt.Domain.Enums;
 using JobHunt.Domain.Shared;
 using JobHunt.Presentation.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using System.Threading;
 
 namespace JobHunt.Presentation.Controllers;
 
 [Authorize]
-public class AccountController(IMediator mediator, ICloudImageService imageService) : Controller
+public class AccountController(IMediator mediator, UserManager<AppUser> userManager, ICloudImageService imageService) : Controller
 {
     private readonly IMediator _mediator = mediator;
+    private readonly UserManager<AppUser> _userManager = userManager;
     private readonly ICloudImageService _imageService = imageService;
+
+    public async Task<IActionResult> MyAccount(CancellationToken cancellationToken)
+    {
+        if (User.IsInRole(nameof(UserRoleType.Employer)))
+        {
+            var getCompanyResult =
+                await _mediator.Send(new GetCompanyByRepresentativeIdQuery(_userManager.GetUserId(User)!), cancellationToken);
+            var getCompanyStatisticResult =
+                await _mediator.Send(new GetCompanyStatisticQuery(getCompanyResult.Value.Id), cancellationToken);
+            return View("MyAccount", getCompanyStatisticResult.Value);
+        }
+        return View();
+    }
+
+    public IActionResult JobPosts()
+    {
+        return View();
+    }
 
     public async Task<IActionResult> AboutCompany(CancellationToken cancellationToken)
     {

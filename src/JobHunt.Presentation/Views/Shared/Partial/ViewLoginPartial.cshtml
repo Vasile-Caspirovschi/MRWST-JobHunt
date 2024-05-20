@@ -1,0 +1,12 @@
+﻿@using JobHunt.Domain.Entities
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<AppUser> SignInManager
+
+@if (SignInManager.IsSignedIn(User))
+{
+    <a href="@Url.Action("MyAccount", "Account")">My account</a>
+}
+else
+{
+    <a href="@Url.Action("Login", "Auth")">Log in</a>
+}

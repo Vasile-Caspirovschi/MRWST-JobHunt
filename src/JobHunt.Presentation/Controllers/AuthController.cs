@@ -1,4 +1,5 @@
 ﻿using JobHunt.Application.Companies.Commands;
+using JobHunt.Application.Companies.Queries;
 using JobHunt.Domain.Entities;
 using JobHunt.Domain.Enums;
 using JobHunt.Presentation.Models;
@@ -6,10 +7,11 @@ using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace JobHunt.Presentation.Controllers;
 
-public class AuthController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, 
+public class AuthController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager,
     IUserStore<AppUser> userStore, IMediator mediator) : Controller
 {
     private readonly IMediator _mediator = mediator;
@@ -24,9 +26,8 @@ public class AuthController(SignInManager<AppUser> signInManager, UserManager<Ap
     }
 
     [HttpPost]
-    public async Task<IActionResult> Login(LoginViewModel login, string? returnUrl = null!)
+    public async Task<IActionResult> Login(LoginViewModel login, CancellationToken cancellationToken)
     {
-        returnUrl ??= Url.Content("~/");
         if (!ModelState.IsValid) return View();
 
         var user = _signInManager.UserManager.Users.FirstOrDefault(u => u.Email == login.Email);
@@ -36,11 +37,14 @@ public class AuthController(SignInManager<AppUser> signInManager, UserManager<Ap
             return View();
         }
 
-        var result = await _signInManager.PasswordSignInAsync(user.UserName!, login.Password, login.RememberMe,
-            false);
-        if (result.Succeeded) return LocalRedirect(returnUrl);
-        ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-        return View();
+        var result = await _signInManager.PasswordSignInAsync(user.UserName!, login.Password, login.RememberMe, false);
+
+        if (!result.Succeeded)
+        {
+            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            return View();
+        }
+        return RedirectToAction("MyAccount", "Account");
     }
 
     public IActionResult Register()
@@ -59,7 +63,7 @@ public class AuthController(SignInManager<AppUser> signInManager, UserManager<Ap
     }
 
     [HttpPost]
-    public async Task<IActionResult> RegisterJobSeeker(RegisterViewModel register, string returnUrl = "/")
+    public async Task<IActionResult> RegisterJobSeeker(RegisterViewModel register)
     {
         if (!ModelState.IsValid) return View(register);
 
@@ -69,7 +73,7 @@ public class AuthController(SignInManager<AppUser> signInManager, UserManager<Ap
         {
             await _userManager.AddToRoleAsync(user, nameof(UserRoleType.JobSeeker));
             await _signInManager.SignInAsync(user, false);
-            return LocalRedirect(returnUrl);
+            return RedirectToAction("MyAccount", "Account");
         }
 
         foreach (var error in result.Errors) ModelState.AddModelError(string.Empty, error.Description);
@@ -78,7 +82,7 @@ public class AuthController(SignInManager<AppUser> signInManager, UserManager<Ap
     }
 
     [HttpPost]
-    public async Task<IActionResult> RegisterEmployer(RegisterViewModel register, string returnUrl = "/")
+    public async Task<IActionResult> RegisterEmployer(RegisterViewModel register)
     {
         if (!ModelState.IsValid) return View(register);
         if (string.IsNullOrEmpty(register.CompanyName))
@@ -94,7 +98,7 @@ public class AuthController(SignInManager<AppUser> signInManager, UserManager<Ap
             await _userManager.AddToRoleAsync(user, UserRoleType.Employer.ToString());
             await _signInManager.SignInAsync(user, false);
             await _mediator.Send(new CreateCompanyCommand(register.CompanyName, user));
-            return LocalRedirect(returnUrl);
+            return RedirectToAction("MyAccount", "Account");
         }
 
         foreach (var error in result.Errors) ModelState.AddModelError(string.Empty, error.Description);

@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "My job posts";
+}
+
+<section>
+    <div class="container pt-2">
+        <div class="row">
+            <div class="col-lg-2">
+                <partial name="/Views/Shared/Partial/SideMenuPartial.cshtml" />
+            </div>
+            <div class="col-lg-10">
+                <h3 class="mb-3">Job posts</h3>
+                <div class="row">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Job title</th>
+                                <th scope="col">Publish date</th>
+                                <th scope="col">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Mark</td>
+                                <td>Otto</td>
+                                <td>
+                                    <div class="d-flex gap-1">
+                                        <a class="btn btn-outline-primary btn-sm"><i class="fa fa-edit"></i></a>
+                                        <a class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

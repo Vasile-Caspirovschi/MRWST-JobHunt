@@ -10,6 +10,7 @@ public class JobHuntDbContext(DbContextOptions<JobHuntDbContext> contextOptions)
     public DbSet<JobPost> JobPosts { get; set; }
     public DbSet<JobCategory> JobCategories { get; set; }
     public DbSet<Company> Companies { get; set; }
+    public DbSet<JobApplication> JobApplications { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

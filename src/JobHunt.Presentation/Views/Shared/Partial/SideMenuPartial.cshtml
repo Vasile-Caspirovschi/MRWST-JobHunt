@@ -1,7 +1,7 @@
 <div class="vertical-menu position-fixed">
     <ul>
         <li>
-            <a href='#'>Account</a>
+            <a href='@Url.Action("MyAccount", "Account")'>My account</a>
         </li>
         <li>
             <a href='@Url.Action("AboutCompany", "Account")'>About company</a>
@@ -10,7 +10,7 @@
             <a href='@Url.Action("ContactData", "Account")'>Contact data</a>
         </li>
         <li>
-            <a href='#'>Job posts</a>
+            <a href='@Url.Action("JobPosts", "Account")' '>Job posts</a>
         </li>
         <li>
             <a href='@Url.Action("PostJob", "Jobs")'>Post a job</a>

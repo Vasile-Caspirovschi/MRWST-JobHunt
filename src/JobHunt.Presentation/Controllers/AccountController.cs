@@ -1,6 +1,7 @@
 using JobHunt.Application.Common.Interfaces;
 using JobHunt.Application.Companies.Commands;
 using JobHunt.Application.Companies.Queries;
+using JobHunt.Application.Jobs.Queries;
 using JobHunt.Domain.Entities;
 using JobHunt.Domain.Enums;
 using JobHunt.Domain.Shared;
@@ -34,9 +35,21 @@ public class AccountController(IMediator mediator, UserManager<AppUser> userMana
         return View();
     }
 
-    public IActionResult JobPosts()
+    [Authorize(Roles = nameof(UserRoleType.Employer))]
+    public async Task<IActionResult> JobPosts(CancellationToken cancellationToken)
     {
-        return View();
+        CompanyJobPostsViewModel vm = new();
+        var getCompanyResult =
+               await _mediator.Send(new GetCompanyByRepresentativeIdQuery(_userManager.GetUserId(User)!), cancellationToken);
+        if (getCompanyResult.IsSuccess)
+        {
+            var jobPostsResult =
+                await _mediator.Send(new GetCompanyJobPostsQuery(getCompanyResult.Value.Id), cancellationToken);
+            vm.JobPosts = jobPostsResult.Value;
+            return View(vm);
+        }
+        //needs some more checking
+        return View(vm);
     }
 
     public async Task<IActionResult> AboutCompany(CancellationToken cancellationToken)

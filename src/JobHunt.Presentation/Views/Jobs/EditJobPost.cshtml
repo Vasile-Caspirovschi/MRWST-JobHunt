@@ -3,7 +3,7 @@
 @model CreateEditJobPostViewModel
 
 @{
-    ViewData["Title"] = "Post a job";
+    ViewData["Title"] = "Edit job post";
 }
 <section>
     <div class="container pt-2">
@@ -12,7 +12,7 @@
                 <partial name="/Views/Shared/Partial/SideMenuPartial.cshtml" />
             </div>
             <div class="col-lg-10">
-                <form action="@Url.Action("PostJob", "Jobs")" method="post">
+                <form action="@Url.Action("EditJobPost", "Jobs")" method="post">
                     <h3 class="mb-3">Post a job</h3>
                     <div class="mb-3 small-section-tittle2">
                         <h4>Job title</h4>
@@ -100,16 +100,16 @@
                         <textarea id="job-description">
 
                             @{
-                                //if (!string.IsNullOrEmpty(Model.JobDescription))
-                                  //  @Html.Raw(Model.JobDescription)
-                               // ;
+                                if (!string.IsNullOrEmpty(Model.JobPost.JobDescription))
+                                    @Html.Raw(Model.JobPost.JobDescription)
+                                ;
                             }    
                         </textarea>
-                        <input asp-for="JobPost.JobDescription" type="hidden" id="job-description-raw-html"/>
+                        <input asp-for="JobPost.JobDescription" type="hidden" id="job-description-raw-html" />
                         <span asp-validation-for="JobPost.JobDescription" class="text-danger"></span>
                     </div>
                     <div class="col-12">
-                        <button class="btn btn-primary w-100" type="submit">Post the job</button>
+                        <button class="btn btn-primary w-100" type="submit">Save changes</button>
                     </div>
                 </form>
             </div>

@@ -27,6 +27,7 @@ public class GetJobPostByIdHandler(IJobHuntDbContext dbContext) : IQueryHandler<
 
         return new JobPostDto()
         {
+            Id = jobPost.Id,
             Title = jobPost.Title,
             Location = jobPost.Company.Location!,
             Experience = (ExperienceRangeType)Enum.Parse(experienceRangeType, jobPost.Experience, true),

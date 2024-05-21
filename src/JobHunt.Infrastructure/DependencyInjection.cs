@@ -22,7 +22,7 @@ public static class DependencyInjection
         services.AddScoped<ICloudImageService, CloudinaryImageService>();
 
         //register the pagination service
-        services.AddScoped(typeof(IPaginationService<,>), typeof(PaginationService<,>));
+        services.AddScoped(typeof(IPaginationService<>), typeof(PaginationService<>));
         return services;
     }
 }

@@ -11,6 +11,8 @@ public class JobPostFilterParams
     public string ByPostedDate { get; set; } = "any";
     public string SearchKey { get; set; } = string.Empty;
 
+    public string SortByPostedDate { get; set; } = "none";
+
     public JobPostFilterParams()
     {
 

@@ -43,8 +43,14 @@ public class GetAllJobsQueryHandler(IJobHuntDbContext dbContext, IPaginationServ
                 CompanyLogoUrl = jobPost.Company.Logo != null ? jobPost.Company.Logo.ImageUrl : @"/images/placeholder.png",
                 PublishDate = jobPost.PublishDate,
                 CompanyName = jobPost.Company.Name
-            })
-            .AsSplitQuery();
+            }).AsQueryable();
+
+        query = request.FilterParams.SortByPostedDate == "oldest"
+            ? query.OrderBy(job => job.PublishDate).ThenBy(job => job.Id)
+            : query.OrderByDescending(job => job.PublishDate).ThenBy(job => job.Id);
+
+        query = query.AsSplitQuery().AsNoTracking();
+        
         return await _paginationService.GetPagedAsync(request.PaginationParams, query);
     }
 }

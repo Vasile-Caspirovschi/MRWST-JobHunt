@@ -16,7 +16,7 @@ using System.Threading;
 namespace JobHunt.Presentation.Controllers;
 
 [Authorize]
-public class AccountController(IMediator mediator, UserManager<AppUser> userManager, ICloudImageService imageService) : Controller
+public class EmployerController(IMediator mediator, UserManager<AppUser> userManager, ICloudImageService imageService) : Controller
 {
     private readonly IMediator _mediator = mediator;
     private readonly UserManager<AppUser> _userManager = userManager;

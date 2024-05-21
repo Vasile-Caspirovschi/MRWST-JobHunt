@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
 </head>
 <body>
+
     <!-- ***** Preloader Start ***** -->
     <div id="js-preloader" class="js-preloader">
         <div class="preloader-inner">
@@ -23,41 +24,20 @@
             </div>
         </div>
     </div>
-    <!-- ***** Preloader End ***** -->
-    <header class="header-area header-sticky background-header">
-        <div class="container">
+
+    <partial name="/Views/Shared/Partial/NavBarPartial.cshtml" />
+
+    <main role="main">
+        <div class="container pt-2">
             <div class="row">
-                <div class="col-12">
-                    <nav class="main-nav header-text">
-                        <a href="@Url.Action("Index", "Home")" class="logo">Job<em> Hunt</em></a>
-                        <ul class="nav">
-                            <li>
-                                <a href="@Url.Action("Index", "Home")" class="active">Home</a>
-                            </li>
-                            <li>
-                                <a href="@Url.Action("Jobs", "Jobs")">Jobs</a>
-                            </li>
-                            <li class="dropdown">
-                                <a class="dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">For companies</a>
-                                <div class="dropdown-menu">
-                                    <a class="dropdown-item" href="#">Candidates</a>
-                                    <a class="dropdown-item" href="@Url.Action("PostJob", "Jobs")">Post a job</a>
-                                </div>
-                            </li>
-                            <li>
-                                <a href="@Url.Action("Login", "Auth")">Log in</a>
-                            </li>
-                        </ul>
-                        <a class='menu-trigger'>
-                            <span>Menu</span>
-                        </a>
-                    </nav>
+                <div class="col-2">
+                    <partial name="/Views/Shared/Partial/EmployerSideMenuPartial.cshtml" />
+                </div>
+                <div class="col-10">
+                    @RenderBody()
                 </div>
             </div>
         </div>
-    </header>
-    <main role="main">
-        @RenderBody()
     </main>
 
     <footer>
@@ -71,17 +51,13 @@
             </div>
         </div>
     </footer>
+
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/imgfix.min.js"></script>
     <script src="~/js/mixitup.js"></script>
     <script src="~/js/custom.js" asp-append-version="true"></script>
     <script src="~/lib/tinymce/tinymce.min.js" referrerpolicy="origin"></script>
-    @* <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script> *@
-    @* <script src="~/js/site.js" asp-append-version="true"></script> *@
-    @* <script src="~/js/scrollreveal.min.js"></script> *@
-    @* <script src="~/js/waypoints.min.js"></script> *@
-    @* <script src="~/js/jquery.counterup.min.js"></script> *@
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

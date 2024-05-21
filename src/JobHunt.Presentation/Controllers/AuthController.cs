@@ -44,7 +44,7 @@ public class AuthController(SignInManager<AppUser> signInManager, UserManager<Ap
             ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             return View();
         }
-        return RedirectToAction("MyAccount", "Account");
+        return RedirectToAction("MyAccount", "Employer");
     }
 
     public IActionResult Register()
@@ -73,7 +73,7 @@ public class AuthController(SignInManager<AppUser> signInManager, UserManager<Ap
         {
             await _userManager.AddToRoleAsync(user, nameof(UserRoleType.JobSeeker));
             await _signInManager.SignInAsync(user, false);
-            return RedirectToAction("MyAccount", "Account");
+            return RedirectToAction("MyAccount", "Employer");
         }
 
         foreach (var error in result.Errors) ModelState.AddModelError(string.Empty, error.Description);
@@ -98,7 +98,7 @@ public class AuthController(SignInManager<AppUser> signInManager, UserManager<Ap
             await _userManager.AddToRoleAsync(user, UserRoleType.Employer.ToString());
             await _signInManager.SignInAsync(user, false);
             await _mediator.Send(new CreateCompanyCommand(register.CompanyName, user));
-            return RedirectToAction("MyAccount", "Account");
+            return RedirectToAction("MyAccount", "Employer");
         }
 
         foreach (var error in result.Errors) ModelState.AddModelError(string.Empty, error.Description);

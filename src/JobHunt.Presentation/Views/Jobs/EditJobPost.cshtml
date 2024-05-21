@@ -4,115 +4,107 @@
 
 @{
     ViewData["Title"] = "Edit job post";
+    Layout = "/Views/Shared/Layouts/_EmployerProfileLayout.cshtml";
 }
-<section>
-    <div class="container pt-2">
-        <div class="row">
-            <div class="col-lg-2">
-                <partial name="/Views/Shared/Partial/SideMenuPartial.cshtml" />
-            </div>
-            <div class="col-lg-10">
-                <form action="@Url.Action("EditJobPost", "Jobs")" method="post">
-                    <h3 class="mb-3">Post a job</h3>
-                    <div class="mb-3 small-section-tittle2">
-                        <h4>Job title</h4>
-                        <div class="col-12">
-                            <input asp-for="JobPost.CompanyId" type="hidden">
-                            <input asp-for="JobPost.Id" type="hidden">
-                            <input asp-for="JobPost.Title" type="text" class="form-control" placeholder="Enter job title">
-                            <span asp-validation-for="JobPost.Title" class="text-danger"></span>
-                        </div>
-                    </div>
-                    <div class="mb-3 small-section-tittle2">
-                        <div class="row">
-                            <div class="col-sm">
-                                <h4>Job salary</h4>
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text">
-                                        <i class="fa fa-money custom-primary-color"></i>
-                                    </span>
-                                    <input asp-for="JobPost.JobSalary" type="number" class="form-control" placeholder="Salary" aria-label="Salary" aria-describedby="basic-addon2">
-                                    <span class="input-group-text">.00</span>
-                                    <span asp-validation-for="JobPost.JobSalary" class="text-danger"></span>
-                                </div>
-                            </div>
-                            <div class="col-sm">
-                                <h4>Job location</h4>
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text">
-                                        <i class="fa fa-map-marker custom-primary-color"></i>
-                                    </span>
-                                    <input asp-for="JobPost.Location" type="text" class="form-control" placeholder="Job Location" aria-label="Job Location" aria-describedby="basic-addon1">
-                                    <span asp-validation-for="JobPost.Location" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm">
-                            <div class="mb-3 small-section-tittle2">
-                                <h4>Job category</h4>
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text">
-                                        <i class="fa fa-university custom-primary-color"></i>
-                                    </span>
-                                    <input class="form-control" list="categoryListOptions" asp-for="JobPost.JobCategoryName" placeholder="Choose category">
-                                    <datalist id="categoryListOptions">
-                                        @foreach (var category in Model.Categories)
-                                        {
-                                            <option value="@category"></option>
-                                        }
-                                    </datalist>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm">
-                            <div class="mb-3 small-section-tittle2">
-                                <h4>Job type</h4>
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text">
-                                        <i class="fa fa-clock-o custom-primary-color"></i>
-                                    </span>
-                                    <select asp-for="JobPost.JobType" class="form-select" name="select" asp-items="Html.GetEnumSelectList<JobTypeType>()">
-                                        Select work schedule
-                                    </select>
-                                    <span asp-validation-for="JobPost.JobType" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm">
-                            <div class="mb-3 small-section-tittle2">
-                                <h4>Experience</h4>
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text" id="basic-addon1">
-                                        <i class="fa fa-briefcase custom-primary-color"></i>
-                                    </span>
-                                    <select asp-for="JobPost.Experience" class="form-select" name="select" asp-items="Html.GetEnumSelectList<ExperienceRangeType>()">
-                                        Select experience
-                                    </select>
-                                    <span asp-validation-for="JobPost.Experience" class="text-danger"></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-3 small-section-tittle2">
-                        <h4>Job description</h4>
-                        <textarea id="job-description">
-
-                            @{
-                                if (!string.IsNullOrEmpty(Model.JobPost.JobDescription))
-                                    @Html.Raw(Model.JobPost.JobDescription)
-                                ;
-                            }    
-                        </textarea>
-                        <input asp-for="JobPost.JobDescription" type="hidden" id="job-description-raw-html" />
-                        <span asp-validation-for="JobPost.JobDescription" class="text-danger"></span>
-                    </div>
-                    <div class="col-12">
-                        <button class="btn btn-primary w-100" type="submit">Save changes</button>
-                    </div>
-                </form>
+<div>
+    <form action="@Url.Action("EditJobPost", "Jobs")" method="post">
+        <h3 class="mb-3">Edit job post</h3>
+        <div class="mb-3 small-section-tittle2">
+            <h4>Job title</h4>
+            <div class="col-12">
+                <input asp-for="JobPost.CompanyId" type="hidden">
+                <input asp-for="JobPost.Id" type="hidden">
+                <input asp-for="JobPost.Title" type="text" class="form-control" placeholder="Enter job title">
+                <span asp-validation-for="JobPost.Title" class="text-danger"></span>
             </div>
         </div>
-    </div>
-</section>
+        <div class="mb-3 small-section-tittle2">
+            <div class="row">
+                <div class="col-sm">
+                    <h4>Job salary</h4>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">
+                            <i class="fa fa-money custom-primary-color"></i>
+                        </span>
+                        <input asp-for="JobPost.JobSalary" type="number" class="form-control" placeholder="Salary" aria-label="Salary" aria-describedby="basic-addon2">
+                        <span class="input-group-text">.00</span>
+                        <span asp-validation-for="JobPost.JobSalary" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-sm">
+                    <h4>Job location</h4>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">
+                            <i class="fa fa-map-marker custom-primary-color"></i>
+                        </span>
+                        <input asp-for="JobPost.Location" type="text" class="form-control" placeholder="Job Location" aria-label="Job Location" aria-describedby="basic-addon1">
+                        <span asp-validation-for="JobPost.Location" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm">
+                <div class="mb-3 small-section-tittle2">
+                    <h4>Job category</h4>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">
+                            <i class="fa fa-university custom-primary-color"></i>
+                        </span>
+                        <input class="form-control" list="categoryListOptions" asp-for="JobPost.JobCategoryName" placeholder="Choose category">
+                        <datalist id="categoryListOptions">
+                            @foreach (var category in Model.Categories)
+                            {
+                                <option value="@category"></option>
+                            }
+                        </datalist>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm">
+                <div class="mb-3 small-section-tittle2">
+                    <h4>Job type</h4>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">
+                            <i class="fa fa-clock-o custom-primary-color"></i>
+                        </span>
+                        <select asp-for="JobPost.JobType" class="form-select" name="select" asp-items="Html.GetEnumSelectList<JobTypeType>()">
+                            Select work schedule
+                        </select>
+                        <span asp-validation-for="JobPost.JobType" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm">
+                <div class="mb-3 small-section-tittle2">
+                    <h4>Experience</h4>
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">
+                            <i class="fa fa-briefcase custom-primary-color"></i>
+                        </span>
+                        <select asp-for="JobPost.Experience" class="form-select" name="select" asp-items="Html.GetEnumSelectList<ExperienceRangeType>()">
+                            Select experience
+                        </select>
+                        <span asp-validation-for="JobPost.Experience" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mb-3 small-section-tittle2">
+            <h4>Job description</h4>
+            <textarea id="job-description">
+
+                @{
+                    if (!string.IsNullOrEmpty(Model.JobPost.JobDescription))
+                        @Html.Raw(Model.JobPost.JobDescription)
+                    ;
+                }    
+                        </textarea>
+            <input asp-for="JobPost.JobDescription" type="hidden" id="job-description-raw-html" />
+            <span asp-validation-for="JobPost.JobDescription" class="text-danger"></span>
+        </div>
+        <div class="col-12">
+            <button class="btn btn-primary w-100" type="submit">Save changes</button>
+        </div>
+    </form>
+</div>

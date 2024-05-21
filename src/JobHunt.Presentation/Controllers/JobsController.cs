@@ -93,7 +93,7 @@ public class JobsController(IMediator mediator) : Controller
         var getJobPostResult = await _mediator.Send(new GetJobPostById(jobPostId), cancellationToken);
 
         if (getJobPostResult.IsFailure)
-            return RedirectToAction("MyAccount", "Account");
+            return RedirectToAction("MyAccount", "Employer");
 
         CreateEditJobPostViewModel vm = new();
         vm.Categories = categoriesResult.Value;
@@ -120,9 +120,9 @@ public class JobsController(IMediator mediator) : Controller
         var result = await _mediator.Send(new DeleteJobPostByIdCommand(jobPostId), cancellationToken);
         if (result.IsSuccess)
         {
-            return RedirectToAction("JobPosts", "Account");
+            return RedirectToAction("JobPosts", "Employer");
         }
-        return RedirectToAction("JobPosts", "Account");
+        return RedirectToAction("JobPosts", "Employer");
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

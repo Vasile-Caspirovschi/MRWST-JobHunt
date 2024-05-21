@@ -1,0 +1,40 @@
+@using JobHunt.Application.Jobs
+@using JobHunt.Domain.Enums
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = "Contact data";
+    Layout = "/Views/Shared/Layouts/_EmployerProfileLayout.cshtml";
+}
+
+<div>
+    <form action="#" method="post">
+        <h3 class="mb-3">Contact data</h3>
+        <div class="row">
+            <div class="col-12 col-sm-6">
+                <div class="mb-3 small-section-tittle2">
+                    <h4 class="mb-1">Full name</h4>
+                    <input type="text" class="form-control" placeholder="Enter full name">
+                    <span class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6">
+                <div class="mb-3 small-section-tittle2">
+                    <h4 class="mb-1">Email</h4>
+                    <input type="text" class="form-control" placeholder="Enter email address">
+                    <span class="text-danger"></span>
+                </div>
+            </div>
+            <div class="col-12 col-sm-6">
+                <div class="mb-3 small-section-tittle2">
+                    <h4 class="mb-1">Phone number</h4>
+                    <input type="text" class="form-control" placeholder="Enter phone number">
+                    <span class="text-danger"></span>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <button class="btn btn-primary w-100" type="submit">Save changes</button>
+        </div>
+    </form>
+</div>

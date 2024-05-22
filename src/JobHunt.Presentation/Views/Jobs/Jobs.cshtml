@@ -8,48 +8,51 @@
 <!-- ***** Fleet Starts ***** -->
 <section class="section" id="trainers">
     <div class="container">
-        <div class="row">
-            <div class="col-lg-10 offset-lg-1">
-                <div class="section-heading">
-                    <h2>Available <em>Jobs</em></h2>
-                    <img src="~/images/line-dec.png" alt="">
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-lg-3">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="small-section-tittle2 mb-45">
-                            <div class="ion">
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                     xmlns:xlink="http://www.w3.org/1999/xlink"
-                                     width="20px" height="12px">
-                                    <path fill-rule="evenodd" fill="rgb(27, 207, 107)"
-                                          d="M7.778,12.000 L12.222,12.000 L12.222,10.000 L7.778,10.000 L7.778,12.000 ZM-0.000,-0.000 L-0.000,2.000 L20.000,2.000 L20.000,-0.000 L-0.000,-0.000 ZM3.333,7.000 L16.667,7.000 L16.667,5.000 L3.333,5.000 L3.333,7.000 Z" />
-                                </svg>
-                            </div>
-                            <h4 class="custom-primary-color">Filter Jobs</h4>
-                        </div>
+        <form action="/Jobs/Jobs" method="get" id="globalFilterForm">
+            <input type="hidden" class="filter" name="byType" value="@Context.Request.Query["byType"]" />
+            <input type="hidden" class="filter" name="byExperience" value="@Context.Request.Query["byExperience"]" />
+
+            <div class="row">
+                <div class="col-lg-10 offset-lg-1">
+                    <div class="section-heading">
+                        <h2>Available <em>Jobs</em></h2>
+                        <img src="~/images/line-dec.png" alt="">
                     </div>
                 </div>
-                <div class="row">
-                    <form action="#">
-                        <div class="job-category-listing mb-50">
+            </div>
+            <div class="row gx-5">
+                <div class="col-lg-3">
+                    <div class="row">
+                        <div class="job-category-listing">
                             <div class="single-listing">
                                 <div class="small-section-tittle2">
-                                    <h4 class="custom-primary-color">Job Category</h4>
+                                    <div class="ion">
+                                        <svg xmlns="http://www.w3.org/2000/svg"
+                                             xmlns:xlink="http://www.w3.org/1999/xlink"
+                                             width="20px" height="12px">
+                                            <path fill-rule="evenodd" fill="rgb(27, 207, 107)"
+                                                  d="M7.778,12.000 L12.222,12.000 L12.222,10.000 L7.778,10.000 L7.778,12.000 ZM-0.000,-0.000 L-0.000,2.000 L20.000,2.000 L20.000,-0.000 L-0.000,-0.000 ZM3.333,7.000 L16.667,7.000 L16.667,5.000 L3.333,5.000 L3.333,7.000 Z" />
+                                        </svg>
+                                    </div>
+                                    <h4 style=" font-size: 22px;" class="custom-primary-color">Filter Jobs</h4>
                                 </div>
-                                <input class="form-control" onkeypress="updateUrlParamsOnEnter(event, 'byCategory', this.value)" list="categoryListOptions" placeholder="Type to search category...">
+                            </div>
+                            <div class="single-listing">
+                                <div class="small-section-tittle2">
+                                    <h5 class="custom-primary-color">Job Category</h5>
+                                </div>
+                                <input class="form-control filter" onkeypress="updateUrlParamsOnEnter(event, 'byCategory', this.value)" name="byCategory" list="categoryListOptions" placeholder="Type to search category...">
                                 <datalist id="categoryListOptions">
                                     @foreach (var category in Model.Categories)
                                     {
                                         <option value="@category"></option>
                                     }
                                 </datalist>
+                            </div>
+                            <div class="single-listing">
                                 <div class="select-Categories pt-80 pb-50">
                                     <div class="small-section-tittle2">
-                                        <h4 class="custom-primary-color">Job Type</h4>
+                                        <h5 class="custom-primary-color">Job Type</h5>
                                     </div>
                                     <label class="container">
                                         Full Time
@@ -72,14 +75,13 @@
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>
-                                <!-- select-Categories End -->
                             </div>
                             <!-- single two -->
                             <div class="single-listing">
                                 <div class="small-section-tittle2">
-                                    <h4 class="custom-primary-color">Job Location</h4>
+                                    <h5 class="custom-primary-color">Job Location</h5>
                                 </div>
-                                <input class="form-control" onkeypress="updateUrlParamsOnEnter(event, 'byLocation', this.value)" list="locationListOptions" placeholder="Type to search...">
+                                <input class="form-control filter" onkeypress="updateUrlParamsOnEnter(event, 'byLocation', this.value)" name="byLocation" list="locationListOptions" placeholder="Type to search...">
                                 <datalist id="locationListOptions">
                                     <option value="San Francisco"></option>
                                     <option value="New York"></option>
@@ -87,9 +89,11 @@
                                     <option value="Los Angeles"></option>
                                     <option value="Chicago"></option>
                                 </datalist>
+                            </div>
+                            <div class="single-listing">
                                 <div class="select-Categories pt-80 pb-50">
                                     <div class="small-section-tittle2">
-                                        <h4 class="custom-primary-color">Experience</h4>
+                                        <h5 class="custom-primary-color">Experience</h5>
                                     </div>
                                     <label class="container">
                                         0-1 Years
@@ -118,139 +122,147 @@
                                     </label>
                                 </div>
                             </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-            <div class="col-lg-9">
-                <div class="row mb-3">
-                    <form asp-action="Jobs" asp-controller="Jobs" method="get">
-                        <div class="input-group">
-                            <input type="text" class="form-control" name="searchKey" placeholder="Search position or company">
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-primary" type="submit">Search</button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="d-flex justify-content-between mb-3">
-                            <span>@Model.Pagination?.TotalItems jobs found</span>
-                            <div class="d-flex" style="gap:1rem;">
-                                <span style="text-wrap: nowrap;">Sort by</span>
-                                <form asp-action="Jobs" asp-controller="Jobs" method="get">
-                                    <select class="form-select form-select-sm" onchange="this.form.submit()" name="sortByPostedDate">
-                                        <option value="newest">None</option>
-                                        <option value="newest">Newest</option>
-                                        <option value="oldest">Oldest</option>
-                                    </select>
-                                </form>
+                            <div class="single-listing">
+                                <a asp-action="Jobs" id="clearFilterButton" asp-controller="Jobs" class="btn btn-outline-primary btn-sm"><i class="fa fa-trash"></i> Clear filters</a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    @foreach (var job in Model.Jobs)
-                    {
-                        <div class="job-item p-4 mb-4">
-                            <div class="row g-4">
-                                <div class="col-sm-12 col-md-8 d-flex align-items-center">
-                                    <img class="img-thumbnail border rounded" src="@job.CompanyLogoUrl" alt="" style="width: 80px; height: 80px;">
-                                    <div class="text-start ps-4">
-                                        <h5 class="mb-3">@job.Title</h5>
-                                        <span class="text-truncate me-3"><i class="fa fa-map-marker custom-primary-color me-2"></i>@job.Location</span>
-                                        <span class="text-truncate me-3"><i class="fa fa-clock-o custom-primary-color me-2"></i>@job.JobType</span>
-                                        <span class="text-truncate me-0"><i class="fa fa-money custom-primary-color me-2"></i>@job.JobSalary</span>
-                                    </div>
-                                </div>
-                                <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
-                                    <div class="d-flex mb-3">
-                                        @* <a class="btn btn-light btn-square me-3" href=""><i class="fa fa-heart-o custom-primary-color"></i></a> *@
-                                        <a class="btn btn-outline-primary" asp-action="JobDetails" asp-route-jobPostId="@job.Id">See details</a>
-                                    </div>
-                                    <div>
-                                        <small class="text-truncate me-3"><i class="fa fa-building custom-primary-color me-2"></i>@job.CompanyName</small>
-                                        <small class="text-truncate"><i class="fa fa-calendar custom-primary-color me-2"></i>@job.PublishDate</small>
-                                    </div>
+                <div class="col-lg-9">
+                    <div class="row mb-3">
+                        <div class="input-group">
+                            <input type="text" class="form-control filter" name="searchKey" oninput="updateUrlParamsOnEnter(e, 'searchKey', this.value" value="@Context.Request.Query["searchKey"]" placeholder="Search position or company">
+                            <div class="input-group-append">
+                                <button class="btn btn-outline-primary" onclick="submitFilterForm()">Search</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="d-flex justify-content-between mb-3">
+                                <span>@Model.Pagination?.TotalItems jobs found</span>
+                                <div class="d-flex" style="gap:1rem;">
+                                    <span style="text-wrap: nowrap;">Sort by</span>
+                                    <select class="form-select form-select-sm filter" onchange="submitFilterForm()" name="sortByPostedDate">
+                                        <option value="newest" selected="@(Context.Request.Query["sortByPostedDate"] == "newest")">Newest</option>
+                                        <option value="oldest" selected="@(Context.Request.Query["sortByPostedDate"] == "oldest")">Oldest</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
-                    }
+                    </div>
+                    <div class="row">
+                        @foreach (var job in Model.Jobs)
+                        {
+                            <div class="job-item p-4 mb-4">
+                                <div class="row g-4">
+                                    <div class="col-sm-12 col-md-8 d-flex align-items-center">
+                                        <img class="img-thumbnail border rounded" src="@job.CompanyLogoUrl" alt="" style="width: 80px; height: 80px;">
+                                        <div class="text-start ps-4">
+                                            <h5 class="mb-3">@job.Title</h5>
+                                            <span class="text-truncate me-3"><i class="fa fa-map-marker custom-primary-color me-2"></i>@job.Location</span>
+                                            <span class="text-truncate me-3"><i class="fa fa-clock-o custom-primary-color me-2"></i>@job.JobType</span>
+                                            <span class="text-truncate me-0"><i class="fa fa-money custom-primary-color me-2"></i>@job.JobSalary</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-12 col-md-4 d-flex flex-column align-items-start align-items-md-end justify-content-center">
+                                        <div class="d-flex mb-3">
+                                            @* <a class="btn btn-light btn-square me-3" href=""><i class="fa fa-heart-o custom-primary-color"></i></a> *@
+                                            <a class="btn btn-outline-primary" asp-action="JobDetails" asp-route-jobPostId="@job.Id">See details</a>
+                                        </div>
+                                        <div>
+                                            <small class="text-truncate me-3"><i class="fa fa-building custom-primary-color me-2"></i>@job.CompanyName</small>
+                                            <small class="text-truncate"><i class="fa fa-calendar custom-primary-color me-2"></i>@job.PublishDate</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <partial name="/Views/Shared/Partial/PaginationPartial.cshtml" for="@Model.Pagination" />
-        </div>
+            <div class="row">
+                <partial name="/Views/Shared/Partial/PaginationPartial.cshtml" for="@Model.Pagination" />
+            </div>
+        </form>
     </div>
 </section>
 
 <script>
     function updateUrlParams(paramName, paramValue, isChecked) {
-        var url = new URL(window.location.href);
-        var params = new URLSearchParams(url.search);
-        var existingValue = params.get(paramName);
+        let form = document.getElementById('globalFilterForm');
+        let input = form.querySelector(`input[name="${paramName}"]`);
+        var currentParamValue = input.value || 'any';
+
         if (isChecked) {
-            localStorage.setItem(paramValue, isChecked);
-            if (existingValue !== null) {
-                paramValue = existingValue + ',' + paramValue;
+            if (currentParamValue !== 'any') {
+                paramValue = currentParamValue + ',' + paramValue;
             }
-            params.set(paramName, paramValue);
         } else {
-            if (existingValue !== null) {
-                var valuesArray = existingValue.split(',');
-                var index = valuesArray.indexOf(paramValue);
-                if (index !== -1) {
-                    valuesArray.splice(index, 1);
-                    localStorage.removeItem(paramValue);
-
-                    paramValue = valuesArray.join(',');
-                    if (paramValue === '') {
-                        params.delete(paramName);
-                    } else {
-                        params.set(paramName, paramValue);
-                    }
-                }
-            }
+            var values = currentParamValue.split(',').filter(value => value !== paramValue && value !== '');
+            paramValue = values.join(',') || 'any';
         }
-        url.search = params.toString();
-        // window.history.replaceState({}, '', url.toString());
-        window.location.href = url.toString();
+        input.value = paramValue;
+        submitFilterForm();
     }
 
-    function setCheckboxStates() {
-        var paramValue = '';
-        for (var i = 0; i < localStorage.length; i++) {
-            var key = localStorage.key(i);
-            var isChecked = localStorage.getItem(key);
-            if (isChecked === "true") {
-                paramValue = paramValue + ',' + key;
-                document.querySelector('input[type="checkbox"][name="' + key + '"]').checked = true;
-            }
-        }
 
-        if (paramValue !== '') {
-            var url = new URL(window.location.href);
-            var params = new URLSearchParams(url.search);
-            params.set('byExperience', paramValue);
-            url.search = params.toString();
-        }
+    function submitFilterForm() {
+        var form = document.getElementById('globalFilterForm');
+        var inputs = form.querySelectorAll('input.filter');
+        var checkboxes = form.querySelectorAll('input[type="checkbox"]');
+
+        checkboxes.forEach((checkbox) => {
+            checkbox.disabled = true;
+        });
+
+        console.log(inputs);
+        inputs.forEach((input) => {
+            if (input.value === '' && input.name !== 'searchKey') {
+                input.value = 'any';
+            }
+        });
+        form.submit();
     }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        let url = new URL(window.location.href);
+        let params = new URLSearchParams(url.search);
+
+        let checkboxes = document.querySelectorAll('input[type="checkbox"]');
+        let categoryInput = document.querySelector('input[name="byCategory"]');
+        let locationInput = document.querySelector('input[name="byLocation"]');
+
+        let checkedCheckboxes = params.get('byType') ?? '';
+        checkedCheckboxes += ',' + (params.get('byExperience') ?? '');
+        checkedCheckboxes = checkedCheckboxes.split(',');
+
+        checkboxes.forEach((checkbox) => {
+            if (checkedCheckboxes.includes(`${checkbox.name}`)) {
+                checkbox.checked = true;
+            }
+        });
+
+        categoryInput.value = params.get('byCategory') !== 'any' ? params.get('byCategory') : '';
+        locationInput.value = params.get('byLocation') !== 'any' ? params.get('byLocation') : '';
+    });
+
+
+    // function filterFormChanged() {
+    //     document.querySelector('#globalFilterForm')
+    //         .addEventListener('input', () => {
+    //             document.querySelector('#clearFilterButton').classList.remove('disabled', 'custom-primary-color');
+    //             console.log('changed');
+    //         });
+    // }
+
 
     function updateUrlParamsOnEnter(e, paramName, paramValue) {
         if (e.key === 'Enter') {
-            var url = new URL(window.location.href);
-            var params = new URLSearchParams(url.search);
-            params.set(paramName, paramValue);
-            url.search = params.toString();
-            // window.history.replaceState({}, '', url.toString());
-            window.location.href = url.toString();
+            let form = document.getElementById('globalFilterForm');
+            let input = form.querySelector(`input[name="${paramName}"]`);
+            input.value = paramValue || 'any';
+            submitFilterForm();
         }
     }
-
-    window.onload = function () {
-        setCheckboxStates();
-    };
-
 </script>

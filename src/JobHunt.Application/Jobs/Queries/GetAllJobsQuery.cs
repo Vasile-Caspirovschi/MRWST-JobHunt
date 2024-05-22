@@ -17,15 +17,18 @@ public class GetAllJobsQueryHandler(IJobHuntDbContext dbContext, IPaginationServ
     {
         var experienceRangeType = typeof(ExperienceRangeType);
         var jobTypeType = typeof(JobTypeType);
+        string[] byType = request.FilterParams.ByType.Split(',');
+        string[] byExperience = request.FilterParams.ByExperience.Split(',');
+
 
         var query = _dbContext.JobPosts
             .Include(job => job.Company)
             .Include(job => job.JobCategory)
             .Where(jobPost =>
                 (request.FilterParams.ByCategory == "any" || jobPost.JobCategory.Title == request.FilterParams.ByCategory) &&
-                (request.FilterParams.ByType == "any" || jobPost.JobType == request.FilterParams.ByType) &&
+                (request.FilterParams.ByType == "any" || byType.Contains(jobPost.JobType)) &&
                 (request.FilterParams.ByLocation == "any" || jobPost.Company.Location == request.FilterParams.ByLocation) &&
-                (request.FilterParams.ByExperience == "any" || jobPost.Experience == request.FilterParams.ByExperience) &&
+                (request.FilterParams.ByExperience == "any" || byExperience.Contains(jobPost.Experience)) &&
                 (string.IsNullOrEmpty(request.FilterParams.SearchKey) ||
                     EF.Functions.Like(jobPost.Title.ToLower(), $"%{request.FilterParams.SearchKey.ToLower()}%") ||
                     EF.Functions.Like(jobPost.Company.Name.ToLower(), $"%{request.FilterParams.SearchKey.ToLower()}%")))

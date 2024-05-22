@@ -56,6 +56,7 @@
                     <h4 class="mb-4">Job Summery</h4>
                     <p><i class="fa fa-angle-right text-primary me-2"></i>Published On: @Model.JobPost.PublishDate</p>
                     <p><i class="fa fa-angle-right text-primary me-2"></i>Vacancy: Open</p>
+                    <p><i class="fa fa-angle-right text-primary me-2"></i>Experience: @Model.ParseExperience()</p>
                     <p><i class="fa fa-angle-right text-primary me-2"></i>Job Nature: @Model.JobPost.JobType</p>
                     <p><i class="fa fa-angle-right text-primary me-2"></i>Salary: @Model.JobPost.JobSalary</p>
                     <p><i class="fa fa-angle-right text-primary me-2"></i>Location: @Model.JobPost.Location</p>

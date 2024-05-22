@@ -68,7 +68,7 @@
                         <span class="input-group-text">
                             <i class="fa fa-clock-o custom-primary-color"></i>
                         </span>
-                        <select asp-for="JobPost.JobType" class="form-select" name="select" asp-items="Html.GetEnumSelectList<JobTypeType>()">
+                        <select asp-for="JobPost.JobType" class="form-select" asp-items="Html.GetEnumSelectList<JobTypeType>()">
                             Select work schedule
                         </select>
                         <span asp-validation-for="JobPost.JobType" class="text-danger"></span>
@@ -82,7 +82,7 @@
                         <span class="input-group-text" id="basic-addon1">
                             <i class="fa fa-briefcase custom-primary-color"></i>
                         </span>
-                        <select asp-for="JobPost.Experience" class="form-select" name="select" asp-items="Html.GetEnumSelectList<ExperienceRangeType>()">
+                        <select asp-for="JobPost.Experience" class="form-select" asp-items="Html.GetEnumSelectList<ExperienceRangeType>()">
                             Select experience
                         </select>
                         <span asp-validation-for="JobPost.Experience" class="text-danger"></span>

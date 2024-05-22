@@ -14,8 +14,11 @@ public static class DependencyInjection
     public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddScoped<IDatabaseUpgrader, DatabaseUpgrader>();
+        //services.AddDbContext<IJobHuntDbContext, JobHuntDbContext>(options =>
+        //    options.UseNpgsql(configuration.GetConnectionString("PostgresConnection")));
+
         services.AddDbContext<IJobHuntDbContext, JobHuntDbContext>(options =>
-            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+        options.UseSqlServer(configuration.GetConnectionString("SqlServerConnection")));
 
         //configure cloudinary for storing the images in cloud
         services.Configure<CloudinarySettings>(configuration.GetSection(nameof(CloudinarySettings)));

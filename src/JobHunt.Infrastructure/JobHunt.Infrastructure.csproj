@@ -1,19 +1,24 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <ItemGroup>
       <None Remove="DbUp\Scripts\0001-Roles.sql" />
-      <None Remove="DbUp\Scripts\0002-JobCategories.sql" />
-      <None Remove="DbUp\Scripts\0003-JobPosts.sql" />
+      <None Remove="DbUp\Scripts\0002-Users.sql" />
+      <None Remove="DbUp\Scripts\0003-JobCategories.sql" />
+      <None Remove="DbUp\Scripts\0004-JobPosts.sql" />
+    </ItemGroup>
+    <ItemGroup>
+      <EmbeddedResource Include="DbUp\Scripts\0002-Users.sql" />
     </ItemGroup>
     <ItemGroup>
       <EmbeddedResource Include="DbUp\Scripts\0001-Roles.sql" />
-      <EmbeddedResource Include="DbUp\Scripts\0002-JobCategories.sql" />
-      <EmbeddedResource Include="DbUp\Scripts\0003-JobPosts.sql" />
+      <EmbeddedResource Include="DbUp\Scripts\0003-JobCategories.sql" />
+      <EmbeddedResource Include="DbUp\Scripts\0004-JobPosts.sql" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="CloudinaryDotNet" />
-        <PackageReference Include="dbup-postgresql" />
+        <PackageReference Include="dbup-sqlserver" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />
         <PackageReference Include="Microsoft.EntityFrameworkCore" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Tools">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -24,6 +29,9 @@
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\JobHunt.Application\JobHunt.Application.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Migrations\" />
     </ItemGroup>
 
     <PropertyGroup>

@@ -47,6 +47,12 @@ public class AuthController(SignInManager<AppUser> signInManager, UserManager<Ap
         return RedirectToAction("MyAccount", "Employer");
     }
 
+    public async Task<IActionResult> Logout()
+    {
+        await _signInManager.SignOutAsync();
+        return RedirectToAction("Index", "Home");
+    }
+
     public IActionResult Register()
     {
         return View();
@@ -106,7 +112,7 @@ public class AuthController(SignInManager<AppUser> signInManager, UserManager<Ap
 
         if (result.Succeeded)
         {
-            await _userManager.AddToRoleAsync(newEmployer, UserRoleType.Employer.ToString());
+            await _userManager.AddToRoleAsync(newEmployer, nameof(UserRoleType.Employer));
             await _signInManager.SignInAsync(newEmployer, false);
             var createCompanyResult = await _mediator.Send(new CreateCompanyCommand(register.CompanyName, newEmployer));
             if (createCompanyResult.IsFailure)

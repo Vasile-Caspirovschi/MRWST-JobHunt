@@ -1,25 +1,25 @@
 <div class="vertical-menu position-sticky">
     <ul>
         <li>
-            <a href='@Url.Action("MyAccount", "Employer")'>My account</a>
+            <a asp-action="MyAccount" asp-controller="Employer">My account</a>
         </li>
         <li>
-            <a href='@Url.Action("AboutCompany", "Employer")'>About company</a>
+            <a asp-action="AboutCompany" asp-controller="Employer">About company</a>
         </li>
         <li>
-            <a href='@Url.Action("ContactData", "Employer")'>Contact data</a>
+            <a asp-action="ContactData" asp-controller="Employer">Contact data</a>
         </li>
         <li>
-            <a href='@Url.Action("JobPosts", "Employer")' '>Job posts</a>
+            <a asp-action="JobPosts" asp-controller="Employer">Job posts</a>
         </li>
         <li>
-            <a href='@Url.Action("PostJob", "Jobs")'>Post a job</a>
+            <a asp-action="PostJob" asp-controller="Jobs">Post a job</a>
         </li>
         <li>
             <a href='#'>Job applications</a>
         </li>
         <li>
-            <a href='#'>Logout</a>
+            <a asp-action="Logout" asp-controller="Auth">Logout</a>
         </li>
     </ul>
 </div>

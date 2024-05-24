@@ -30,7 +30,7 @@ public class EmployerController(IMediator mediator, UserManager<AppUser> userMan
                 await _mediator.Send(new GetCompanyByRepresentativeIdQuery(Guid.Parse(_userManager.GetUserId(User))), cancellationToken);
             var getCompanyStatisticResult =
                 await _mediator.Send(new GetCompanyStatisticQuery(getCompanyResult.Value.Id), cancellationToken);
-            return View("MyAccount", getCompanyStatisticResult.Value);
+            return View(getCompanyStatisticResult.Value);
         }
         return View();
     }

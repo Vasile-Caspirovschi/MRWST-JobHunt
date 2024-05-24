@@ -31,9 +31,8 @@
                             <i class="fa fa-money custom-primary-color"></i>
                         </span>
                         <input asp-for="JobPost.JobSalary" type="number" class="form-control" placeholder="Salary" aria-label="Salary" aria-describedby="basic-addon2">
-                        <span class="input-group-text">.00</span>
-                        <span asp-validation-for="JobPost.JobSalary" class="text-danger"></span>
                     </div>
+                    <span asp-validation-for="JobPost.JobSalary" class="text-danger"></span>
                 </div>
                 <div class="col-sm">
                     <h4>Job location</h4>
@@ -42,8 +41,8 @@
                             <i class="fa fa-map-marker custom-primary-color"></i>
                         </span>
                         <input asp-for="JobPost.Location" type="text" class="form-control" placeholder="Job Location" aria-label="Job Location" aria-describedby="basic-addon1">
-                        <span asp-validation-for="JobPost.Location" class="text-danger"></span>
                     </div>
+                    <span asp-validation-for="JobPost.Location" class="text-danger"></span>
                 </div>
             </div>
         </div>
@@ -75,8 +74,8 @@
                         <select asp-for="JobPost.JobType" class="form-select" asp-items="Html.GetEnumSelectList<JobTypeType>()">
                             Select work schedule
                         </select>
-                        <span asp-validation-for="JobPost.JobType" class="text-danger"></span>
                     </div>
+                    <span asp-validation-for="JobPost.JobType" class="text-danger"></span>
                 </div>
             </div>
             <div class="col-sm">
@@ -89,8 +88,8 @@
                         <select asp-for="JobPost.Experience" class="form-select" asp-items="Html.GetEnumSelectList<ExperienceRangeType>()">
                             Select experience
                         </select>
-                        <span asp-validation-for="JobPost.Experience" class="text-danger"></span>
                     </div>
+                    <span asp-validation-for="JobPost.Experience" class="text-danger"></span>
                 </div>
             </div>
         </div>

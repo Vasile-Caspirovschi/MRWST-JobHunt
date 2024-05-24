@@ -15,7 +15,7 @@
         <div class="row">
             <div class="col-12 col-sm-3">
                 <div class="mb-3 small-section-tittle2">
-                    <h4 class="mb-1">Company logo</h4>
+                    <h5 class="mb-1">Company logo</h5>
                     <img class="img-fluid border rounded mb-1" src="@Model.Company.LogoUrl" alt="Logo">
                     <input asp-for="UploadedLogo" type="file" class="form-control bg-white">
                 </div>
@@ -24,14 +24,14 @@
                 <div class="row">
                     <div class="col-12 col-sm-6">
                         <div class="mb-3 small-section-tittle2">
-                            <h4 class="mb-1">Name</h4>
+                            <h5 class="mb-1">Name</h5>
                             <input asp-for="Company.Name" type="text" class="form-control" placeholder="Enter company's name">
                             <span asp-validation-for="Company.Name" class="text-danger"></span>
                         </div>
                     </div>
                     <div class="col-12 col-sm-6">
                         <div class="mb-3 small-section-tittle2">
-                            <h4 class="mb-1">Contacts</h4>
+                            <h5 class="mb-1">Contacts</h5>
                             <input asp-for="Company.Phone" type="number" class="form-control" placeholder="Enter company's phone">
                             <span asp-validation-for="Company.Phone" class="text-danger"></span>
                         </div>
@@ -39,7 +39,7 @@
                 </div>
                 <div class="col-12">
                     <div class="mb-3 small-section-tittle2">
-                        <h4 class="mb-1">Location</h4>
+                        <h5 class="mb-1">Location</h5>
                         <input asp-for="Company.Location" type="text" class="form-control" placeholder="Enter company's location">
                         <span asp-validation-for="Company.Location" class="text-danger"></span>
                     </div>
@@ -49,7 +49,7 @@
         </div>
         <div class="row">
             <div class="mb-3 small-section-tittle2">
-                <h4 class="mb-1">Description</h4>
+                <h5 class="mb-1">Description</h5>
                 <div class="col-12">
                     <textarea asp-for="Company.Description" class="form-control" rows="5" placeholder="Company's description"></textarea>
                 </div>

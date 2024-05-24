@@ -2,6 +2,8 @@ using JobHunt.Application.Common.Interfaces;
 using JobHunt.Application.Companies.Commands;
 using JobHunt.Application.Companies.Queries;
 using JobHunt.Application.Jobs.Queries;
+using JobHunt.Application.Users.Commands;
+using JobHunt.Application.Users.Queries;
 using JobHunt.Domain.Entities;
 using JobHunt.Domain.Enums;
 using JobHunt.Domain.Shared;
@@ -52,9 +54,33 @@ public class EmployerController(IMediator mediator, UserManager<AppUser> userMan
         return View(new CompanyViewModel());
     }
 
-    public IActionResult ContactData()
+    public async Task<IActionResult> ContactData(CancellationToken cancellationToken)
     {
-        return View();
+        Guid userId = Guid.Parse(User.FindFirstValue(ClaimTypes.NameIdentifier));
+        var getUserResult = await _mediator.Send(new GetUserByIdQuery(userId), cancellationToken);
+
+        EmployerProfileViewModel viewModel = new();
+
+        if (getUserResult.IsFailure)
+        {
+            //TODO handle this i'm lazy at the moment
+            ModelState.AddModelError(string.Empty, getUserResult.Error.Message);
+        }
+
+        viewModel.Profile = getUserResult.Value;
+        return View(viewModel);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> UpdateContactData(EmployerProfileViewModel viewModel)
+    {
+        if (!ModelState.IsValid) return View("ContactData", viewModel);
+        var result = await _mediator.Send(new UpdateUserProfileCommand(viewModel.Profile));
+
+        if (result.IsFailure)
+            ModelState.AddModelError(string.Empty, result.Error.Message);
+
+        return View("ContactData", viewModel);
     }
 
     [HttpPost]
@@ -79,6 +105,6 @@ public class EmployerController(IMediator mediator, UserManager<AppUser> userMan
         var result = await _mediator.Send(new UpdateCompanyCommand(companyViewModel.Company), cancellationToken);
         if (result.IsFailure)
             ModelState.AddModelError(string.Empty, result.Error.Message);
-        return View("AboutCompany", companyViewModel);
+        return View(companyViewModel);
     }
 }

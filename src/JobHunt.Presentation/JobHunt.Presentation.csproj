@@ -27,4 +27,12 @@
         <DockerComposeProjectPath>..\..\docker-compose.dcproj</DockerComposeProjectPath>
     </PropertyGroup>
 
+    <ItemGroup>
+      <UpToDateCheckInput Remove="Views\Shared\Partial\AlertMessagePartial.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Views\Shared\Partial\AlertMessagePartial.cshtml" />
+    </ItemGroup>
+
 </Project>

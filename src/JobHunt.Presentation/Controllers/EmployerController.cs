@@ -27,7 +27,7 @@ public class EmployerController(IMediator mediator, UserManager<AppUser> userMan
         if (User.IsInRole(nameof(UserRoleType.Employer)))
         {
             var getCompanyResult =
-                await _mediator.Send(new GetCompanyByRepresentativeIdQuery(_userManager.GetUserId(User)!), cancellationToken);
+                await _mediator.Send(new GetCompanyByRepresentativeIdQuery(Guid.Parse(_userManager.GetUserId(User))), cancellationToken);
             var getCompanyStatisticResult =
                 await _mediator.Send(new GetCompanyStatisticQuery(getCompanyResult.Value.Id), cancellationToken);
             return View("MyAccount", getCompanyStatisticResult.Value);
@@ -40,7 +40,7 @@ public class EmployerController(IMediator mediator, UserManager<AppUser> userMan
     {
         CompanyJobPostsViewModel vm = new();
         var getCompanyResult =
-               await _mediator.Send(new GetCompanyByRepresentativeIdQuery(_userManager.GetUserId(User)!), cancellationToken);
+               await _mediator.Send(new GetCompanyByRepresentativeIdQuery(Guid.Parse(_userManager.GetUserId(User))), cancellationToken);
         if (getCompanyResult.IsSuccess)
         {
             var jobPostsResult =
@@ -55,7 +55,7 @@ public class EmployerController(IMediator mediator, UserManager<AppUser> userMan
     public async Task<IActionResult> AboutCompany(CancellationToken cancellationToken)
     {
         var id = User.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
-        var result = await _mediator.Send(new GetCompanyByRepresentativeIdQuery(id), cancellationToken);
+        var result = await _mediator.Send(new GetCompanyByRepresentativeIdQuery(Guid.Parse(id)), cancellationToken);
 
         if (!result.IsFailure) return View(new CompanyViewModel(result.Value));
 

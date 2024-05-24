@@ -5,7 +5,7 @@ using JobHunt.Domain.Shared;
 
 namespace JobHunt.Application.Companies.Commands;
 
-public sealed record CreateCompanyCommand(string Name, AppUser Representative) : ICommand;
+public sealed record CreateCompanyCommand(string Name, Employer Representative) : ICommand;
 
 public class CreateCompanyCommandHandler(IJobHuntDbContext dbContext) : ICommandHandler<CreateCompanyCommand>
 {
@@ -13,17 +13,19 @@ public class CreateCompanyCommandHandler(IJobHuntDbContext dbContext) : ICommand
 
     public async Task<Result> Handle(CreateCompanyCommand request, CancellationToken cancellationToken)
     {
-        var newCompany = new Company
+        Company newCompany = new()
         {
             Name = request.Name,
-            CompanyRepresentativeId = request.Representative.Id,
-            CompanyRepresentative = request.Representative
+            Employer = request.Representative
         };
+        _dbContext.Companies.Add(newCompany);
 
-        await _dbContext.Companies.AddAsync(newCompany, cancellationToken);
+        request.Representative.Company = newCompany;
+        request.Representative.CompanyId = newCompany.Id;
+        _dbContext.Employers.Update(request.Representative);
+
         if (await _dbContext.SaveChangesAsync(cancellationToken) > 0)
             return Result.Success();
-        return Result.Failure(new Error("CreateCompany.Failed",
-            "Something went wrong when trying to create a new company"));
+        return Result.Failure(new Error("CreateCompany.Failed", "Something went wrong when trying to create a new company"));
     }
 }

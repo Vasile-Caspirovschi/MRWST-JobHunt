@@ -67,13 +67,18 @@ public class AuthController(SignInManager<AppUser> signInManager, UserManager<Ap
     {
         if (!ModelState.IsValid) return View(register);
 
-        var user = await AppUserInit(register);
-        var result = await _userManager.CreateAsync(user, register.Password);
+        JobSeeker newJobSeeker = new()
+        {
+            Email = register.Email,
+            PhoneNumber = register.PhoneNumber,
+        };
+        await _userStore.SetUserNameAsync(newJobSeeker, register.FullName, CancellationToken.None);
+        var result = await _userManager.CreateAsync(newJobSeeker, register.Password);
         if (result.Succeeded)
         {
-            await _userManager.AddToRoleAsync(user, nameof(UserRoleType.JobSeeker));
-            await _signInManager.SignInAsync(user, false);
-            return RedirectToAction("MyAccount", "Employer");
+            await _userManager.AddToRoleAsync(newJobSeeker, nameof(UserRoleType.JobSeeker));
+            await _signInManager.SignInAsync(newJobSeeker, false);
+            return RedirectToAction("MyAccount", "JobSeeker");
         }
 
         foreach (var error in result.Errors) ModelState.AddModelError(string.Empty, error.Description);
@@ -91,28 +96,29 @@ public class AuthController(SignInManager<AppUser> signInManager, UserManager<Ap
             return View(register);
         }
 
-        var user = await AppUserInit(register);
-        var result = await _userManager.CreateAsync(user, register.Password);
+        Employer newEmployer = new()
+        {
+            Email = register.Email,
+            PhoneNumber = register.PhoneNumber,
+        };
+        await _userStore.SetUserNameAsync(newEmployer, register.FullName, CancellationToken.None);
+        var result = await _userManager.CreateAsync(newEmployer, register.Password);
+
         if (result.Succeeded)
         {
-            await _userManager.AddToRoleAsync(user, UserRoleType.Employer.ToString());
-            await _signInManager.SignInAsync(user, false);
-            await _mediator.Send(new CreateCompanyCommand(register.CompanyName, user));
+            await _userManager.AddToRoleAsync(newEmployer, UserRoleType.Employer.ToString());
+            await _signInManager.SignInAsync(newEmployer, false);
+            var createCompanyResult = await _mediator.Send(new CreateCompanyCommand(register.CompanyName, newEmployer));
+            if (createCompanyResult.IsFailure)
+            {
+                ModelState.AddModelError(string.Empty, "Failed to create the company.");
+                return View(register);
+            }
             return RedirectToAction("MyAccount", "Employer");
         }
 
         foreach (var error in result.Errors) ModelState.AddModelError(string.Empty, error.Description);
 
         return View(register);
-    }
-
-    private async Task<AppUser> AppUserInit(RegisterViewModel register)
-    {
-        var user = new AppUser();
-        await _userStore.SetUserNameAsync(user, register.FullName, CancellationToken.None);
-        //await /*_emailStore*/.SetEmailAsync(user, register.Email, CancellationToken.None);
-        user.Email = register.Email;
-        user.PhoneNumber = register.PhoneNumber;
-        return user;
     }
 }

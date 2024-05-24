@@ -1,20 +1,15 @@
-﻿using CloudinaryDotNet;
-using JobHunt.Application.Categories.Queries;
+﻿using JobHunt.Application.Categories.Queries;
 using JobHunt.Application.Companies.Queries;
-using JobHunt.Application.Jobs;
 using JobHunt.Application.Jobs.Commands;
 using JobHunt.Application.Jobs.Queries;
-using JobHunt.Domain.Entities;
 using JobHunt.Domain.Enums;
 using JobHunt.Domain.Shared;
 using JobHunt.Presentation.Models;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Query;
 using System.Diagnostics;
 using System.Security.Claims;
-using System.Threading;
 
 namespace JobHunt.Presentation.Controllers;
 
@@ -63,8 +58,10 @@ public class JobsController(IMediator mediator) : Controller
     public async Task<IActionResult> PostJob(CancellationToken cancellationToken)
     {
         var categoriesResult = await _mediator.Send(new GetAllJobCategoriesQuery(), cancellationToken);
-        CreateEditJobPostViewModel vm = new();
-        vm.Categories = categoriesResult.Value;
+        CreateEditJobPostViewModel vm = new()
+        {
+            Categories = categoriesResult.Value
+        };
         return View(vm);
     }
 
@@ -74,7 +71,7 @@ public class JobsController(IMediator mediator) : Controller
         if (!ModelState.IsValid)
             return View(viewModel);
         var userId = User.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
-        var getCompanyResult = await _mediator.Send(new GetCompanyByRepresentativeIdQuery(userId));
+        var getCompanyResult = await _mediator.Send(new GetCompanyByRepresentativeIdQuery(Guid.Parse(userId)));
         if (getCompanyResult.IsSuccess)
         {
             viewModel.JobPost.CompanyId = getCompanyResult.Value.Id;

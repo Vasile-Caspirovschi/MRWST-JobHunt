@@ -1,0 +1,14 @@
+﻿@model string
+
+
+<div class="alert primary-color-bg" id="parent">
+    <strong>Warning!</strong>
+    <div class="d-flex justify-content-between">
+        <p style="color: white">
+            @Model
+        </p>
+        <button type="button" class="close" onclick="document.querySelector('#parent').style.display = 'none';">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</div>

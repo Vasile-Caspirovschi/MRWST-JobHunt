@@ -21,7 +21,7 @@ public class GeCompanyByIdHandler(IJobHuntDbContext dbContext) : IQueryHandler<G
         {
             Id = company.Id,
             Name = company.Name,
-            CompanyRepresentativeId = company.CompanyRepresentativeId,
+            RepresentativeId = company.EmployerId,
             Description = company.Description,
             Location = company.Location,
             LogoUrl = company.Logo?.ImageUrl ?? @"/images/placeholder.png",

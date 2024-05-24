@@ -8,7 +8,8 @@ public interface IJobHuntDbContext : IDisposable
     DbSet<JobPost> JobPosts { get; set; }
     DbSet<JobCategory> JobCategories { get; set; }
     DbSet<Company> Companies { get; set; }
-    DbSet<AppUser> Users { get; set; }
+    DbSet<JobSeeker> JobSeekers{ get; set; }
+    DbSet<Employer> Employers { get; set; }
     DbSet<JobApplication> JobApplications { get; set; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken);
     Task MigrateAsync(CancellationToken cancellationToken);

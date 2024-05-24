@@ -6,7 +6,7 @@ public class CompanyDto
     public string Name { get; set; } = string.Empty;
     public string? Description { get; set;} = string.Empty;
     public string? Phone { get; set;}
-    public string? CompanyRepresentativeId { get; set; }
+    public Guid? RepresentativeId { get; set; }
     public string? Location { get; set; } = default!;
     public string? LogoUrl { get; set; }
     public string? LogoId { get; set; }

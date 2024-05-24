@@ -210,6 +210,10 @@ body {
     color: #ed563b !important;
 }
 
+.primary-color-bg {
+    background-color: #ed563b !important;
+}
+
 .pagination .page-link {
     color: #ed563b !important;
 }

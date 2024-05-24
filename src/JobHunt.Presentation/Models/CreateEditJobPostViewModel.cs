@@ -6,4 +6,6 @@ public class CreateEditJobPostViewModel
 {
     public JobPostDto? JobPost { get; set; }
     public IEnumerable<string> Categories { get; set; } = [];
+
+    public string AlertMessage { get; set; } = "Some message to pay attention.";
 }

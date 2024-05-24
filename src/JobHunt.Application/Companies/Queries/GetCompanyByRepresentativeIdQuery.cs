@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace JobHunt.Application.Companies.Queries;
 
-public sealed record GetCompanyByRepresentativeIdQuery(string RepresentativeId) : IQuery<CompanyDto>;
+public sealed record GetCompanyByRepresentativeIdQuery(Guid RepresentativeId) : IQuery<CompanyDto>;
 
 public class GetCompanyByRepresentativeIdHanlder(IJobHuntDbContext dbContext) : IQueryHandler<GetCompanyByRepresentativeIdQuery, CompanyDto>
 {
@@ -13,7 +13,7 @@ public class GetCompanyByRepresentativeIdHanlder(IJobHuntDbContext dbContext) : 
     
     public async Task<Result<CompanyDto>> Handle(GetCompanyByRepresentativeIdQuery request, CancellationToken cancellationToken)
     {
-        var user = await _dbContext.Users.FindAsync(request.RepresentativeId, cancellationToken);
+        var user = await _dbContext.Employers.FindAsync(request.RepresentativeId, cancellationToken);
 
         if (user == null)
         {
@@ -22,7 +22,7 @@ public class GetCompanyByRepresentativeIdHanlder(IJobHuntDbContext dbContext) : 
         }
 
         var company = await _dbContext.Companies.Include(c => c.Logo)
-            .FirstOrDefaultAsync(c => c.CompanyRepresentativeId == request.RepresentativeId, cancellationToken);
+            .FirstOrDefaultAsync(c => c.EmployerId == request.RepresentativeId, cancellationToken);
         if (company == null)
         {
             return Result.Failure<CompanyDto>(
@@ -33,7 +33,7 @@ public class GetCompanyByRepresentativeIdHanlder(IJobHuntDbContext dbContext) : 
         {
             Id = company.Id,
             Name = company.Name,
-            CompanyRepresentativeId = company.CompanyRepresentativeId,
+            RepresentativeId = company.EmployerId,
             Description = company.Description,
             Location = company.Location,
             LogoUrl = company.Logo?.ImageUrl ?? @"/images/placeholder.png",

@@ -8,6 +8,7 @@
 }
 <div>
     <form action="@Url.Action("PostJob", "Jobs")" method="post">
+        <partial name="/Views/Shared/Partial/AlertMessagePartial.cshtml" for="@Model.AlertMessage" />
         <h3 class="mb-3">Post a job</h3>
         <div class="mb-3 small-section-tittle2">
             <h4>Job title</h4>

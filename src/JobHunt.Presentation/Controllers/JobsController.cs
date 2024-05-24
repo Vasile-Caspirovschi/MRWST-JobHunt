@@ -1,5 +1,6 @@
 ﻿using JobHunt.Application.Categories.Queries;
 using JobHunt.Application.Companies.Queries;
+using JobHunt.Application.Jobs;
 using JobHunt.Application.Jobs.Commands;
 using JobHunt.Application.Jobs.Queries;
 using JobHunt.Domain.Enums;
@@ -57,11 +58,17 @@ public class JobsController(IMediator mediator) : Controller
 
     public async Task<IActionResult> PostJob(CancellationToken cancellationToken)
     {
-        var categoriesResult = await _mediator.Send(new GetAllJobCategoriesQuery(), cancellationToken);
+        string companyId = User.FindFirstValue("CompanyId");
+        var getCategoriesResult = await _mediator.Send(new GetAllJobCategoriesQuery(), cancellationToken);
+        var getCompanyResult = await _mediator.Send(new GetCompanyByIdQuery(Guid.Parse(companyId)), cancellationToken);
+
         CreateEditJobPostViewModel vm = new()
         {
-            Categories = categoriesResult.Value
+            Categories = getCategoriesResult.Value,
+            CompanyDto = getCompanyResult.Value,
+            JobPost = new JobPostDto()
         };
+        vm.JobPost.Location = vm.CompanyDto.Location;
         return View(vm);
     }
 

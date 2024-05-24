@@ -8,7 +8,10 @@
 }
 <div>
     <form action="@Url.Action("PostJob", "Jobs")" method="post">
-        <partial name="/Views/Shared/Partial/AlertMessagePartial.cshtml" for="@Model.AlertMessage" />
+        @if (!Model.CompanyDto.IsCompanyProfileComplete())
+        {
+            <partial name="/Views/Shared/Partial/AlertMessagePartial.cshtml" for="@Model.AlertMessage" />
+        }
         <h3 class="mb-3">Post a job</h3>
         <div class="mb-3 small-section-tittle2">
             <h4>Job title</h4>
@@ -105,7 +108,7 @@
             <span asp-validation-for="JobPost.JobDescription" class="text-danger"></span>
         </div>
         <div class="col-12">
-            <button class="btn btn-primary w-100" type="submit">Post the job</button>
+            <button class="btn btn-primary w-100" type="submit" @(Model.CompanyDto.IsCompanyProfileComplete() ? "" : "disabled")>Post the job</button>
         </div>
     </form>
 </div>

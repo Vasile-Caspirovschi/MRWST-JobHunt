@@ -13,7 +13,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using System.Threading;
 
 namespace JobHunt.Presentation.Controllers;
 
@@ -75,11 +74,18 @@ public class EmployerController(IMediator mediator, UserManager<AppUser> userMan
     public async Task<IActionResult> UpdateContactData(EmployerProfileViewModel viewModel)
     {
         if (!ModelState.IsValid) return View("ContactData", viewModel);
-        var result = await _mediator.Send(new UpdateUserProfileCommand(viewModel.Profile));
+        //var result = await _mediator.Send(new UpdateUserProfileCommand(viewModel.Profile));
 
-        if (result.IsFailure)
-            ModelState.AddModelError(string.Empty, result.Error.Message);
+        var user = await _userManager.GetUserAsync(User);
 
+        user.UserName = viewModel.Profile.Fullname;
+        user.Email = viewModel.Profile.Email;
+        user.PhoneNumber = viewModel.Profile.Phone;
+
+        var result = await _userManager.UpdateAsync(user);
+        if (!result.Succeeded)
+            ModelState.AddModelError(string.Empty, string.Join(", ", result.Errors.Select(e => e.Description)));
+        
         return View("ContactData", viewModel);
     }
 

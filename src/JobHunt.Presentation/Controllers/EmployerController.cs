@@ -22,42 +22,31 @@ public class EmployerController(IMediator mediator, UserManager<AppUser> userMan
     private readonly UserManager<AppUser> _userManager = userManager;
     private readonly ICloudImageService _imageService = imageService;
 
+    [Authorize(Roles = nameof(UserRoleType.Employer))]
     public async Task<IActionResult> MyAccount(CancellationToken cancellationToken)
     {
-        if (User.IsInRole(nameof(UserRoleType.Employer)))
-        {
-            var getCompanyResult =
-                await _mediator.Send(new GetCompanyByRepresentativeIdQuery(Guid.Parse(_userManager.GetUserId(User))), cancellationToken);
-            var getCompanyStatisticResult =
-                await _mediator.Send(new GetCompanyStatisticQuery(getCompanyResult.Value.Id), cancellationToken);
-            return View(getCompanyStatisticResult.Value);
-        }
-        return View();
+        string companyId = User.FindFirstValue("CompanyId");
+        var getCompanyStatisticResult =
+            await _mediator.Send(new GetCompanyStatisticQuery(Guid.Parse(companyId)), cancellationToken);
+        return View(getCompanyStatisticResult.Value);
     }
 
     [Authorize(Roles = nameof(UserRoleType.Employer))]
     public async Task<IActionResult> JobPosts(CancellationToken cancellationToken)
     {
+        string companyId = User.FindFirstValue("CompanyId");
+        var jobPostsResult = await _mediator.Send(new GetCompanyJobPostsQuery(Guid.Parse(companyId)), cancellationToken);
         CompanyJobPostsViewModel vm = new();
-        var getCompanyResult =
-               await _mediator.Send(new GetCompanyByRepresentativeIdQuery(Guid.Parse(_userManager.GetUserId(User))), cancellationToken);
-        if (getCompanyResult.IsSuccess)
-        {
-            var jobPostsResult =
-                await _mediator.Send(new GetCompanyJobPostsQuery(getCompanyResult.Value.Id), cancellationToken);
-            vm.JobPosts = jobPostsResult.Value;
-            return View(vm);
-        }
-        //needs some more checking
+        vm.JobPosts = jobPostsResult.Value;
         return View(vm);
     }
 
     public async Task<IActionResult> AboutCompany(CancellationToken cancellationToken)
     {
-        var id = User.Claims.First(claim => claim.Type == ClaimTypes.NameIdentifier).Value;
+        var id = User.FindFirstValue(ClaimTypes.NameIdentifier);
         var result = await _mediator.Send(new GetCompanyByRepresentativeIdQuery(Guid.Parse(id)), cancellationToken);
 
-        if (!result.IsFailure) return View(new CompanyViewModel(result.Value));
+        if (result.IsSuccess) return View(new CompanyViewModel(result.Value));
 
         ModelState.AddModelError(string.Empty, result.Error.Message);
         return View(new CompanyViewModel());

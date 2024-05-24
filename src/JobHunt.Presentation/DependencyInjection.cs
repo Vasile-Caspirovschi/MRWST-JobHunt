@@ -1,6 +1,7 @@
 ﻿using JobHunt.Application.Common.Interfaces;
 using JobHunt.Domain.Entities;
 using JobHunt.Infrastructure.Persistence;
+using JobHunt.Presentation.Helpers;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 
@@ -14,6 +15,8 @@ public static class DependencyInjection
             .AddEntityFrameworkStores<JobHuntDbContext>().AddDefaultTokenProviders();
         services.PostConfigure<CookieAuthenticationOptions>(IdentityConstants.ApplicationScheme,
             opt => opt.LoginPath = "/auth/login");
+
+        services.AddScoped<IUserClaimsPrincipalFactory<AppUser>, AppUserClaimsFactory>();
         return services;
     }
 

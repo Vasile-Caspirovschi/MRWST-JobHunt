@@ -221,3 +221,9 @@ body {
 .pagination > .page-item.active {
     color: white;
 }
+
+.cv-file {
+    display: flex;
+    align-items: center;
+    gap: 0.5em;
+}

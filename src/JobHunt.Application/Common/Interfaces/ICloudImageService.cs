@@ -5,6 +5,7 @@ namespace JobHunt.Application.Common.Interfaces;
 
 public interface ICloudImageService
 {
-        Task<ImageUploadResult> AddImageAsync(UploadedImageFile file);
-        Task<DeletionResult> DeleteImageAsync(string publicId);
+    Task<ImageUploadResult> AddImageAsync(UploadedFile file);
+    Task<DeletionResult> DeleteImageAsync(string publicId);
+    Task<ImageUploadResult> UploadPdfAsync(UploadedFile file);
 }

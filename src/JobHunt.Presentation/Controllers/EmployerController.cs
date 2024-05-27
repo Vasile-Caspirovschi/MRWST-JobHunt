@@ -95,7 +95,7 @@ public class EmployerController(IMediator mediator, UserManager<AppUser> userMan
         if (!ModelState.IsValid) return View("AboutCompany", companyViewModel);
         if (companyViewModel.UploadedLogo is not null)
         {
-            var image = new UploadedImageFile()
+            var image = new UploadedFile()
             {
                 FileName = companyViewModel.UploadedLogo.FileName,
                 Length = companyViewModel.UploadedLogo.Length,
@@ -111,6 +111,6 @@ public class EmployerController(IMediator mediator, UserManager<AppUser> userMan
         var result = await _mediator.Send(new UpdateCompanyCommand(companyViewModel.Company), cancellationToken);
         if (result.IsFailure)
             ModelState.AddModelError(string.Empty, result.Error.Message);
-        return View(companyViewModel);
+        return View("AboutCompany", companyViewModel);
     }
 }

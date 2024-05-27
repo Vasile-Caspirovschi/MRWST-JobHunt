@@ -2,9 +2,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace JobHunt.Domain.Shared;
 #nullable disable
-public class UploadedImageFile
+public class UploadedFile
 {
-    [FileExtensions(Extensions = "jpg,png")]
+    [FileExtensions(Extensions = "jpg,png,pdf")]
     [StringLength(100)]
     public string FileName { get; set; }
 

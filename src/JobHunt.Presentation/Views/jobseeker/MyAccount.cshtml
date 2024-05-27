@@ -1,0 +1,137 @@
+@using System.Security.Claims
+@model JobSeekerViewModel
+@{
+    ViewData["Title"] = "My Account";
+    Layout = "/Views/Shared/Layouts/_JobSeekerProfileLayout.cshtml";
+}
+
+<div>
+    <div class="row">
+        <h3 class="mb-3">Statistic</h3>
+        <div class="col-12 col-sm-4 mb-3">
+            <div class="card card-stats mb-4 mb-xl-0 shadow">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title text-uppercase text-muted mb-0">Job Applications</h5>
+                            <span class="h2 font-weight-bold mb-0">@Model.JobSeeker.JobApplicationsCount</span>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-warning text-white rounded-circle shadow">
+                                <i class="fa fa-share"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-4">
+            <div class="card card-stats mb-4 mb-xl-0 shadow">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="card-title text-uppercase text-muted mb-0">Favorite jobs</h5>
+                            <span class="h2 font-weight-bold mb-0">0</span>
+                        </div>
+                        <div class="col-auto">
+                            <div class="icon icon-shape bg-danger text-white rounded-circle shadow">
+                                <i class="fa fa-tasks"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <h3 class="mb-3">Personal Information</h3>
+        <form method="post" asp-action="UpdateProfile" enctype="multipart/form-data" asp-controller="JobSeeker">
+            <div class="row">
+                <div class="col-12 col-sm-6">
+                    <div class="mb-3 small-section-tittle2">
+                        <h5 class="mb-1">Full name</h5>
+                        <input type="hidden" asp-for="JobSeeker.Profile.Id" />
+                        <input asp-for="JobSeeker.Profile.Fullname" type="text" class="form-control" placeholder="Enter full name">
+                        <span asp-validation-for="JobSeeker.Profile.Fullname" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6">
+                    <div class="mb-3 small-section-tittle2">
+                        <h5 class="mb-1">Email</h5>
+                        <input asp-for="JobSeeker.Profile.Email" type="text" class="form-control" placeholder="Enter email address">
+                        <span asp-validation-for="JobSeeker.Profile.Email" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-6">
+                    <div class="mb-3 small-section-tittle2">
+                        <h5 class="mb-1">Phone number</h5>
+                        <input asp-for="JobSeeker.Profile.Phone" type="text" class="form-control" placeholder="Enter phone number">
+                        <span asp-validation-for="JobSeeker.Profile.Phone" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <button class="btn btn-primary w-100" type="submit">Save changes</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="row mt-4">
+        <div class="col-12">
+            <h3 class="mb-3">Curriculum vitae</h3>
+            <div class="col-12 col-sm-6">
+                <div class="mb-3 small-section-tittle2">
+                    <h5 class="mb-1">Your CV</h5>
+                    @if (Model.JobSeeker.HasUploadedCV)
+                    {
+                        <div class="d-flex gap-1">
+                            <div class="cv-file">
+                                <i class="fa fa-file-text custom-primary-color" aria-hidden="true"></i>
+                                <a href="@Model.JobSeeker.CV?.FileUrl" target="_blank">@Model.JobSeeker.CV?.FileName</a>
+                            </div>
+                            <button type="button" data-bs-toggle="modal" data-bs-target="#confirmDeletion" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                        </div>
+                    }
+                    else
+                    {
+                        <form asp-action="UploadCV" asp-controller="JobSeeker" method="post" enctype="multipart/form-data">
+                            <div class="d-flex gap-1">
+                                <input asp-for="JobSeeker.HasUploadedCV" type="hidden" />
+                                <input asp-for="UploadedCV" type="file" class="form-control bg-white">
+                                <button type="submit" class="btn btn-outline-primary btn-sm"><i class="fa fa-upload"></i></button>
+                            </div>
+                        </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="confirmDeletion" tabindex="-1" role="dialog" aria-labelledby="confirm" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirm">Confirm deletion</h5>
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete your uploaded CV file?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <form asp-action="DeleteCV" asp-controller="JobSeeker" method="post">
+                    <input type="hidden" asp-for="@User.FindFirst(ClaimTypes.NameIdentifier).Value" name="jobSeekerId" />
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+

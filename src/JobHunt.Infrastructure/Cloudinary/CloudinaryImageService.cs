@@ -16,7 +16,7 @@ public class CloudinaryImageService : ICloudImageService
         _cloudinary = new CloudinaryDotNet.Cloudinary(account);
     }
 
-    public async Task<ImageUploadResult> AddImageAsync(UploadedImageFile file)
+    public async Task<ImageUploadResult> AddImageAsync(UploadedFile file)
     {
         var uploadParams = new ImageUploadParams
         {
@@ -26,10 +26,20 @@ public class CloudinaryImageService : ICloudImageService
         return await _cloudinary.UploadAsync(uploadParams);
     }
 
+
     public async Task<DeletionResult> DeleteImageAsync(string publicId)
     {
         var deleteParams = new DeletionParams(publicId);
         var deletionResult = await _cloudinary.DestroyAsync(deleteParams);
         return deletionResult;
+    }
+
+    public async Task<ImageUploadResult> UploadPdfAsync(UploadedFile file)
+    {
+        var uploadParams = new ImageUploadParams()
+        {
+            File = new FileDescription(file.FileName, file.Stream)
+        };
+        return await _cloudinary.UploadAsync(uploadParams);
     }
 }

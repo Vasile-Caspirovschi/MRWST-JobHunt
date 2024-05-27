@@ -1,5 +1,4 @@
 ﻿using JobHunt.Application.Companies.Commands;
-using JobHunt.Application.Companies.Queries;
 using JobHunt.Domain.Entities;
 using JobHunt.Domain.Enums;
 using JobHunt.Presentation.Models;
@@ -7,7 +6,6 @@ using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace JobHunt.Presentation.Controllers;
 
@@ -44,6 +42,9 @@ public class AuthController(SignInManager<AppUser> signInManager, UserManager<Ap
             ModelState.AddModelError(string.Empty, "Invalid login attempt.");
             return View();
         }
+
+        if (User.IsInRole(nameof(UserRoleType.JobSeeker)))
+            return RedirectToAction("MyAccount", "JobSeeker");
         return RedirectToAction("MyAccount", "Employer");
     }
 

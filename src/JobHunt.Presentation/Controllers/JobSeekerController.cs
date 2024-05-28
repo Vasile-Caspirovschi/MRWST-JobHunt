@@ -1,4 +1,4 @@
-﻿using CloudinaryDotNet.Actions;
+﻿using JobHunt.Application.JobApplications.Queries;
 using JobHunt.Application.JobSeekers.Commands;
 using JobHunt.Application.JobSeekers.Queries;
 using JobHunt.Domain.Entities;
@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
-using System.Threading;
 
 namespace JobHunt.Presentation.Controllers;
 
@@ -36,6 +35,14 @@ public class JobSeekerController(IMediator mediator, UserManager<AppUser> userMa
         return View(vm);
     }
 
+    public async Task<IActionResult> JobApplications(CancellationToken cancellationToken)
+    {
+        string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var result = await _mediator.Send(new GetJobSeekerApplicationsQuery(Guid.Parse(userId)), cancellationToken);
+        JobApplicationsViewModel vm = new();
+        vm.JobApplications = result.Value;
+        return View(vm);
+    }
 
     public async Task<IActionResult> UpdateProfile(JobSeekerViewModel viewModel, CancellationToken cancellationToken)
     {

@@ -4,6 +4,7 @@ namespace JobHunt.Application.JobSeekers;
 
 public class JobSeekerDto
 {
+    public Guid Id { get; set; }
     public AppUserDto Profile { get; set; } = default!;
     public CVDto? CV { get; set; } = default!;
     public int JobApplicationsCount { get; set; }

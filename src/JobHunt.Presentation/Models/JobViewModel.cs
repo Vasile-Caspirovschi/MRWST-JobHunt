@@ -1,5 +1,6 @@
 ﻿using JobHunt.Application.Companies;
 using JobHunt.Application.Jobs;
+using JobHunt.Application.JobSeekers;
 using JobHunt.Domain.Enums;
 
 namespace JobHunt.Presentation.Models;
@@ -8,6 +9,7 @@ public class JobViewModel
 {
     public required JobPostDto JobPost { get; set; }
     public required CompanyDto Company { get; set; }
+    public JobSeekerDto? JobSeeker { get; set; }
 
     public string ParseExperience()
     {
@@ -23,4 +25,5 @@ public class JobViewModel
         };
     }
 
+    public string AlertMessage { get; set; } = "You have to upload your CV in your profile before beeing able to apply for the job";
 }

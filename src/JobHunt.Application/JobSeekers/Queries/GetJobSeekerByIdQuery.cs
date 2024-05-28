@@ -36,6 +36,7 @@ public class GetJobSeekerByIdHandler(IJobHuntDbContext dbContext) : IQueryHandle
 
         return new JobSeekerDto()
         {
+            Id = jobSeeker.Id,
             Profile = new AppUserDto(jobSeeker.UserName, jobSeeker.Email, jobSeeker.PhoneNumber),
             CV = cVDto,
             JobApplicationsCount = jobSeeker.JobApplications.Count(),

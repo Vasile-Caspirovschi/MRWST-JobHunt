@@ -16,4 +16,5 @@ public class JobPostDto
     public ExperienceRangeType Experience { get; set; }
     public Guid? CompanyId { get; set; } = Guid.Empty;
     public string CompanyName { get; set; } = string.Empty;
+    public bool HasAppliedTo { get; set; }
 }

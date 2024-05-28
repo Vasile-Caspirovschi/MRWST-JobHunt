@@ -1,4 +1,5 @@
-﻿@{
+﻿@using JobHunt.Domain.Enums
+@{
     ViewData["Title"] = "Job Details";
 }
 @model JobViewModel
@@ -23,31 +24,49 @@
                     <div>
                         @Html.Raw(@Model.JobPost.JobDescription);
                     </div>
-                    <div class="mt-4">
-                        <h4 class="mb-4">Apply For The Job</h4>
-                        <form>
-                            <div class="row g-3">
-                                <div class="col-12 col-sm-6">
-                                    <input type="text" class="form-control" placeholder="Your Name">
+                    @if (User.IsInRole(nameof(UserRoleType.JobSeeker)) && !Model.JobPost.HasAppliedTo)
+                    {
+                        <div class="mt-4">
+                            <h4 class="mb-4">Apply For The Job</h4>
+                            @if (!Model.JobSeeker.HasUploadedCV)
+                            {
+                                <partial name="/Views/Shared/Partial/AlertMessagePartial.cshtml" for="@Model.AlertMessage" />
+                            }
+                            <form asp-action="ApplyJob" asp-controller="Jobs" method="post">
+                                <div class="row g-3">
+                                    <div class="small-section-tittle2">
+                                        <h5 class="mb-1">Contact data</h5>
+                                        <div class="row g-3">
+                                            <div class="col-12 col-sm-6">
+                                                <input asp-for="JobSeeker.Id" type="hidden" name="ApplicantId"/>
+                                                <input asp-for="JobPost.Id" type="hidden" name="JobId"/>
+                                                <input asp-for="Company.Id" type="hidden" name="CompanyId"/>
+                                                <input asp-for="JobSeeker.Profile.Fullname" name="ApplicantFullname" type="text" class="form-control" placeholder="Your full name">
+                                                <span asp-validation-for="JobSeeker.Profile.Fullname" class="text-danger"></span>
+                                            </div>
+                                            <div class="col-12 col-sm-6">
+                                                <input asp-for="JobSeeker.Profile.Email" type="text" name="ApplicantEmail" class="form-control" placeholder="Enter email address">
+                                                <span asp-validation-for="JobSeeker.Profile.Email" class="text-danger"></span>
+                                            </div>
+                                            <small class="form-text text-muted">Your name and email was retrieved from your profile, feel free to edit them before applying</small>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3 small-section-tittle2">
+                                        <h5 class="mb-1">Your CV</h5>
+                                        <div class="d-flex gap-1">
+                                            <div class="cv-file">
+                                                <i class="fa fa-file-text custom-primary-color" aria-hidden="true"></i>
+                                                <a href="@Model.JobSeeker.CV?.FileUrl" target="_blank">@Model.JobSeeker.CV?.FileName</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <button class="btn btn-primary w-100" type="submit">Apply Now</button>
+                                    </div>
                                 </div>
-                                <div class="col-12 col-sm-6">
-                                    <input type="email" class="form-control" placeholder="Your Email">
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <input type="text" class="form-control" placeholder="Portfolio Website">
-                                </div>
-                                <div class="col-12 col-sm-6">
-                                    <input type="file" class="form-control bg-white">
-                                </div>
-                                <div class="col-12">
-                                    <textarea class="form-control" rows="5" placeholder="Coverletter"></textarea>
-                                </div>
-                                <div class="col-12">
-                                    <button class="btn btn-primary w-100" type="submit">Apply Now</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                            </form>
+                        </div>
+                    }
                 </div>
 
             </div>
@@ -55,7 +74,6 @@
                 <div class="bg-light rounded p-5 mb-4">
                     <h4 class="mb-4">Job Summery</h4>
                     <p><i class="fa fa-angle-right text-primary me-2"></i>Published On: @Model.JobPost.PublishDate</p>
-                    <p><i class="fa fa-angle-right text-primary me-2"></i>Vacancy: Open</p>
                     <p><i class="fa fa-angle-right text-primary me-2"></i>Experience: @Model.ParseExperience()</p>
                     <p><i class="fa fa-angle-right text-primary me-2"></i>Job Nature: @Model.JobPost.JobType</p>
                     <p><i class="fa fa-angle-right text-primary me-2"></i>Salary: @Model.JobPost.JobSalary</p>

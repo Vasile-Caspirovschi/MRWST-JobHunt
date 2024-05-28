@@ -3,6 +3,8 @@ using JobHunt.Application.Companies.Queries;
 using JobHunt.Application.Jobs;
 using JobHunt.Application.Jobs.Commands;
 using JobHunt.Application.Jobs.Queries;
+using JobHunt.Application.JobSeekers.Commands;
+using JobHunt.Application.JobSeekers.Queries;
 using JobHunt.Domain.Enums;
 using JobHunt.Domain.Shared;
 using JobHunt.Presentation.Models;
@@ -14,7 +16,7 @@ using System.Security.Claims;
 
 namespace JobHunt.Presentation.Controllers;
 
-[Authorize(Roles = nameof(UserRoleType.Employer))]
+[Authorize()]
 public class JobsController(IMediator mediator) : Controller
 {
     private readonly IMediator _mediator = mediator;
@@ -43,6 +45,13 @@ public class JobsController(IMediator mediator) : Controller
         if (getJobPostResult.IsFailure)
             return RedirectToAction(nameof(Jobs), nameof(Jobs));
 
+        if (User.IsInRole(nameof(UserRoleType.JobSeeker)))
+        {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var hasAppliedForJob = await _mediator.Send(new HasAppliedForJobPostQuery(Guid.Parse(userId), jobPostId), cancellationToken);
+            getJobPostResult.Value.HasAppliedTo = hasAppliedForJob.Value;
+        }
+
         var getCompanyResult = await _mediator.Send(new GetCompanyByIdQuery(getJobPostResult.Value.CompanyId.Value), cancellationToken);
 
         if (getCompanyResult.IsFailure)
@@ -53,6 +62,13 @@ public class JobsController(IMediator mediator) : Controller
             JobPost = getJobPostResult.Value,
             Company = getCompanyResult.Value
         };
+
+        if (User.IsInRole(nameof(UserRoleType.JobSeeker)))
+        {
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var getJobSeekerResult = await _mediator.Send(new GetJobSeekerByIdQuery(Guid.Parse(userId)), cancellationToken);
+            viewModel.JobSeeker = getJobSeekerResult.Value;
+        }
         return View(viewModel);
     }
 
@@ -127,6 +143,17 @@ public class JobsController(IMediator mediator) : Controller
             return RedirectToAction("JobPosts", "Employer");
         }
         return RedirectToAction("JobPosts", "Employer");
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> ApplyJob(ApplyJobViewModel viewModel, CancellationToken cancellationToken)
+    {
+        if (ModelState.IsValid)
+        {
+            ApplyForJobCommand command = new(viewModel.ApplicantFullname, viewModel.ApplicantEmail, viewModel.JobId, viewModel.ApplicantId, viewModel.CompanyId);
+            var result = await _mediator.Send(command, cancellationToken);
+        }
+        return RedirectToAction("JobDetails", "Jobs", new { jobPostId = viewModel.JobId });
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

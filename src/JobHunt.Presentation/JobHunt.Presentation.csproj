@@ -13,10 +13,6 @@
         <ProjectReference Include="..\JobHunt.Infrastructure\JobHunt.Infrastructure.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Views\JobSeeker\" />
-    </ItemGroup>
-
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>

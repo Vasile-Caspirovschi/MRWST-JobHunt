@@ -1,6 +1,7 @@
 ﻿using JobHunt.Application.Common.Interfaces;
 using JobHunt.Domain.Entities;
 using JobHunt.Infrastructure.Persistence;
+using JobHunt.Presentation.Helpers;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 
@@ -10,10 +11,12 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddPresentation(this IServiceCollection services)
     {
-        services.AddIdentity<AppUser, IdentityRole>(options => { options.User.RequireUniqueEmail = false; })
+        services.AddIdentity<AppUser, IdentityRole<Guid>>(options => { options.User.RequireUniqueEmail = false; })
             .AddEntityFrameworkStores<JobHuntDbContext>().AddDefaultTokenProviders();
         services.PostConfigure<CookieAuthenticationOptions>(IdentityConstants.ApplicationScheme,
             opt => opt.LoginPath = "/auth/login");
+
+        services.AddScoped<IUserClaimsPrincipalFactory<AppUser>, AppUserClaimsFactory>();
         return services;
     }
 

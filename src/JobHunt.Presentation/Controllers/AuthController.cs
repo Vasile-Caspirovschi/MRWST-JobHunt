@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace JobHunt.Presentation.Controllers;
 
-public class AuthController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager, 
+public class AuthController(SignInManager<AppUser> signInManager, UserManager<AppUser> userManager,
     IUserStore<AppUser> userStore, IMediator mediator) : Controller
 {
     private readonly IMediator _mediator = mediator;
@@ -24,9 +24,8 @@ public class AuthController(SignInManager<AppUser> signInManager, UserManager<Ap
     }
 
     [HttpPost]
-    public async Task<IActionResult> Login(LoginViewModel login, string? returnUrl = null!)
+    public async Task<IActionResult> Login(LoginViewModel login, CancellationToken cancellationToken)
     {
-        returnUrl ??= Url.Content("~/");
         if (!ModelState.IsValid) return View();
 
         var user = _signInManager.UserManager.Users.FirstOrDefault(u => u.Email == login.Email);
@@ -36,11 +35,23 @@ public class AuthController(SignInManager<AppUser> signInManager, UserManager<Ap
             return View();
         }
 
-        var result = await _signInManager.PasswordSignInAsync(user.UserName!, login.Password, login.RememberMe,
-            false);
-        if (result.Succeeded) return LocalRedirect(returnUrl);
-        ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-        return View();
+        var result = await _signInManager.PasswordSignInAsync(user.UserName!, login.Password, login.RememberMe, false);
+
+        if (!result.Succeeded)
+        {
+            ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+            return View();
+        }
+
+        if (User.IsInRole(nameof(UserRoleType.JobSeeker)))
+            return RedirectToAction("MyAccount", "JobSeeker");
+        return RedirectToAction("MyAccount", "Employer");
+    }
+
+    public async Task<IActionResult> Logout()
+    {
+        await _signInManager.SignOutAsync();
+        return RedirectToAction("Index", "Home");
     }
 
     public IActionResult Register()
@@ -59,17 +70,22 @@ public class AuthController(SignInManager<AppUser> signInManager, UserManager<Ap
     }
 
     [HttpPost]
-    public async Task<IActionResult> RegisterJobSeeker(RegisterViewModel register, string returnUrl = "/")
+    public async Task<IActionResult> RegisterJobSeeker(RegisterViewModel register)
     {
         if (!ModelState.IsValid) return View(register);
 
-        var user = await AppUserInit(register);
-        var result = await _userManager.CreateAsync(user, register.Password);
+        JobSeeker newJobSeeker = new()
+        {
+            Email = register.Email,
+            PhoneNumber = register.PhoneNumber,
+        };
+        await _userStore.SetUserNameAsync(newJobSeeker, register.FullName, CancellationToken.None);
+        var result = await _userManager.CreateAsync(newJobSeeker, register.Password);
         if (result.Succeeded)
         {
-            await _userManager.AddToRoleAsync(user, UserRoleType.JobSeeker.ToString());
-            await _signInManager.SignInAsync(user, false);
-            return LocalRedirect(returnUrl);
+            await _userManager.AddToRoleAsync(newJobSeeker, nameof(UserRoleType.JobSeeker));
+            await _signInManager.SignInAsync(newJobSeeker, false);
+            return RedirectToAction("MyAccount", "JobSeeker");
         }
 
         foreach (var error in result.Errors) ModelState.AddModelError(string.Empty, error.Description);
@@ -78,7 +94,7 @@ public class AuthController(SignInManager<AppUser> signInManager, UserManager<Ap
     }
 
     [HttpPost]
-    public async Task<IActionResult> RegisterEmployer(RegisterViewModel register, string returnUrl = "/")
+    public async Task<IActionResult> RegisterEmployer(RegisterViewModel register)
     {
         if (!ModelState.IsValid) return View(register);
         if (string.IsNullOrEmpty(register.CompanyName))
@@ -87,28 +103,29 @@ public class AuthController(SignInManager<AppUser> signInManager, UserManager<Ap
             return View(register);
         }
 
-        var user = await AppUserInit(register);
-        var result = await _userManager.CreateAsync(user, register.Password);
+        Employer newEmployer = new()
+        {
+            Email = register.Email,
+            PhoneNumber = register.PhoneNumber,
+        };
+        await _userStore.SetUserNameAsync(newEmployer, register.FullName, CancellationToken.None);
+        var result = await _userManager.CreateAsync(newEmployer, register.Password);
+
         if (result.Succeeded)
         {
-            await _userManager.AddToRoleAsync(user, UserRoleType.Employer.ToString());
-            await _signInManager.SignInAsync(user, false);
-            await _mediator.Send(new CreateCompanyCommand(register.CompanyName, user));
-            return LocalRedirect(returnUrl);
+            await _userManager.AddToRoleAsync(newEmployer, nameof(UserRoleType.Employer));
+            await _signInManager.SignInAsync(newEmployer, false);
+            var createCompanyResult = await _mediator.Send(new CreateCompanyCommand(register.CompanyName, newEmployer));
+            if (createCompanyResult.IsFailure)
+            {
+                ModelState.AddModelError(string.Empty, "Failed to create the company.");
+                return View(register);
+            }
+            return RedirectToAction("MyAccount", "Employer");
         }
 
         foreach (var error in result.Errors) ModelState.AddModelError(string.Empty, error.Description);
 
         return View(register);
-    }
-
-    private async Task<AppUser> AppUserInit(RegisterViewModel register)
-    {
-        var user = new AppUser();
-        await _userStore.SetUserNameAsync(user, register.FullName, CancellationToken.None);
-        //await /*_emailStore*/.SetEmailAsync(user, register.Email, CancellationToken.None);
-        user.Email = register.Email;
-        user.PhoneNumber = register.PhoneNumber;
-        return user;
     }
 }

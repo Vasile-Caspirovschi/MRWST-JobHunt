@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace JobHunt.Domain.Enums;
+﻿namespace JobHunt.Domain.Enums;
 public enum JobTypeType
 {
     FullTime = 0,

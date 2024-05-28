@@ -10,22 +10,22 @@ internal class DatabaseUpgrader(IConfiguration _configuration) : IDatabaseUpgrad
     {
         try
         {
-            string connectionString = _configuration.GetConnectionString("DefaultConnection")
+            string connectionString = _configuration.GetConnectionString("SqlServerConnection")
                 ?? throw new InvalidOperationException("DefaultConnection connection string is not configured.");
 
-            EnsureDatabase.For.PostgresqlDatabase(connectionString);
+            EnsureDatabase.For.SqlDatabase(connectionString);
 
             var upgradeEngine = DeployChanges.To
-                .PostgresqlDatabase(connectionString)
+                .SqlDatabase(connectionString)
                 .WithScriptsEmbeddedInAssemblies([typeof(DatabaseUpgrader).Assembly])
                 .LogToConsole()
                 .Build();
-            Console.WriteLine("Checking if the database needs to be upgraded...");
-            if (!upgradeEngine.IsUpgradeRequired())
-            {
-                Console.WriteLine("No changes found, upgrade not needed.");
-                return;
-            }
+            //Console.WriteLine("Checking if the database needs to be upgraded...");
+            //if (!upgradeEngine.IsUpgradeRequired())
+            //{
+            //    Console.WriteLine("No changes found, upgrade not needed.");
+            //    return;
+            //}
 
             var upgradeResult = upgradeEngine.PerformUpgrade();
             if (upgradeResult.Successful)

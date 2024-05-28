@@ -2,6 +2,7 @@
 
 namespace JobHunt.Domain.Entities;
 
-public class AppUser : IdentityUser
+public class AppUser : IdentityUser<Guid>
 {
+
 }

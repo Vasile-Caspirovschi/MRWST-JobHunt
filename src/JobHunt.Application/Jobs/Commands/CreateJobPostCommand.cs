@@ -2,6 +2,7 @@
 using JobHunt.Application.Common.Interfaces;
 using JobHunt.Domain.Entities;
 using JobHunt.Domain.Shared;
+using Microsoft.EntityFrameworkCore;
 
 namespace JobHunt.Application.Jobs.Commands;
 
@@ -22,18 +23,19 @@ public class CreateJobPostCommandHandler(IJobHuntDbContext dbContext) : ICommand
 
     public async Task<Result> Handle(CreateJobPostCommand request, CancellationToken cancellationToken)
     {
-        var newJobPost = new JobPost()
+        var category = await _dbContext.JobCategories.FirstOrDefaultAsync(c => c.Title == request.JobPost.JobCategoryName);
+
+        if (category is null)
+        {
+            return Result.Failure(new Error("CreateJobPost.Failed", "Job category not found"));
+        }
+
+        JobPost newJobPost = new()
         {
             Title = request.JobPost.Title,
             JobSalary = request.JobPost.JobSalary,
-            JobCategory = new JobCategory()
-            {
-                Title = request.JobPost.JobCategoryName?? "IT"
-            },
-            Company = new Company()
-            {
-                Location = request.JobPost.Location,
-            },
+            JobCategory = category,
+            CompanyId = request.JobPost.CompanyId ?? Guid.Empty,
             JobDescription = request.JobPost.JobDescription,
             JobType = request.JobPost.JobType.ToString(),
             Experience = request.JobPost.Experience.ToString(),

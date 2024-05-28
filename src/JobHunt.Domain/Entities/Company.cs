@@ -1,4 +1,6 @@
-﻿namespace JobHunt.Domain.Entities;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace JobHunt.Domain.Entities;
 
 public class Company
 {
@@ -6,8 +8,10 @@ public class Company
     public string Name { get; set; } = string.Empty;
     public string? Description { get; set;} = string.Empty;
     public string? Phone { get; set;}
-    public string CompanyRepresentativeId { get; set; } = default!;
-    public AppUser CompanyRepresentative { get; set; } = default!;
+
+    [ForeignKey(nameof(Employer))]
+    public Guid EmployerId { get; set; }
+    public Employer Employer { get; set; } = default!;
     public string? Location { get; set; } = default!;
     public Image? Logo { get; set; }
 }

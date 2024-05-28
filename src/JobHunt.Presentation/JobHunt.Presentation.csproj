@@ -28,12 +28,12 @@
     </ItemGroup>
 
     <ItemGroup>
-      <_ContentIncludedByDefault Remove="views\jobseeker\MyAccount.cshtml" />
+      <_ContentIncludedByDefault Remove="Views\JobSeeker\MyAccount.cshtml" />
       <_ContentIncludedByDefault Remove="Views\Shared\Partial\AlertMessagePartial.cshtml" />
     </ItemGroup>
 
     <ItemGroup>
-      <UpToDateCheckInput Remove="views\jobseeker\MyAccount.cshtml" />
+      <UpToDateCheckInput Remove="Views\JobSeeker\MyAccount.cshtml" />
     </ItemGroup>
 
 </Project>

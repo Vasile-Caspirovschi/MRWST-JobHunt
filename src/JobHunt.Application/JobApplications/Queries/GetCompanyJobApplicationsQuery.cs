@@ -5,18 +5,20 @@ using JobHunt.Domain.Shared;
 using Microsoft.EntityFrameworkCore;
 
 namespace JobHunt.Application.JobApplications.Queries;
-public sealed record GetJobSeekerApplicationsQuery(Guid UserId) : IQuery<IEnumerable<JobApplicationDto>>;
+public sealed record GetCompanyJobApplicationsQuery(Guid CompanyId) : IQuery<IEnumerable<JobApplicationDto>>;
 
-public class GetJobSeekerApplicationHandler(IJobHuntDbContext dbContext) : IQueryHandler<GetJobSeekerApplicationsQuery, IEnumerable<JobApplicationDto>>
+public class GetCompanyJobApplicationsHanlder(IJobHuntDbContext dbContext) : IQueryHandler<GetCompanyJobApplicationsQuery, IEnumerable<JobApplicationDto>>
 {
     private readonly IJobHuntDbContext _dbContext = dbContext;
 
-    public async Task<Result<IEnumerable<JobApplicationDto>>> Handle(GetJobSeekerApplicationsQuery request, CancellationToken cancellationToken)
+    public async Task<Result<IEnumerable<JobApplicationDto>>> Handle(GetCompanyJobApplicationsQuery request, CancellationToken cancellationToken)
     {
         var jobApplications = await _dbContext.JobApplications
             .Include(x => x.JobPost)
             .ThenInclude(x => x.Company)
-            .Where(x => x.ApplicantId == request.UserId)
+            .Include(x => x.Applicant)
+            .ThenInclude(x => x.CV)
+            .Where(x => x.CompanyId == request.CompanyId)
             .Select(jobApplication => new JobApplicationDto()
             {
                 ApplicantFullname = jobApplication.ApplicantFullname,
@@ -27,6 +29,7 @@ public class GetJobSeekerApplicationHandler(IJobHuntDbContext dbContext) : IQuer
                 CompanyId = jobApplication.CompanyId,
                 CompanyName = jobApplication.JobPost.Company.Name,
                 AppliedAt = jobApplication.ApplicationDate,
+                CV = new CVDto(jobApplication.Applicant.CV.FileName, jobApplication.Applicant.CV.FileUrl)
             })
             .AsSplitQuery()
             .ToListAsync();

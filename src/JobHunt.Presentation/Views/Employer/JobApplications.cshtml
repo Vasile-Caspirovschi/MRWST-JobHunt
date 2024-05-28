@@ -1,0 +1,43 @@
+﻿@model JobApplicationsViewModel
+@{
+    ViewData["Title"] = "Job Applications";
+    Layout = "/Views/Shared/Layouts/_EmployerProfileLayout.cshtml";
+}
+
+<div>
+    <h3 class="mb-3">Job Applications</h3>
+    <div class="row">
+        <table class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Job title</th>
+                    <th scope="col">Applicant</th>
+                    <th scope="col">Applied CV</th>
+                    <th scope="col">Applied At</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                @foreach (var jobApplication in Model.JobApplications)
+                {
+                    <tr>
+                        <td>@jobApplication.JobTitle</td>
+                        <td>
+                            <div class="d-flex flex-column gap-1">
+                                <span>@jobApplication.ApplicantFullname</span>
+                                <span>@jobApplication.ApplicantEmail</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="cv-file">
+                                <i class="fa fa-file-text custom-primary-color" aria-hidden="true"></i>
+                                <a href="@jobApplication.CV?.FileUrl" target="_blank">@jobApplication.CV?.FileName</a>
+                            </div>
+                        </td>
+                        <td>@jobApplication.AppliedAt</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

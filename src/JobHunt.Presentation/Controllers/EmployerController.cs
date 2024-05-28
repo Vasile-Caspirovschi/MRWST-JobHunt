@@ -1,8 +1,8 @@
 using JobHunt.Application.Common.Interfaces;
 using JobHunt.Application.Companies.Commands;
 using JobHunt.Application.Companies.Queries;
+using JobHunt.Application.JobApplications.Queries;
 using JobHunt.Application.Jobs.Queries;
-using JobHunt.Application.Users.Commands;
 using JobHunt.Application.Users.Queries;
 using JobHunt.Domain.Entities;
 using JobHunt.Domain.Enums;
@@ -85,7 +85,7 @@ public class EmployerController(IMediator mediator, UserManager<AppUser> userMan
         var result = await _userManager.UpdateAsync(user);
         if (!result.Succeeded)
             ModelState.AddModelError(string.Empty, string.Join(", ", result.Errors.Select(e => e.Description)));
-        
+
         return View("ContactData", viewModel);
     }
 
@@ -112,5 +112,16 @@ public class EmployerController(IMediator mediator, UserManager<AppUser> userMan
         if (result.IsFailure)
             ModelState.AddModelError(string.Empty, result.Error.Message);
         return View("AboutCompany", companyViewModel);
+    }
+
+    public async Task<IActionResult> JobApplications(CancellationToken cancellationToken)
+    {
+        string companyId = User.FindFirstValue("CompanyId");
+        var result = await _mediator.Send(new GetCompanyJobApplicationsQuery(Guid.Parse(companyId)), cancellationToken);
+        JobApplicationsViewModel vm = new()
+        {
+            JobApplications = result.Value
+        };
+        return View(vm);
     }
 }

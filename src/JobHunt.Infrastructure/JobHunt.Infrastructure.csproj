@@ -1,11 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <ItemGroup>
-      <None Remove="DbUp\Scripts\0001-Roles.sql" />
-    </ItemGroup>
-    <ItemGroup>
-      <EmbeddedResource Include="DbUp\Scripts\0001-Roles.sql" />
-    </ItemGroup>
-    <ItemGroup>
         <PackageReference Include="CloudinaryDotNet" />
         <PackageReference Include="dbup-sqlserver" />
         <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" />
@@ -17,7 +11,6 @@
         </PackageReference>
         <PackageReference Include="Microsoft.Extensions.Identity.Core" />
         <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" />
-        <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\JobHunt.Application\JobHunt.Application.csproj" />
